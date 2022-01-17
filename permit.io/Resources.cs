@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using permit.io.Models;
 
 //.net standart
 //ClassLib.Model ?
@@ -32,22 +33,6 @@ namespace permit.io
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.Token); // TODO change to permit.io token, is it the same?
             client.DefaultRequestHeaders.Add("Content-Type", "application/json");
 
-        }
-
-        public class ActionProperties
-        {
-            public string title;
-            public string description;
-            public string path;
-            public Dictionary<string, string> attributes;
-        }
-
-        public class ResourceType
-        {
-            public string Type;
-            public string Description;
-            public Dictionary<string, string> attributes;
-            public Dictionary<string, ActionProperties> actions;
         }
 
 
