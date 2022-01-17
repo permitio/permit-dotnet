@@ -21,7 +21,7 @@ namespace permit.io
 
         Config config { get; }
         public Enforcer enforcer;
-        public Resources cache;
+        public Cache cache;
 
         public Client(string token, string pdp = DEFAULT_PDP_URL, bool debugMode = false, string level = "info", string label = "permitio-sdk", string defaultTenant = "default", bool logAsJson = false)
         {
