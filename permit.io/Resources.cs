@@ -23,7 +23,7 @@ namespace permit.io
         Config config;
         HttpClient client = new HttpClient();
 
-        public string SyncResourcesUri { get; private set; } = "v1/resources";
+        public string SyncResourcesUri { get; private set; } = "cloud/resources";
 
         public Resources(Config config, string remotePermitUrl)
         {

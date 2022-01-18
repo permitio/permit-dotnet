@@ -24,5 +24,4 @@ namespace permit.io
         }
 
     }
-
 }
