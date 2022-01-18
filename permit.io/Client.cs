@@ -12,9 +12,6 @@ using System.Threading.Tasks;
 
 namespace permit.io
 {
-
-
-
     public class Client
     {
         public const string DEFAULT_PDP_URL = "http://localhost:7000";

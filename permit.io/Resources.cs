@@ -43,7 +43,7 @@ namespace permit.io
                 var serializedResources = JsonSerializer.Serialize(resourceTypes);
                 var parameters = new Dictionary<string, string> { { "resources", serializedResources } };
                 var encodedContent = new FormUrlEncodedContent(parameters);
-                var response = await client.PostAsync(
+                var response = await client.PutAsync(
                     SyncResourcesUri,
                     encodedContent).ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)

@@ -19,7 +19,7 @@ namespace permit.io
         string Label;
         bool LogAsJson;
 
-        public LoggerConfig ( string level = "info", string label = "permit.io-sdk", bool logAsJson = false)
+        public LoggerConfig(string level = "info", string label = "permit.io-sdk", bool logAsJson = false)
         {
             this.Level = level;
             this.Label = label;

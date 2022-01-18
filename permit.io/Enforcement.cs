@@ -49,7 +49,7 @@ namespace permit.io
             this.tenant = tenant;
         }
     }
-    
+
     public interface IPermitCheckData
     {
         public bool allow { get; }
@@ -67,8 +67,8 @@ namespace permit.io
         public string type { get; }
         public string id { get; }
         public string tenant { get; }
-        public IDictionary<string, string> attributes {get; }
-        public IDictionary<string, string> context {get; }
+        public IDictionary<string, string> attributes { get; }
+        public IDictionary<string, string> context { get; }
     }
 
 
@@ -118,28 +118,30 @@ namespace permit.io
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     // Do something with response. Example get content:
-                    var responseContent = await response.Content.ReadAsStringAsync ().ConfigureAwait(false);
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (config.DebugMode)
                     {
-                        Console.Write(string.Format("Checking permission for {0} to perform {1} on {2}",user, action, resource.type));
+                        Console.Write(string.Format("Checking permission for {0} to perform {1} on {2}", user, action, resource.type));
                     }
                     bool decision = JsonSerializer.Deserialize<IPermitCheck>(responseContent).data.allow || false;
                     return decision;
-                } else
+                }
+                else
                 {
                     //throw new PermissionCheckException("Permission check failed");
                     Console.Write(string.Format("Error while checking permission for {0} to perform {1} on {2}", user, action, resource.type));
                     return false;
-                
+
                 }
-            } catch
+            }
+            catch
             {
                 //Logger exception 
                 Console.Write(string.Format("Error while checking permission for {0} to perform {1} on {2}", user, action, resource.type));
                 return false;
             }
 
-         }
+        }
 
         public async Task<bool> Check(string user, string action, string resource, Dictionary<string, string> context = null)
         {
