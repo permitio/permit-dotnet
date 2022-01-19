@@ -43,22 +43,16 @@ namespace Permit.Tests
         [Fact]
         public async void TestPermitClient()
         {
-            //setup http server on port 7000
-            //assert got request
-            //using (new MockServer(7000, "/allowed", (req, rsp, prm) => "Result Body"))
-            //{
-                string testToken = "testToken";
-                string testUser = "testUser";
-                //var testUserKey = (IUserKey)( { { "key", "test" } });
-                Mock<IUserKey> testUserKey = new Mock<IUserKey>();
-                testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
+            string testToken = "testToken";
+            string testUser = "testUser";
+            Mock<IUserKey> testUserKey = new Mock<IUserKey>();
+            testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
             
-                string testAction = "testAction";
-                string testResource = "testResource";
-                Client permitClient = new Client(testToken);
-                Assert.True(await permitClient.enforcer.Check(testUser, testAction, testResource));
-                Assert.True(await permitClient.enforcer.Check(testUserKey.Object, testAction, new ResourceInput(testResource)));
-            //}
+            string testAction = "testAction";
+            string testResource = "testResource";
+            Client permitClient = new Client(testToken);
+            Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
+            Assert.False(await permitClient.Enforcer.Check(testUserKey.Object, testAction, new ResourceInput(testResource)));
 
         }
     }

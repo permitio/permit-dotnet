@@ -24,7 +24,7 @@ namespace Permit
         public string Token { get; private set; }
         public string Pdp { get; private set; }
         public bool DebugMode { get; private set; }
-        public string defaultTenant { get; private set; }
+        public string DefaultTenant { get; private set; }
         LoggerConfig Log { get; }
 
         public Config(string token, string pdp = DEFAULT_PDP_URL, bool debugMode = false, string level = "info", string label = "permitio-sdk", string defaultTenant = null, bool logAsJson = false)
@@ -32,7 +32,7 @@ namespace Permit
             this.Token = token;
             this.Pdp = pdp;
             this.DebugMode = debugMode;
-            this.defaultTenant = defaultTenant;
+            this.DefaultTenant = defaultTenant;
             this.Log = new LoggerConfig(level, label, logAsJson);
         }
     }

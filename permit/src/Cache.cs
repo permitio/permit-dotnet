@@ -22,16 +22,17 @@ namespace Permit
     public class Cache
     {
         string Url;
-        Config config;
-        HttpClient client = new HttpClient();
+        Config Config;
+        HttpClient Client = new HttpClient();
 
-        public Cache(Config config, string url = Client.DEFAULT_PDP_URL)
+        public Cache(Config config, string url = Permit.Client.DEFAULT_PDP_URL)
         {
             this.Url = url;
-            this.config = config;
-            client.BaseAddress = new Uri(url);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.Token);
-            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+            this.Config = config;
+            Client.BaseAddress = new Uri(url);
+            Client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer", config.Token));
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
 
         }
 
@@ -39,12 +40,12 @@ namespace Permit
         {
             try
             {
-                var response = await client.GetAsync(uri).ConfigureAwait(false);
+                var response = await Client.GetAsync(uri).ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     // Do something with response. Example get content:
                     var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    if (config.DebugMode)
+                    if (Config.DebugMode)
                     {
                         Console.Write(string.Format("Sending {0} request to local sidecar", uri));
                     }
@@ -99,7 +100,7 @@ namespace Permit
         {
             try
             {
-                var response = await client.GetAsync("policy-updater/trigger").ConfigureAwait(false);
+                var response = await Client.GetAsync("policy-updater/trigger").ConfigureAwait(false);
                 Console.Write("Sending Trigger Policy update request to local sidecar");
                 return (response.StatusCode == HttpStatusCode.OK);
             }
@@ -112,7 +113,7 @@ namespace Permit
         {
             try
             {
-                var response = await client.GetAsync("data-updater/trigger").ConfigureAwait(false);
+                var response = await Client.GetAsync("data-updater/trigger").ConfigureAwait(false);
                 Console.Write("Sending Trigger Data update request to local sidecar");
                 return (response.StatusCode == HttpStatusCode.OK);
             }
