@@ -1,29 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿
 
-//.net standart
-//ClassLib.Model ?
-//namespace for project contains the folder structure
-//add project reference by right click on dependencies
-
-
-
-namespace permit.io
+namespace Permit
 {
 
     public class LoggerConfig
     {
-        string Level;
-        string Label;
-        bool LogAsJson;
+        public string Level { get; private set; }
+        public string Label { get; private set; }
+        public bool LogAsJson { get; private set; }
 
-        public LoggerConfig(string level = "info", string label = "permit.io-sdk", bool logAsJson = false)
+        public LoggerConfig(string level = "info", string label = "permit-sdk", bool logAsJson = false)
         {
-            this.Level = level;
-            this.Label = label;
-            this.LogAsJson = logAsJson;
+            Level = level;
+            Label = label;
+            LogAsJson = logAsJson;
         }
     }
 
@@ -35,7 +25,7 @@ namespace permit.io
         public string Pdp { get; private set; }
         public bool DebugMode { get; private set; }
         public string defaultTenant { get; private set; }
-        LoggerConfig Log;
+        LoggerConfig Log { get; }
 
         public Config(string token, string pdp = DEFAULT_PDP_URL, bool debugMode = false, string level = "info", string label = "permitio-sdk", string defaultTenant = null, bool logAsJson = false)
         {

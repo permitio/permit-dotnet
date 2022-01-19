@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
-using permit.io.Models;
+using Permit.Models;
 
 //.net standart
 //ClassLib.Model ?
@@ -36,7 +36,7 @@ public class CreateResourceException : Exception
     }
 }
 
-namespace permit.io
+namespace Permit
 {
     public class AssignedRole
     {
@@ -77,7 +77,6 @@ namespace permit.io
     /// </summary>
     public class Enforcer
     {
-        readonly HttpClient httpClient;
         string Url;
         string CheckURI = "/allowed";
         Config config;

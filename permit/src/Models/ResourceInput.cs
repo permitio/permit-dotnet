@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace permit.io.Models
+namespace Permit.Models
 {
 
     public class ResourceInput

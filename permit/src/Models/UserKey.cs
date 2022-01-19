@@ -1,5 +1,4 @@
-﻿using System;
-namespace permit.io.Models
+﻿namespace Permit.Models
 {
     public interface IUserKey
     {

@@ -5,16 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
-using permit.io.Models;
-
-//.net standart
-//ClassLib.Model ?
-//namespace for project contains the folder structure
-//add project reference by right click on dependencies
+using Permit.Models;
 
 
 
-namespace permit.io
+namespace Permit
 {
 
     public class Resources
@@ -30,7 +25,7 @@ namespace permit.io
             this.Url = remotePermitUrl;
             this.config = config;
             client.BaseAddress = new Uri(remotePermitUrl);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.Token); // TODO change to permit.io token, is it the same?
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.Token); // TODO change to permit token, is it the same?
             client.DefaultRequestHeaders.Add("Content-Type", "application/json");
 
         }

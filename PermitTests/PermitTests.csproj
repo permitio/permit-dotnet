@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\permit.io\permit.io.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Moq" />
     <None Remove="Newtonsoft.Json" />
     <None Remove="MockHttpServer" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\permit\Permit.csproj" />
   </ItemGroup>
 </Project>

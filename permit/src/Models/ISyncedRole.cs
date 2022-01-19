@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace permit.io.Models
+namespace Permit.Models
 {
     public interface ISyncedRole
     {

@@ -6,23 +6,23 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using permit.io.Models;
+using Permit.Models;
 
-namespace permit.io
+namespace Permit
 {
-    public class Cloud
+    public class API
     {
 
         string Url;
         Config config;
         HttpClient client = new HttpClient();
 
-        public Cloud(Config config, string remotePermitUrl)
+        public API(Config config, string remotePermitUrl)
         {
             this.Url = remotePermitUrl;
             this.config = config;
             client.BaseAddress = new Uri(remotePermitUrl);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.Token); // TODO change to permit.io token, is it the same?
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", config.Token); // TODO change to permit token, is it the same?
             client.DefaultRequestHeaders.Add("Content-Type", "application/json");
 
         }
@@ -67,7 +67,7 @@ namespace permit.io
         {
             var uri = string.Format("cloud/role_assignments?user={0}", userId);
             uri = tenantId != null ? uri + string.Format("&tenant={0}", tenantId) : "";
-            return await CloudRequest<ISyncedRole[]>(uri));
+            return await CloudRequest<ISyncedRole[]>(uri);
         }
         public async Task<ISyncedRole> GetRoleById(string roleId)
         {

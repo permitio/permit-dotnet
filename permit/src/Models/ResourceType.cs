@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace permit.io.Models
+namespace Permit.Models
 {
     public class ResourceType
     {
         public string Type;
-        public string Description;
-        public Dictionary<string, string> attributes;
+        //public string Description;
+        //public Dictionary<string, string> attributes;
         public Dictionary<string, ActionProperties> actions;
 
         public ResourceType()

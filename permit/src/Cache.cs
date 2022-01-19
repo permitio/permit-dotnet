@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
-using permit.io.Models;
+using Permit.Models;
 
 //.net standart
 //ClassLib.Model ?
@@ -16,7 +16,7 @@ public interface IResponseData
     public object data { get; }
 }
 
-namespace permit.io
+namespace Permit
 {
 
     public class Cache

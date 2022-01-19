@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1700.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permit", "permit\Permit.csproj", "{DD74A0CC-9602-4785-B7BC-CE2E0B694777}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermitTests", "PermitTests\PermitTests.csproj", "{9E261E17-E83C-4235-8C15-886EC2545BCB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD74A0CC-9602-4785-B7BC-CE2E0B694777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD74A0CC-9602-4785-B7BC-CE2E0B694777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD74A0CC-9602-4785-B7BC-CE2E0B694777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD74A0CC-9602-4785-B7BC-CE2E0B694777}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E261E17-E83C-4235-8C15-886EC2545BCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E261E17-E83C-4235-8C15-886EC2545BCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E261E17-E83C-4235-8C15-886EC2545BCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E261E17-E83C-4235-8C15-886EC2545BCB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5942727C-DF6A-4AD2-A585-16C5E6943F5E}
+	EndGlobalSection
+EndGlobal

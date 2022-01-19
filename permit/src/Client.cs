@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-//.net standart
-//ClassLib.Model ?
-//namespace for project contains the folder structure
-//how to add logs
-
-
-
-namespace permit.io
+﻿
+namespace Permit
 {
     public class Client
     {

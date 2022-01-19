@@ -1,11 +1,10 @@
-﻿//using System;
-using Xunit;
+﻿using Xunit;
 using System.Collections.Generic;
-using permit.io;
-//using System.Threading.Tasks;
 using Moq;
+using Permit;
+using Permit.Models;
 
-namespace permit.ioTests
+namespace Permit.Tests
 {
     public class UnitTest1
     {
@@ -27,9 +26,9 @@ namespace permit.ioTests
             // duplicate keys, but some of the values are duplicates.
             openWith.Add("txt", "notepad.exe");
 
-            var enforcer = new Enforcer("testurl");
-            Assert.True(await enforcer.Check("user", "action", "resource", openWith));
-            Assert.True(await enforcer.Check(testUser, "action", resource, openWith));
+            //var enforcer = new Enforcer("testurl");
+            //Assert.True(await enforcer.Check("user", "action", "resource", openWith));
+            //Assert.True(await enforcer.Check(testUser, "action", resource, openWith));
         }
 
         [Fact]
