@@ -34,7 +34,7 @@ namespace Permit.Models
         static public ResourceInput Normalize(ResourceInput resource, Config config)
         {
             ResourceInput normalizedResource = new ResourceInput(resource.type, resource.id, resource.tenant, resource.attributes, resource.context);
-            if (resource.tenant == null && config.DefaultTenant != null)
+            if (resource.tenant == null && config.UseDefaultTenantIfEmpty)
             {
                 normalizedResource.tenant = config.DefaultTenant;
             }
