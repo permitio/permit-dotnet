@@ -10,7 +10,13 @@ namespace Permit.Models
         public AssignedRole[] roles = null;
         public Dictionary<string, string> attributes = null;
 
-        public User(string email, string firstName = "", string lastName = "", AssignedRole[] roles = null, Dictionary<string, string> attributes = null)
+        public User(
+            string email,
+            string firstName = "",
+            string lastName = "",
+            AssignedRole[] roles = null,
+            Dictionary<string, string> attributes = null
+        )
         {
             this.email = email;
             this.firstName = firstName;
@@ -18,7 +24,6 @@ namespace Permit.Models
             this.roles = roles;
             this.attributes = attributes;
         }
-
     }
 
 

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
-
 namespace Permit.Models
 {
     public class SyncedRole : ISyncedRole
@@ -12,7 +10,13 @@ namespace Permit.Models
         public Dictionary<string, object> metadata { get; set; }
         public string[] permissions { get; set; }
 
-        public SyncedRole(string id, string name, string tenantId, Dictionary<string, object> metadata, string[] permissions)
+        public SyncedRole(
+            string id,
+            string name,
+            string tenantId,
+            Dictionary<string, object> metadata,
+            string[] permissions
+        )
         {
             this.id = id;
             this.name = name;

@@ -11,8 +11,6 @@ namespace Permit.Models
         public ISyncedRole[] Roles { get; set; }
     }
 
-
-
     public interface IUser
     {
         string key { get; set; }

@@ -9,26 +9,16 @@ using System.Net.Http.Headers;
 
 public class PermissionCheckException : Exception
 {
-    public PermissionCheckException()
-    {
-    }
+    public PermissionCheckException() { }
 
-    public PermissionCheckException(string message)
-        : base(message)
-    {
-    }
+    public PermissionCheckException(string message) : base(message) { }
 }
 
 public class CreateResourceException : Exception
 {
-    public CreateResourceException()
-    {
-    }
+    public CreateResourceException() { }
 
-    public CreateResourceException(string message)
-        : base(message)
-    {
-    }
+    public CreateResourceException(string message) : base(message) { }
 }
 
 namespace Permit
@@ -55,8 +45,6 @@ namespace Permit
         public IPermitCheckData data { get; }
     }
 
-
-
     public interface IResource
     {
         public string type { get; }
@@ -65,7 +53,6 @@ namespace Permit
         public IDictionary<string, string> attributes { get; }
         public IDictionary<string, string> context { get; }
     }
-
 
     /// <summary>
     /// Implements Permit Enforcer using API checks against PDP sidecar.
@@ -77,62 +64,105 @@ namespace Permit
         Config Config;
         HttpClient Client = new HttpClient();
 
-
         public Enforcer(Config config, string url = Permit.Client.DEFAULT_PDP_URL)
         {
             this.Url = url;
             this.Config = config;
             Client.BaseAddress = new Uri(url);
-            Client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", config.Token));
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Client.DefaultRequestHeaders.Add(
+                "Authorization",
+                string.Format("Bearer {0}", config.Token)
+            );
+            Client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json")
+            );
         }
 
-
         /// <inheritdoc />
-        public async Task<bool> Check(IUserKey user, string action, ResourceInput resource, Dictionary<string, string> context = null)
+        public async Task<bool> Check(
+            IUserKey user,
+            string action,
+            ResourceInput resource,
+            Dictionary<string, string> context = null
+        )
         {
-            var normalizedResource = JsonSerializer.Serialize(ResourceInput.Normalize(resource, Config));
-            var parameters = new Dictionary<string, string> { { "user", user.key }, { "action", action }, { "resource", normalizedResource }, { "context", context == null ? JsonSerializer.Serialize(context) : "" } };
+            var normalizedResource = JsonSerializer.Serialize(
+                ResourceInput.Normalize(resource, Config)
+            );
+            var parameters = new Dictionary<string, string>
+            {
+                { "user", user.key },
+                { "action", action },
+                { "resource", normalizedResource },
+                { "context", context == null ? JsonSerializer.Serialize(context) : "" }
+            };
             var encodedContent = new FormUrlEncodedContent(parameters);
             try
             {
-
-                var response = await Client.PostAsync(
-                    Url + CheckURI,
-                    encodedContent).ConfigureAwait(false);
+                var response = await Client
+                    .PostAsync(Url + CheckURI, encodedContent)
+                    .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     // Do something with response. Example get content:
-                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var responseContent = await response.Content
+                        .ReadAsStringAsync()
+                        .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Checking permission for {0} to perform {1} on {2}", user, action, resource.type));
+                        Console.Write(
+                            string.Format(
+                                "Checking permission for {0} to perform {1} on {2}",
+                                user,
+                                action,
+                                resource.type
+                            )
+                        );
                     }
-                    bool decision = JsonSerializer.Deserialize<IPermitCheck>(responseContent).data.allow || false;
+                    bool decision =
+                        JsonSerializer.Deserialize<IPermitCheck>(responseContent).data.allow
+                        || false;
                     return decision;
                 }
                 else
                 {
                     //throw new PermissionCheckException("Permission check failed");
-                    Console.Write(string.Format("Error while checking permission for {0} to perform {1} on {2}", user, action, resource.type));
+                    Console.Write(
+                        string.Format(
+                            "Error while checking permission for {0} to perform {1} on {2}",
+                            user,
+                            action,
+                            resource.type
+                        )
+                    );
                     return false;
-
                 }
             }
-            catch (Exception e)            {
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
-                Console.Write(string.Format("Error while checking permission for {0} to perform {1} on {2}", user, action, resource.type));
+                Console.Write(
+                    string.Format(
+                        "Error while checking permission for {0} to perform {1} on {2}",
+                        user,
+                        action,
+                        resource.type
+                    )
+                );
                 return false;
             }
-
         }
 
-        public async Task<bool> Check(string user, string action, string resource, Dictionary<string, string> context = null)
+        public async Task<bool> Check(
+            string user,
+            string action,
+            string resource,
+            Dictionary<string, string> context = null
+        )
         {
             var resourceObject = ResourceInput.ResourceFromString(resource);
             var userKey = new UserKey(user);
             return await Check(userKey, action, resourceObject, context);
-
         }
     }
 }

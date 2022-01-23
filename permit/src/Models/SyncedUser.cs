@@ -10,8 +10,13 @@ namespace Permit.Models
         public Dictionary<string, string> metadata { get; set; }
         public SyncedRole[] Roles { get; set; }
 
-
-        public SyncedUser(string id, string name = "", string email = "", SyncedRole[] roles = null, Dictionary<string, string> metadata = null)
+        public SyncedUser(
+            string id,
+            string name = "",
+            string email = "",
+            SyncedRole[] roles = null,
+            Dictionary<string, string> metadata = null
+        )
         {
             this.id = id;
             this.name = name;

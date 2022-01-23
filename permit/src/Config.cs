@@ -1,15 +1,16 @@
-﻿
-
-namespace Permit
+﻿namespace Permit
 {
-
     public class LoggerConfig
     {
         public string Level { get; private set; }
         public string Label { get; private set; }
         public bool LogAsJson { get; private set; }
 
-        public LoggerConfig(string level = "info", string label = "permit-sdk", bool logAsJson = false)
+        public LoggerConfig(
+            string level = "info",
+            string label = "permit-sdk",
+            bool logAsJson = false
+        )
         {
             Level = level;
             Label = label;
@@ -28,7 +29,16 @@ namespace Permit
         public bool UseDefaultTenantIfEmpty { get; private set; }
         LoggerConfig Log { get; }
 
-        public Config(string token, string pdp = DEFAULT_PDP_URL, bool debugMode = false, string level = "info", string label = "permitio-sdk", string defaultTenant = null, bool useDefaultTenantIfEmpty = false, bool logAsJson = false)
+        public Config(
+            string token,
+            string pdp = DEFAULT_PDP_URL,
+            bool debugMode = false,
+            string level = "info",
+            string label = "permitio-sdk",
+            string defaultTenant = null,
+            bool useDefaultTenantIfEmpty = false,
+            bool logAsJson = false
+        )
         {
             this.Token = token;
             this.Pdp = pdp;
@@ -38,5 +48,4 @@ namespace Permit
             this.Log = new LoggerConfig(level, label, logAsJson);
         }
     }
-
 }

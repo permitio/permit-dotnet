@@ -9,8 +9,6 @@ namespace Permit.Models
         public string path; //todo can I remove this?
         public Dictionary<string, string> attributes;
 
-        public ActionProperties()
-        {
-        }
+        public ActionProperties() { }
     }
 }

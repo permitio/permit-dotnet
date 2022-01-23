@@ -19,7 +19,6 @@ public interface IResponseData
 
 namespace Permit
 {
-
     public class Cache
     {
         string Url;
@@ -31,8 +30,13 @@ namespace Permit
             this.Url = url;
             this.Config = config;
             Client.BaseAddress = new Uri(url);
-            Client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", config.Token));
-            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Client.DefaultRequestHeaders.Add(
+                "Authorization",
+                string.Format("Bearer {0}", config.Token)
+            );
+            Client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json")
+            );
 
 
         }
@@ -45,7 +49,9 @@ namespace Permit
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     // Do something with response. Example get content:
-                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var responseContent = await response.Content
+                        .ReadAsStringAsync()
+                        .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
                         Console.Write(string.Format("Sending {0} request to local sidecar", uri));
@@ -73,26 +79,32 @@ namespace Permit
         {
             return await GetCache<SyncedUser>(string.Format("local/users/{0}", userId));
         }
+
         public async Task<string[]> getUserTenants(string userId)
         {
             return await GetCache<string[]>(string.Format("local/users/{0}/tenants", userId));
         }
+
         public async Task<ISyncedRole[]> getAssignedRoles(string userId)
         {
             return await GetCache<ISyncedRole[]>(string.Format("local/users/{0}/roles", userId));
         }
+
         public async Task<SyncedUser[]> GetUsers()
         {
             return await GetCache<SyncedUser[]>("local/users");
         }
+
         public async Task<ISyncedRole[]> GetRoles()
         {
             return await GetCache<ISyncedRole[]>("local/roles");
         }
+
         public async Task<ISyncedRole> GetRoleById(string roleId)
         {
             return await GetCache<ISyncedRole>(string.Format("local/roles/{0}", roleId));
         }
+
         public async Task<ISyncedRole> GetRoleByName(string roleName)
         {
             return await GetCache<ISyncedRole>(string.Format("local/roles/by-name/{0}", roleName));
@@ -103,7 +115,9 @@ namespace Permit
             try
             {
                 var httpContent = new StringContent("{}", Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync("policy-updater/trigger", httpContent).ConfigureAwait(false);
+                var response = await Client
+                    .PostAsync("policy-updater/trigger", httpContent)
+                    .ConfigureAwait(false);
                 Console.Write("Sending Trigger Policy update request to local sidecar");
                 return (response.StatusCode == HttpStatusCode.OK);
             }
@@ -113,12 +127,15 @@ namespace Permit
                 return false;
             }
         }
+
         public async Task<bool> TriggerDataUpdate()
         {
             try
             {
                 var httpContent = new StringContent("{}", Encoding.UTF8, "application/json");
-                var response = await Client.PostAsync("data-updater/trigger", httpContent).ConfigureAwait(false);
+                var response = await Client
+                    .PostAsync("data-updater/trigger", httpContent)
+                    .ConfigureAwait(false);
                 Console.Write("Sending Trigger Data update request to local sidecar");
                 return (response.StatusCode == HttpStatusCode.OK);
             }
@@ -133,6 +150,5 @@ namespace Permit
         {
             return await TriggerDataUpdate() && await TriggerPolicyUpdate();
         }
-
     }
 }

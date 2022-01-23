@@ -41,14 +41,18 @@ namespace Permit.Tests
             string testUser = "testUser";
             Mock<IUserKey> testUserKey = new Mock<IUserKey>();
             testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
-            
+
             string testAction = "testAction";
             string testResource = "testResource";
             Client permitClient = new Client(testToken);
             Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
-            Assert.False(await permitClient.Enforcer.Check(testUserKey.Object, testAction, new ResourceInput(testResource)));
-
+            Assert.False(
+                await permitClient.Enforcer.Check(
+                    testUserKey.Object,
+                    testAction,
+                    new ResourceInput(testResource)
+                )
+            );
         }
     }
 }
-

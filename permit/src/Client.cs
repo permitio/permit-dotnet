@@ -1,5 +1,4 @@
-﻿
-namespace Permit
+﻿namespace Permit
 {
     public class Client
     {
@@ -10,7 +9,15 @@ namespace Permit
         public Cache Cache { get; private set; }
         public API Api { get; private set; }
 
-        public Client(string token, string pdp = DEFAULT_PDP_URL, bool debugMode = false, string level = "info", string label = "permitio-sdk", string defaultTenant = "default", bool logAsJson = false)
+        public Client(
+            string token,
+            string pdp = DEFAULT_PDP_URL,
+            bool debugMode = false,
+            string level = "info",
+            string label = "permitio-sdk",
+            string defaultTenant = "default",
+            bool logAsJson = false
+        )
         {
             this.Config = new Config(token, pdp, debugMode, level, label, defaultTenant, logAsJson);
             this.Enforcer = new Enforcer(this.Config, this.Config.Pdp);
@@ -18,5 +25,4 @@ namespace Permit
             this.Api = new API(this.Config, this.Config.Pdp);
         }
     }
-
 }
