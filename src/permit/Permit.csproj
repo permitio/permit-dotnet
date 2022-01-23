@@ -16,12 +16,10 @@
 </PropertyGroup>
   <ItemGroup>
     <None Remove="Newtonsoft.Json" />
-    <None Remove="src\" />
-    <None Remove="src\Models\" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\" />
-    <Folder Include="src\Models\" />
     <Folder Include="..\Permit\Models\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

@@ -37,7 +37,7 @@ namespace Permit.Tests
         [Fact]
         public async void TestPermitClientEnforcer()
         {
-            string testToken = "testToken";
+            string testToken = "";
             string testUser = "testUser";
             Mock<IUserKey> testUserKey = new Mock<IUserKey>();
             testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");

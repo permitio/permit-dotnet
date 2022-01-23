@@ -24,6 +24,6 @@
     <None Remove="MockHttpServer" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\permit\Permit.csproj" />
+    <ProjectReference Include="..\..\src\permit\Permit.csproj" />
   </ItemGroup>
 </Project>
