@@ -72,7 +72,7 @@ namespace Permit
 
         public async Task<bool> isUser(string userId)
         {
-            return await GetCache<ISyncedUser>(string.Format("local/users/{0}", userId)) != null;
+            return await GetCache<SyncedUser>(string.Format("local/users/{0}", userId)) != null;
         }
 
         public async Task<SyncedUser> getUser(string userId)
@@ -85,9 +85,9 @@ namespace Permit
             return await GetCache<string[]>(string.Format("local/users/{0}/tenants", userId));
         }
 
-        public async Task<ISyncedRole[]> getAssignedRoles(string userId)
+        public async Task<SyncedRole[]> getAssignedRoles(string userId)
         {
-            return await GetCache<ISyncedRole[]>(string.Format("local/users/{0}/roles", userId));
+            return await GetCache<SyncedRole[]>(string.Format("local/users/{0}/roles", userId));
         }
 
         public async Task<SyncedUser[]> GetUsers()
@@ -95,19 +95,19 @@ namespace Permit
             return await GetCache<SyncedUser[]>("local/users");
         }
 
-        public async Task<ISyncedRole[]> GetRoles()
+        public async Task<SyncedRole[]> GetRoles()
         {
-            return await GetCache<ISyncedRole[]>("local/roles");
+            return await GetCache<SyncedRole[]>("local/roles");
         }
 
-        public async Task<ISyncedRole> GetRoleById(string roleId)
+        public async Task<SyncedRole> GetRoleById(string roleId)
         {
-            return await GetCache<ISyncedRole>(string.Format("local/roles/{0}", roleId));
+            return await GetCache<SyncedRole>(string.Format("local/roles/{0}", roleId));
         }
 
-        public async Task<ISyncedRole> GetRoleByName(string roleName)
+        public async Task<SyncedRole> GetRoleByName(string roleName)
         {
-            return await GetCache<ISyncedRole>(string.Format("local/roles/by-name/{0}", roleName));
+            return await GetCache<SyncedRole>(string.Format("local/roles/by-name/{0}", roleName));
         }
 
         public async Task<bool> TriggerPolicyUpdate()

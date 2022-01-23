@@ -28,7 +28,6 @@ namespace Permit.Tests
         [Fact]
         public void TestPermitConfig()
         {
-            string testToken = "";
             Config config = new Config(testToken);
             Assert.True(config.Token == testToken);
             Assert.True(config.Pdp == Config.DEFAULT_PDP_URL);
@@ -37,7 +36,6 @@ namespace Permit.Tests
         [Fact]
         public async void TestPermitClientEnforcer()
         {
-            string testToken = "";
             string testUser = "testUser";
             Mock<IUserKey> testUserKey = new Mock<IUserKey>();
             testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
@@ -53,6 +51,35 @@ namespace Permit.Tests
                     new ResourceInput(testResource)
                 )
             );
+        }
+
+        [Fact]
+        public async void TestPermitClientCache()
+        {
+            Mock<IUserKey> testUserKey = new Mock<IUserKey>();
+            testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
+            Client permitClient = new Client(testToken);
+
+            SyncedUser[] users = await permitClient.Cache.GetUsers();
+            Assert.True(users.Length > 0);
+            SyncedUser user = await permitClient.Cache.getUser(users[0].id);
+            Assert.True(await permitClient.Cache.isUser(user.id));
+            string[] userTenatns = await permitClient.Cache.getUserTenants(user.id);
+            Assert.True(userTenatns.Length > 0);
+            SyncedRole[] userRoles = await permitClient.Cache.getAssignedRoles(user.id);
+            Assert.True(userRoles != null);
+            SyncedRole[] roles = await permitClient.Cache.GetRoles();
+            Assert.True(roles != null);
+            SyncedRole roleById = await permitClient.Cache.GetRoleById(roles[0].id);
+            Assert.True(roleById != null);
+            SyncedRole roleByName = await permitClient.Cache.GetRoleByName(roleById.name);
+            Assert.True(roleByName != null);
+
+            Assert.True(await permitClient.Cache.TriggerDataUpdate());
+            Assert.True(await permitClient.Cache.TriggerPolicyUpdate());
+            Assert.True(await permitClient.Cache.TriggerDataAndPolicyUpdate());
+
+
         }
     }
 }

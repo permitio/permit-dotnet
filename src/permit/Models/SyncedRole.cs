@@ -24,5 +24,7 @@ namespace Permit.Models
             this.metadata = metadata;
             this.permissions = permissions;
         }
+
+        private SyncedRole() { }
     }
 }
