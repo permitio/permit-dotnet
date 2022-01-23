@@ -17,7 +17,7 @@ namespace Permit.Models
         string firstName { get; set; }
         string lastName { get; set; }
         string email { get; set; }
-        Dictionary<string, object> attributes { get; set; }
+        Dictionary<string, string> attributes { get; set; }
         ISyncedRole[] Roles { get; set; }
     }
 }

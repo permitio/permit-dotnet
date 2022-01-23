@@ -4,6 +4,7 @@ namespace Permit.Models
 {
     public class User
     {
+        public string id = "";
         public string firstName = "";
         public string lastName = "";
         public string email = "";
@@ -24,6 +25,8 @@ namespace Permit.Models
             this.roles = roles;
             this.attributes = attributes;
         }
+
+        private User() { }
     }
 
 

@@ -10,13 +10,14 @@ using Permit.Models;
 
 namespace Permit
 {
-    public class API
+    public class Api
     {
         string Url;
         Config Config;
         HttpClient Client = new HttpClient();
+        public JsonSerializerOptions options { get; private set; }
 
-        public API(Config config, string remotePermitUrl)
+        public Api(Config config, string remotePermitUrl)
         {
             this.Url = remotePermitUrl;
             this.Config = config;
@@ -28,6 +29,9 @@ namespace Permit
             Client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
             );
+
+            this.options = new JsonSerializerOptions();
+            this.options.IgnoreNullValues = true;
         }
 
         public async Task<T> CloudRequest<T>(string uri)
@@ -45,7 +49,7 @@ namespace Permit
                     {
                         Console.Write(string.Format("Sending {0} request to cloud service", uri));
                     }
-                    return (T)JsonSerializer.Deserialize<IResponseData>(responseContent).data;
+                    return JsonSerializer.Deserialize<T>(responseContent);
                 }
                 else
                 {
@@ -59,11 +63,11 @@ namespace Permit
             }
         }
 
-        public async Task<IUser> SyncUser(IUser user)
+        public async Task<UserKey> SyncUser(UserKey user)
         {
             try
             {
-                var serializedUser = JsonSerializer.Serialize(user);
+                var serializedUser = JsonSerializer.Serialize(user, options);
                 var httpContent = new StringContent(
                     serializedUser,
                     Encoding.UTF8,
@@ -74,7 +78,6 @@ namespace Permit
                     .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    // Do something with response. Example get content:
                     var responseContent = await response.Content
                         .ReadAsStringAsync()
                         .ConfigureAwait(false);
@@ -82,7 +85,7 @@ namespace Permit
                     {
                         Console.Write(string.Format("Syncing user: {0}", serializedUser));
                     }
-                    return (IUser)JsonSerializer.Deserialize<IResponseData>(responseContent).data;
+                    return JsonSerializer.Deserialize<UserKey>(responseContent);
                 }
                 else
                 {
@@ -99,9 +102,9 @@ namespace Permit
             }
         }
 
-        public async Task<ISyncedUser> getUser(string userId)
+        public async Task<UserKey> getUser(string userId)
         {
-            return await CloudRequest<ISyncedUser>(string.Format("cloud/users/{0}", userId));
+            return await CloudRequest<UserKey>(string.Format("cloud/users/{0}", userId));
         }
 
         public async Task<bool> DeleteUser(string userKey)
@@ -138,25 +141,25 @@ namespace Permit
             }
         }
 
-        public async Task<string[]> getTenant(string tenantId)
+        public async Task<Tenant> getTenant(string tenantId)
         {
-            return await CloudRequest<string[]>(string.Format("cloud/tenants/{0}", tenantId));
+            return await CloudRequest<Tenant>(string.Format("cloud/tenants/{0}", tenantId));
         }
 
-        public async Task<ITenant> CreateTenant(ITenant tenant)
+        public async Task<Tenant> CreateTenant(ITenant tenant)
         {
             try
             {
-                var modifiedTenant = new Dictionary<string, string>
-                {
-                    { "externalId", tenant.key },
-                    { "name", tenant.name }
-                };
-                if (tenant.description != null)
-                {
-                    modifiedTenant.Add("description", tenant.description);
-                }
-                var serializedTenant = JsonSerializer.Serialize(modifiedTenant);
+                //var modifiedTenant = new Dictionary<string, string>
+                //{
+                //    { "externalId", tenant.externalId },
+                //    { "name", tenant.name }
+                //};
+                //if (tenant.description != null)
+                //{
+                //    modifiedTenant.Add("description", tenant.description);
+                //}
+                var serializedTenant = JsonSerializer.Serialize(tenant, options);
                 var httpContent = new StringContent(
                     serializedTenant,
                     Encoding.UTF8,
@@ -174,7 +177,7 @@ namespace Permit
                     {
                         Console.Write(string.Format("Syncing tenant: {0}", serializedTenant));
                     }
-                    return (ITenant)JsonSerializer.Deserialize<IResponseData>(responseContent).data;
+                    return JsonSerializer.Deserialize<Tenant>(responseContent);
                 }
                 else
                 {
@@ -193,23 +196,23 @@ namespace Permit
             }
         }
 
-        public async Task<ITenant> UpdateTenant(ITenant tenant)
+        public async Task<Tenant> UpdateTenant(Tenant tenant)
         {
             try
             {
-                var modifiedTenant = new Dictionary<string, string> { { "name", tenant.name } };
-                if (tenant.description != null)
-                {
-                    modifiedTenant.Add("description", tenant.description);
-                }
-                var serializedTenant = JsonSerializer.Serialize(modifiedTenant);
+                //var modifiedTenant = new Dictionary<string, string> { { "name", tenant.name } };
+                //if (tenant.description != null)
+                //{
+                //    modifiedTenant.Add("description", tenant.description);
+                //}
+                var serializedTenant = JsonSerializer.Serialize(tenant, options);
                 var httpContent = new StringContent(
                     serializedTenant,
                     Encoding.UTF8,
                     "application/json"
                 );
                 var response = await Client
-                    .PatchAsync(string.Format("cloud/tenants/{0}", tenant.key), httpContent)
+                    .PatchAsync(string.Format("cloud/tenants/{0}", tenant.externalId), httpContent)
                     .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -218,14 +221,16 @@ namespace Permit
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Syncing tenant: {0}", tenant.key));
+                        Console.Write(string.Format("Syncing tenant: {0}", tenant.externalId));
                     }
-                    return (ITenant)JsonSerializer.Deserialize<IResponseData>(responseContent).data;
+                    return JsonSerializer.Deserialize<Tenant>(responseContent);
                 }
                 else
                 {
                     //throw new PermissionCheckException("Permission check failed");
-                    Console.Write(string.Format("Error while syncing tenant: {0}", tenant.key));
+                    Console.Write(
+                        string.Format("Error while syncing tenant: {0}", tenant.externalId)
+                    );
                     return null;
                 }
             }
@@ -237,12 +242,62 @@ namespace Permit
             }
         }
 
-        public async Task<ISyncedRole> GetRoleById(string roleId)
+        //public async Task<Role> CreateRole(Role role)
+        //{
+        //    try
+        //    {
+
+        //        var serializedRole = JsonSerializer.Serialize(role, options);
+        //        var httpContent = new StringContent(
+        //            serializedRole,
+        //            Encoding.UTF8,
+        //            "application/json"
+        //        );
+        //        var response = await Client
+        //            .PutAsync("cloud/roles", httpContent)
+        //            .ConfigureAwait(false);
+        //        if (response.StatusCode == HttpStatusCode.OK)
+        //        {
+        //            var responseContent = await response.Content
+        //                .ReadAsStringAsync()
+        //                .ConfigureAwait(false);
+        //            if (Config.DebugMode)
+        //            {
+        //                Console.Write(string.Format("Creating role: {0}", serializedRole));
+        //            }
+        //            return JsonSerializer.Deserialize<Role>(responseContent);
+        //        }
+        //        else
+        //        {
+        //            Console.Write(
+        //                string.Format("Error while syncing role: {0}", serializedRole)
+        //            );
+        //            return null;
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //        Console.Write("Error while syncing role");
+        //        return null;
+        //    }
+        //}
+
+        public async Task<Role> GetRoleById(string roleId)
         {
-            return await CloudRequest<ISyncedRole>(string.Format("cloud/roles/{0}", roleId));
+            return await CloudRequest<Role>(string.Format("cloud/roles/{0}", roleId));
         }
 
-        public async Task<ISyncedRole> AssignRole(string userKey, string roleKey, string tenantKey)
+        public async Task<Role[]> GetRoles()
+        {
+            return await CloudRequest<Role[]>("cloud/roles");
+        }
+
+        public async Task<RoleAssignment> AssignRole(
+            string userKey,
+            string roleKey,
+            string tenantKey
+        )
         {
             try
             {
@@ -253,14 +308,14 @@ namespace Permit
                     { "scope", tenantKey }
                 };
 
-                var serializedRole = JsonSerializer.Serialize(assignRoleData);
+                var serializedRole = JsonSerializer.Serialize(assignRoleData, options);
                 var httpContent = new StringContent(
                     serializedRole,
                     Encoding.UTF8,
                     "application/json"
                 );
                 var response = await Client
-                    .PatchAsync("cloud/role_assignments", httpContent)
+                    .PostAsync("cloud/role_assignments", httpContent)
                     .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -271,9 +326,7 @@ namespace Permit
                     {
                         Console.Write(string.Format("Assigning role: {0}", serializedRole));
                     }
-                    return (ISyncedRole)JsonSerializer.Deserialize<IResponseData>(
-                        responseContent
-                    ).data;
+                    return JsonSerializer.Deserialize<RoleAssignment>(responseContent);
                 }
                 else
                 {
@@ -290,18 +343,42 @@ namespace Permit
             }
         }
 
-        public async Task<ISyncedRole[]> getAssignedRoles(string userId, string tenantId = null)
+        public async Task<Role[]> getAssignedRoles(string userId, string tenantId = null)
         {
             var uri = string.Format("cloud/role_assignments?user={0}", userId);
-            uri = tenantId != null ? uri + string.Format("&tenant={0}", tenantId) : "";
-            return await CloudRequest<ISyncedRole[]>(uri);
+            uri = (tenantId != null) ? uri + string.Format("&tenant={0}", tenantId) : uri;
+            return await CloudRequest<Role[]>(uri);
+        }
+
+        public async Task<bool> unassignRole(string userKey, string roleKey, string tenantKey)
+        {
+            try
+            {
+                var response = await Client
+                    .DeleteAsync(
+                        string.Format(
+                            "cloud/role_assignments?role={0}&user={1}&scope={2}",
+                            roleKey,
+                            userKey,
+                            tenantKey
+                        )
+                    )
+                    .ConfigureAwait(false);
+                return (response.StatusCode == HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.Write(string.Format("Error while deleting role {0}", roleKey));
+                return false;
+            }
         }
 
         public async Task<IResource[]> SyncResources(ResourceType[] resourceTypes)
         {
             try
             {
-                var serializedResources = JsonSerializer.Serialize(resourceTypes);
+                var serializedResources = JsonSerializer.Serialize(resourceTypes, options);
                 var parameters = new Dictionary<string, string>
                 {
                     { "resources", serializedResources }
@@ -320,9 +397,7 @@ namespace Permit
                     {
                         Console.Write(string.Format("Syncing resources: {0}", serializedResources));
                     }
-                    return (IResource[])JsonSerializer.Deserialize<IResponseData>(
-                        responseContent
-                    ).data;
+                    return JsonSerializer.Deserialize<IResource[]>(responseContent);
                 }
                 else
                 {

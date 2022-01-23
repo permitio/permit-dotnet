@@ -78,7 +78,68 @@ namespace Permit.Tests
             Assert.True(await permitClient.Cache.TriggerDataUpdate());
             Assert.True(await permitClient.Cache.TriggerPolicyUpdate());
             Assert.True(await permitClient.Cache.TriggerDataAndPolicyUpdate());
+        }
 
+        [Fact]
+        public async void TestPermitClientApi()
+        {
+            Client permitClient = new Client(testToken);
+            string testKey = "testKey";
+            string testFirstName = "testFirstName";
+            string testLastName = "testlastName";
+            string testEmail = "testEmail@email.com";
+            Mock<IUserKey> testUserKey = new Mock<IUserKey>();
+            testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
+
+            // Test User Api
+            UserKey userObj = new UserKey(testKey, testFirstName, testLastName, testEmail);
+            UserKey user = await permitClient.Api.SyncUser(userObj);
+            Assert.True(user.firstName == testFirstName);
+            UserKey getUser = await permitClient.Api.getUser(user.customId);
+            Assert.True(getUser.email == testEmail);
+
+            // test Tenant Api
+            //string desc = "desc";
+            string desc2 = "desc2";
+            string tenantName = "tName";
+            string tenantKey = "tKey";
+            Tenant tenantObj = new Tenant(tenantKey, tenantName);
+            Tenant tenant = await permitClient.Api.CreateTenant(tenantObj);
+            Tenant getTenant = await permitClient.Api.getTenant(tenantKey);
+            Assert.True(tenant.externalId == getTenant.externalId);
+            getTenant.description = desc2;
+            Tenant getTenant2 = await permitClient.Api.UpdateTenant(getTenant);
+            Assert.True(getTenant2.description == desc2);
+            Assert.True(getTenant.externalId == tenantKey);
+
+            // test roles Api
+            string roleName = "rName";
+            string roleDesc = "rDesc";
+            //Role roleObj = new Role(roleName, roleDesc);
+            //Role createdRole = await permitClient.Api.CreateRole(roleObj);
+            string tmpRoleId = "da7cc0d117c749bf995366bfb9e97c40";
+            //Role[] roles = await permitClient.Api.GetRoles();
+            Role getRole = await permitClient.Api.GetRoleById(tmpRoleId);
+            await permitClient.Api.AssignRole(user.customId, getRole.id, getTenant.externalId);
+            Role[] assignedRoles = await permitClient.Api.getAssignedRoles(getUser.customId);
+            Role[] assignedRoles2 = await permitClient.Api.getAssignedRoles(
+                getUser.customId,
+                getTenant.externalId
+            );
+            Assert.True(assignedRoles == assignedRoles2); //null == null :(
+
+            await permitClient.Api.unassignRole(user.customId, getRole.id, getTenant.externalId);
+            assignedRoles = await permitClient.Api.getAssignedRoles(getUser.customId);
+            Assert.True(assignedRoles == null);
+
+            await permitClient.Api.DeleteUser(getUser.customId);
+            getUser = await permitClient.Api.getUser(user.key);
+            Assert.True(getUser == null);
+            await permitClient.Api.DeleteTenant(tenantKey);
+            getTenant = await permitClient.Api.getTenant(getTenant.externalId);
+            Assert.True(getTenant == null);
+
+            // sync resources
 
         }
     }
