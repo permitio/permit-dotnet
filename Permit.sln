@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permit", "permit\Permit.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermitTests", "PermitTests\PermitTests.csproj", "{9E261E17-E83C-4235-8C15-886EC2545BCB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEEB2F4F-2961-4200-9096-A322BC6D5EED}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.TXT = LICENSE.TXT
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

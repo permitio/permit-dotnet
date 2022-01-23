@@ -22,7 +22,7 @@ namespace Permit
             this.Url = remotePermitUrl;
             this.Config = config;
             Client.BaseAddress = new Uri(remotePermitUrl);
-            Client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer", config.Token));
+            Client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", config.Token));
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         }
@@ -48,8 +48,8 @@ namespace Permit
                     return default(T);
                 }
             }
-            catch
-            {
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 return default(T);
             }
         }
@@ -83,9 +83,8 @@ namespace Permit
                 }
 
             }
-            catch
-            {
-                //todo add exception / error
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 Console.Write("Error while syncing user");
                 return null;
             }
@@ -105,9 +104,8 @@ namespace Permit
                     string.Format("cloud/users/{0}", userKey)).ConfigureAwait(false);
                 return (response.StatusCode == HttpStatusCode.OK);
             }
-            catch
-            {
-                //todo add exception / error
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 Console.Write(string.Format("Error while deleting user {0}", userKey));
                 return false;
             }
@@ -122,9 +120,8 @@ namespace Permit
                     string.Format("cloud/tenants/{0}", tenantKey)).ConfigureAwait(false);
                 return (response.StatusCode == HttpStatusCode.OK);
             }
-            catch
-            {
-                //todo add exception / error
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 Console.Write(string.Format("Error while deleting tenant {0}", tenantKey));
                 return false;
             }
@@ -167,9 +164,8 @@ namespace Permit
                 }
 
             }
-            catch
-            {
-                //todo add exception / error
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 Console.Write("Error while syncing tenant");
                 return null;
             }
@@ -207,9 +203,8 @@ namespace Permit
                 }
 
             }
-            catch
-            {
-                //todo add exception / error
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 Console.Write("Error while syncing tenant");
                 return null;
             }
@@ -249,9 +244,8 @@ namespace Permit
                 }
 
             }
-            catch
-            {
-                //todo add exception / error
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 Console.Write("Error while assigning role");
                 return null;
             }
@@ -294,9 +288,8 @@ namespace Permit
                 }
 
             }
-            catch
-            {
-                //todo add exception / error
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 Console.Write("Error while syncing resources");
                 return null;
             }

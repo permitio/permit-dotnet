@@ -14,13 +14,6 @@
     <PackageReadmeFile>readme.md</PackageReadmeFile>
 
 </PropertyGroup>
-    <ItemGroup>
-        <None Include="LICENSE.TXT" Pack="true" PackagePath="LICENSE.TXT" />
-        <None Include="README.md" Pack="true" PackagePath="README.md" />
-
-    </ItemGroup>
-
-
   <ItemGroup>
     <None Remove="Newtonsoft.Json" />
     <None Remove="src\" />

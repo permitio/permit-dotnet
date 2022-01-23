@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Permit.Models;
@@ -30,7 +31,7 @@ namespace Permit
             this.Url = url;
             this.Config = config;
             Client.BaseAddress = new Uri(url);
-            Client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer", config.Token));
+            Client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", config.Token));
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 
@@ -49,15 +50,16 @@ namespace Permit
                     {
                         Console.Write(string.Format("Sending {0} request to local sidecar", uri));
                     }
-                    return (T)JsonSerializer.Deserialize<IResponseData>(responseContent).data;
+                    return JsonSerializer.Deserialize<T>(responseContent);
                 }
                 else
                 {
                     return default(T);
                 }
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return default(T);
             }
         }
@@ -67,9 +69,9 @@ namespace Permit
             return await GetCache<ISyncedUser>(string.Format("local/users/{0}", userId)) != null;
         }
 
-        public async Task<ISyncedUser> getUser(string userId)
+        public async Task<SyncedUser> getUser(string userId)
         {
-            return await GetCache<ISyncedUser>(string.Format("local/users/{0}", userId));
+            return await GetCache<SyncedUser>(string.Format("local/users/{0}", userId));
         }
         public async Task<string[]> getUserTenants(string userId)
         {
@@ -79,9 +81,9 @@ namespace Permit
         {
             return await GetCache<ISyncedRole[]>(string.Format("local/users/{0}/roles", userId));
         }
-        public async Task<User[]> GetUsers()
+        public async Task<SyncedUser[]> GetUsers()
         {
-            return await GetCache<User[]>("local/users");
+            return await GetCache<SyncedUser[]>("local/users");
         }
         public async Task<ISyncedRole[]> GetRoles()
         {
@@ -100,12 +102,14 @@ namespace Permit
         {
             try
             {
-                var response = await Client.GetAsync("policy-updater/trigger").ConfigureAwait(false);
+                var httpContent = new StringContent("{}", Encoding.UTF8, "application/json");
+                var response = await Client.PostAsync("policy-updater/trigger", httpContent).ConfigureAwait(false);
                 Console.Write("Sending Trigger Policy update request to local sidecar");
                 return (response.StatusCode == HttpStatusCode.OK);
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }
@@ -113,12 +117,14 @@ namespace Permit
         {
             try
             {
-                var response = await Client.GetAsync("data-updater/trigger").ConfigureAwait(false);
+                var httpContent = new StringContent("{}", Encoding.UTF8, "application/json");
+                var response = await Client.PostAsync("data-updater/trigger", httpContent).ConfigureAwait(false);
                 Console.Write("Sending Trigger Data update request to local sidecar");
                 return (response.StatusCode == HttpStatusCode.OK);
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }

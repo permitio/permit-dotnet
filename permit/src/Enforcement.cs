@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
 using Permit.Models;
+using System.Net.Http.Headers;
 
 public class PermissionCheckException : Exception
 {
@@ -73,34 +74,37 @@ namespace Permit
     {
         string Url;
         string CheckURI = "/allowed";
-        Config config;
-        HttpClient client = new HttpClient();
+        Config Config;
+        HttpClient Client = new HttpClient();
 
 
-        public Enforcer(Config config, string url = Client.DEFAULT_PDP_URL)
+        public Enforcer(Config config, string url = Permit.Client.DEFAULT_PDP_URL)
         {
             this.Url = url;
-            this.config = config;
+            this.Config = config;
+            Client.BaseAddress = new Uri(url);
+            Client.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", config.Token));
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
 
         /// <inheritdoc />
         public async Task<bool> Check(IUserKey user, string action, ResourceInput resource, Dictionary<string, string> context = null)
         {
-            var normalizedResource = JsonSerializer.Serialize(ResourceInput.Normalize(resource, config));
+            var normalizedResource = JsonSerializer.Serialize(ResourceInput.Normalize(resource, Config));
             var parameters = new Dictionary<string, string> { { "user", user.key }, { "action", action }, { "resource", normalizedResource }, { "context", context == null ? JsonSerializer.Serialize(context) : "" } };
             var encodedContent = new FormUrlEncodedContent(parameters);
             try
             {
 
-                var response = await client.PostAsync(
+                var response = await Client.PostAsync(
                     Url + CheckURI,
                     encodedContent).ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     // Do something with response. Example get content:
                     var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    if (config.DebugMode)
+                    if (Config.DebugMode)
                     {
                         Console.Write(string.Format("Checking permission for {0} to perform {1} on {2}", user, action, resource.type));
                     }
@@ -115,9 +119,8 @@ namespace Permit
 
                 }
             }
-            catch
-            {
-                //Logger exception 
+            catch (Exception e)            {
+                Console.WriteLine(e);
                 Console.Write(string.Format("Error while checking permission for {0} to perform {1} on {2}", user, action, resource.type));
                 return false;
             }
