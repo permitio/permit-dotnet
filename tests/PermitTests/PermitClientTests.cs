@@ -115,22 +115,28 @@ namespace Permit.Tests
             // test roles Api
             string roleName = "rName";
             string roleDesc = "rDesc";
-            //Role roleObj = new Role(roleName, roleDesc);
-            //Role createdRole = await permitClient.Api.CreateRole(roleObj);
-            string tmpRoleId = "da7cc0d117c749bf995366bfb9e97c40";
-            //Role[] roles = await permitClient.Api.GetRoles();
-            Role getRole = await permitClient.Api.GetRoleById(tmpRoleId);
-            await permitClient.Api.AssignRole(user.customId, getRole.id, getTenant.externalId);
-            Role[] assignedRoles = await permitClient.Api.getAssignedRoles(getUser.customId);
-            Role[] assignedRoles2 = await permitClient.Api.getAssignedRoles(
+            Role roleObj = new Role(roleName, roleDesc);
+            Role createdRole = await permitClient.Api.CreateRole(roleObj);
+            Role[] roles = await permitClient.Api.GetRoles();
+            Assert.True(roles.Length > 0);
+            Role getRole = await permitClient.Api.GetRoleById(createdRole.id);
+            var assignedRole = await permitClient.Api.AssignRole(
+                user.customId,
+                getRole.id,
+                getTenant.externalId
+            );
+            RoleAssignment[] assignedRoles = await permitClient.Api.getAssignedRoles(
+                getUser.customId
+            );
+            RoleAssignment[] assignedRoles2 = await permitClient.Api.getAssignedRoles(
                 getUser.customId,
                 getTenant.externalId
             );
-            Assert.True(assignedRoles == assignedRoles2); //null == null :(
+            Assert.True(assignedRoles.Length == assignedRoles2.Length);
 
             await permitClient.Api.unassignRole(user.customId, getRole.id, getTenant.externalId);
             assignedRoles = await permitClient.Api.getAssignedRoles(getUser.customId);
-            Assert.True(assignedRoles == null);
+            Assert.True(assignedRoles.Length == (assignedRoles2.Length - 1));
 
             await permitClient.Api.DeleteUser(getUser.customId);
             getUser = await permitClient.Api.getUser(user.key);

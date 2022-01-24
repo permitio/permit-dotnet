@@ -12,9 +12,16 @@ using Permit.Models;
 //namespace for project contains the folder structure
 //add project reference by right click on dependencies
 
-public interface IResponseData
+public interface IResponseData<T>
 {
-    public object data { get; }
+    public T data { get; }
+}
+
+public class ResponseData<T>
+{
+    public T data { get; set; }
+
+    ResponseData() { }
 }
 
 namespace Permit
@@ -48,7 +55,6 @@ namespace Permit
                 var response = await Client.GetAsync(uri).ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    // Do something with response. Example get content:
                     var responseContent = await response.Content
                         .ReadAsStringAsync()
                         .ConfigureAwait(false);

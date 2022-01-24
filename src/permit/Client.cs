@@ -1,4 +1,8 @@
-﻿namespace Permit
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Permit.Models;
+
+namespace Permit
 {
     public class Client
     {
@@ -23,6 +27,16 @@
             this.Enforcer = new Enforcer(this.Config, this.Config.Pdp);
             this.Cache = new Cache(this.Config, this.Config.Pdp);
             this.Api = new Api(this.Config, this.Config.Pdp);
+        }
+
+        public async Task<bool> Check(
+            IUserKey user,
+            string action,
+            ResourceInput resource,
+            Dictionary<string, string> context = null
+        )
+        {
+            return await this.Enforcer.Check(user, action, resource, context);
         }
     }
 }

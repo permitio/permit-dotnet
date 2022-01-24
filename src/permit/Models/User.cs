@@ -8,14 +8,14 @@ namespace Permit.Models
         public string firstName = "";
         public string lastName = "";
         public string email = "";
-        public AssignedRole[] roles = null;
+        public RoleAssignment[] roles = null;
         public Dictionary<string, string> attributes = null;
 
         public User(
             string email,
             string firstName = "",
             string lastName = "",
-            AssignedRole[] roles = null,
+            RoleAssignment[] roles = null,
             Dictionary<string, string> attributes = null
         )
         {

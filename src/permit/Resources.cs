@@ -43,7 +43,6 @@ namespace Permit
                     .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    // Do something with response. Example get content:
                     var responseContent = await response.Content
                         .ReadAsStringAsync()
                         .ConfigureAwait(false);
@@ -51,7 +50,7 @@ namespace Permit
                     {
                         Console.Write(string.Format("Syncing resources: {0}", serializedResources));
                     }
-                    return (IResource[])JsonSerializer.Deserialize<IResponseData>(
+                    return JsonSerializer.Deserialize<IResponseData<IResource[]>>(
                         responseContent
                     ).data;
                 }

@@ -23,18 +23,6 @@ public class CreateResourceException : Exception
 
 namespace Permit
 {
-    public class AssignedRole
-    {
-        string role;
-        string tenant;
-
-        public AssignedRole(string role, string tenant)
-        {
-            this.role = role;
-            this.tenant = tenant;
-        }
-    }
-
     public interface IPermitCheckData
     {
         public bool allow { get; }
@@ -104,7 +92,6 @@ namespace Permit
                     .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    // Do something with response. Example get content:
                     var responseContent = await response.Content
                         .ReadAsStringAsync()
                         .ConfigureAwait(false);

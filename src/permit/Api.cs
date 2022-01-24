@@ -41,7 +41,6 @@ namespace Permit
                 var response = await Client.GetAsync(uri).ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    // Do something with response. Example get content:
                     var responseContent = await response.Content
                         .ReadAsStringAsync()
                         .ConfigureAwait(false);
@@ -50,6 +49,34 @@ namespace Permit
                         Console.Write(string.Format("Sending {0} request to cloud service", uri));
                     }
                     return JsonSerializer.Deserialize<T>(responseContent);
+                }
+                else
+                {
+                    return default(T);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return default(T);
+            }
+        }
+
+        public async Task<T> CloudRequestList<T>(string uri)
+        {
+            try
+            {
+                var response = await Client.GetAsync(uri).ConfigureAwait(false);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content
+                        .ReadAsStringAsync()
+                        .ConfigureAwait(false);
+                    if (Config.DebugMode)
+                    {
+                        Console.Write(string.Format("Sending {0} request to cloud service", uri));
+                    }
+                    return JsonSerializer.Deserialize<ResponseData<T>>(responseContent).data;
                 }
                 else
                 {
@@ -242,46 +269,46 @@ namespace Permit
             }
         }
 
-        //public async Task<Role> CreateRole(Role role)
-        //{
-        //    try
-        //    {
-
-        //        var serializedRole = JsonSerializer.Serialize(role, options);
-        //        var httpContent = new StringContent(
-        //            serializedRole,
-        //            Encoding.UTF8,
-        //            "application/json"
-        //        );
-        //        var response = await Client
-        //            .PutAsync("cloud/roles", httpContent)
-        //            .ConfigureAwait(false);
-        //        if (response.StatusCode == HttpStatusCode.OK)
-        //        {
-        //            var responseContent = await response.Content
-        //                .ReadAsStringAsync()
-        //                .ConfigureAwait(false);
-        //            if (Config.DebugMode)
-        //            {
-        //                Console.Write(string.Format("Creating role: {0}", serializedRole));
-        //            }
-        //            return JsonSerializer.Deserialize<Role>(responseContent);
-        //        }
-        //        else
-        //        {
-        //            Console.Write(
-        //                string.Format("Error while syncing role: {0}", serializedRole)
-        //            );
-        //            return null;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //        Console.Write("Error while syncing role");
-        //        return null;
-        //    }
-        //}
+        public async Task<Role> CreateRole(Role role)
+        {
+            try
+            {
+                var serializedRole = JsonSerializer.Serialize(role, options);
+                var httpContent = new StringContent(
+                    serializedRole,
+                    Encoding.UTF8,
+                    "application/json"
+                );
+                var response = await Client
+                    .PostAsync("cloud/roles", httpContent)
+                    .ConfigureAwait(false);
+                if (
+                    response.StatusCode == HttpStatusCode.OK
+                    || response.StatusCode == HttpStatusCode.Created
+                )
+                {
+                    var responseContent = await response.Content
+                        .ReadAsStringAsync()
+                        .ConfigureAwait(false);
+                    if (Config.DebugMode)
+                    {
+                        Console.Write(string.Format("Creating role: {0}", serializedRole));
+                    }
+                    return JsonSerializer.Deserialize<Role>(responseContent);
+                }
+                else
+                {
+                    Console.Write(string.Format("Error while syncing role: {0}", serializedRole));
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.Write("Error while syncing role");
+                return null;
+            }
+        }
 
         public async Task<Role> GetRoleById(string roleId)
         {
@@ -290,7 +317,7 @@ namespace Permit
 
         public async Task<Role[]> GetRoles()
         {
-            return await CloudRequest<Role[]>("cloud/roles");
+            return await CloudRequestList<Role[]>("cloud/roles");
         }
 
         public async Task<RoleAssignment> AssignRole(
@@ -343,11 +370,11 @@ namespace Permit
             }
         }
 
-        public async Task<Role[]> getAssignedRoles(string userId, string tenantId = null)
+        public async Task<RoleAssignment[]> getAssignedRoles(string userId, string tenantId = null)
         {
             var uri = string.Format("cloud/role_assignments?user={0}", userId);
             uri = (tenantId != null) ? uri + string.Format("&tenant={0}", tenantId) : uri;
-            return await CloudRequest<Role[]>(uri);
+            return await CloudRequestList<RoleAssignment[]>(uri);
         }
 
         public async Task<bool> unassignRole(string userKey, string roleKey, string tenantKey)
@@ -389,7 +416,6 @@ namespace Permit
                     .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    // Do something with response. Example get content:
                     var responseContent = await response.Content
                         .ReadAsStringAsync()
                         .ConfigureAwait(false);
