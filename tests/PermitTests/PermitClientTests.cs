@@ -42,7 +42,7 @@ namespace Permit.Tests
 
             string testAction = "testAction";
             string testResource = "testResource";
-            Client permitClient = new Client(testToken);
+            Permit permitClient = new Permit(testToken);
             Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
             Assert.False(
                 await permitClient.Enforcer.Check(
@@ -58,7 +58,7 @@ namespace Permit.Tests
         {
             Mock<IUserKey> testUserKey = new Mock<IUserKey>();
             testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
-            Client permitClient = new Client(testToken);
+            Permit permitClient = new Permit(testToken);
 
             SyncedUser[] users = await permitClient.Cache.GetUsers();
             Assert.True(users.Length > 0);
@@ -83,7 +83,7 @@ namespace Permit.Tests
         [Fact]
         public async void TestPermitClientApi()
         {
-            Client permitClient = new Client(testToken);
+            Permit permitClient = new Permit(testToken);
             string testKey = "testKey";
             string testFirstName = "testFirstName";
             string testLastName = "testlastName";

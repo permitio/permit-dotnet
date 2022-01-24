@@ -4,7 +4,7 @@ using Permit.Models;
 
 namespace Permit
 {
-    public class Client
+    public class Permit
     {
         public const string DEFAULT_PDP_URL = "http://localhost:7000";
 
@@ -13,7 +13,7 @@ namespace Permit
         public Cache Cache { get; private set; }
         public Api Api { get; private set; }
 
-        public Client(
+        public Permit(
             string token,
             string pdp = DEFAULT_PDP_URL,
             bool debugMode = false,
