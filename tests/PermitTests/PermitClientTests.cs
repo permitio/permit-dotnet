@@ -146,7 +146,22 @@ namespace Permit.Tests
             Assert.True(getTenant == null);
 
             // sync resources
+            string testType = "document";
+            ActionProperties testActionProperties = new ActionProperties(
+                "Create document",
+                "Ability to create document"
+            );
+            Dictionary<string, ActionProperties> testActions = new Dictionary<
+                string,
+                ActionProperties
+            >
+            {
+                { "create", testActionProperties }
+            };
+            ResourceType[] testResources = { new ResourceType(testType, testActions) };
+            var syncResources = await permitClient.Api.SyncResources(testResources);
 
+            Assert.True(syncResources);
         }
     }
 }

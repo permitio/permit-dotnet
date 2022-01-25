@@ -401,18 +401,22 @@ namespace Permit
             }
         }
 
-        public async Task<IResource[]> SyncResources(ResourceType[] resourceTypes)
+        public async Task<bool> SyncResources(ResourceType[] resourceTypes)
         {
             try
             {
-                var serializedResources = JsonSerializer.Serialize(resourceTypes, options);
-                var parameters = new Dictionary<string, string>
+                var parameters = new Dictionary<string, ResourceType[]>
                 {
-                    { "resources", serializedResources }
+                    { "resources", resourceTypes }
                 };
-                var encodedContent = new FormUrlEncodedContent(parameters);
+                var serializedResources = JsonSerializer.Serialize(parameters, options);
+                var httpContent = new StringContent(
+                    serializedResources,
+                    Encoding.UTF8,
+                    "application/json"
+                );
                 var response = await Client
-                    .PutAsync("cloud/resources", encodedContent)
+                    .PutAsync("cloud/resources", httpContent)
                     .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -423,22 +427,21 @@ namespace Permit
                     {
                         Console.Write(string.Format("Syncing resources: {0}", serializedResources));
                     }
-                    return JsonSerializer.Deserialize<IResource[]>(responseContent);
+                    return true;
                 }
                 else
                 {
-                    //throw new PermissionCheckException("Permission check failed");
                     Console.Write(
                         string.Format("Error while syncing resources: {0}", serializedResources)
                     );
-                    return null;
+                    return false;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 Console.Write("Error while syncing resources");
-                return null;
+                return false;
             }
         }
     }
