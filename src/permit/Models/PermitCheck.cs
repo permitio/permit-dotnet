@@ -2,8 +2,8 @@
 {
     public class PermitCheck
     {
-        public bool allow { get; }
+        public bool allow { get; private set; }
 
-        private PermitCheck() { }
+        public PermitCheck() { }
     }
 }

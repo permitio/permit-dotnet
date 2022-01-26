@@ -113,7 +113,7 @@ namespace PermitSDK
                 }
                 else
                 {
-                    this.logger.LogInformation(
+                    this.logger.LogError(
                         string.Format(
                             "Error while checking permission for {0} to perform {1} on {2}",
                             user,
