@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using PermitSDK.Models;
 
 namespace PermitSDK
@@ -15,9 +16,10 @@ namespace PermitSDK
         string Url;
         Config Config;
         HttpClient Client = new HttpClient();
+        ILogger logger;
         public JsonSerializerOptions options { get; private set; }
 
-        public Api(Config config, string remotePermitUrl)
+        public Api(Config config, string remotePermitUrl, ILogger logger = null)
         {
             this.Url = remotePermitUrl;
             this.Config = config;
@@ -32,6 +34,7 @@ namespace PermitSDK
 
             this.options = new JsonSerializerOptions();
             this.options.IgnoreNullValues = true;
+            this.logger = logger;
         }
 
         public async Task<T> CloudRequest<T>(string uri)
@@ -46,7 +49,9 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Sending {0} request to cloud service", uri));
+                        this.logger.LogInformation(
+                            string.Format("Sending {0} request to cloud service", uri)
+                        );
                     }
                     return JsonSerializer.Deserialize<T>(responseContent);
                 }
@@ -57,7 +62,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                this.logger.LogError(e);
                 return default(T);
             }
         }
@@ -74,7 +79,9 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Sending {0} request to cloud service", uri));
+                        this.logger.LogInformation(
+                            string.Format("Sending {0} request to cloud service", uri)
+                        );
                     }
                     return JsonSerializer.Deserialize<ResponseData<T>>(responseContent).data;
                 }
@@ -85,7 +92,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                this.logger.LogError(e);
                 return default(T);
             }
         }
@@ -110,21 +117,24 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Syncing user: {0}", serializedUser));
+                        this.logger.LogInformation(
+                            string.Format("Syncing user: {0}", serializedUser)
+                        );
                     }
                     return JsonSerializer.Deserialize<UserKey>(responseContent);
                 }
                 else
                 {
-                    //throw new PermissionCheckException("Permission check failed");
-                    Console.Write(string.Format("Error while syncing user: {0}", serializedUser));
+                    this.logger.LogInformation(
+                        string.Format("Error while syncing user: {0}", serializedUser)
+                    );
                     return null;
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write("Error while syncing user");
+                this.logger.LogError(e);
+                this.logger.LogInformation("Error while syncing user");
                 return null;
             }
         }
@@ -145,8 +155,8 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write(string.Format("Error while deleting user {0}", userKey));
+                this.logger.LogError(e);
+                this.logger.LogInformation(string.Format("Error while deleting user {0}", userKey));
                 return false;
             }
         }
@@ -162,8 +172,10 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write(string.Format("Error while deleting tenant {0}", tenantKey));
+                this.logger.LogError(e);
+                this.logger.LogInformation(
+                    string.Format("Error while deleting tenant {0}", tenantKey)
+                );
                 return false;
             }
         }
@@ -202,14 +214,15 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Syncing tenant: {0}", serializedTenant));
+                        this.logger.LogInformation(
+                            string.Format("Syncing tenant: {0}", serializedTenant)
+                        );
                     }
                     return JsonSerializer.Deserialize<Tenant>(responseContent);
                 }
                 else
                 {
-                    //throw new PermissionCheckException("Permission check failed");
-                    Console.Write(
+                    this.logger.LogInformation(
                         string.Format("Error while syncing tenant: {0}", serializedTenant)
                     );
                     return null;
@@ -217,8 +230,8 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write("Error while syncing tenant");
+                this.logger.LogError(e);
+                this.logger.LogInformation("Error while syncing tenant");
                 return null;
             }
         }
@@ -248,14 +261,15 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Syncing tenant: {0}", tenant.externalId));
+                        this.logger.LogInformation(
+                            string.Format("Syncing tenant: {0}", tenant.externalId)
+                        );
                     }
                     return JsonSerializer.Deserialize<Tenant>(responseContent);
                 }
                 else
                 {
-                    //throw new PermissionCheckException("Permission check failed");
-                    Console.Write(
+                    this.logger.LogInformation(
                         string.Format("Error while syncing tenant: {0}", tenant.externalId)
                     );
                     return null;
@@ -263,8 +277,8 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write("Error while syncing tenant");
+                this.logger.LogError(e);
+                this.logger.LogInformation("Error while syncing tenant");
                 return null;
             }
         }
@@ -292,20 +306,24 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Creating role: {0}", serializedRole));
+                        this.logger.LogInformation(
+                            string.Format("Creating role: {0}", serializedRole)
+                        );
                     }
                     return JsonSerializer.Deserialize<Role>(responseContent);
                 }
                 else
                 {
-                    Console.Write(string.Format("Error while syncing role: {0}", serializedRole));
+                    this.logger.LogInformation(
+                        string.Format("Error while syncing role: {0}", serializedRole)
+                    );
                     return null;
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write("Error while syncing role");
+                this.logger.LogError(e);
+                this.logger.LogInformation("Error while syncing role");
                 return null;
             }
         }
@@ -351,21 +369,24 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Assigning role: {0}", serializedRole));
+                        this.logger.LogInformation(
+                            string.Format("Assigning role: {0}", serializedRole)
+                        );
                     }
                     return JsonSerializer.Deserialize<RoleAssignment>(responseContent);
                 }
                 else
                 {
-                    //throw new PermissionCheckException("Permission check failed");
-                    Console.Write(string.Format("Error while assigning role: {0}", serializedRole));
+                    this.logger.LogInformation(
+                        string.Format("Error while assigning role: {0}", serializedRole)
+                    );
                     return null;
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write("Error while assigning role");
+                this.logger.LogError(e);
+                this.logger.LogInformation("Error while assigning role");
                 return null;
             }
         }
@@ -395,8 +416,8 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write(string.Format("Error while deleting role {0}", roleKey));
+                this.logger.LogError(e);
+                this.logger.LogInformation(string.Format("Error while deleting role {0}", roleKey));
                 return false;
             }
         }
@@ -425,13 +446,15 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Syncing resources: {0}", serializedResources));
+                        this.logger.LogInformation(
+                            string.Format("Syncing resources: {0}", serializedResources)
+                        );
                     }
                     return true;
                 }
                 else
                 {
-                    Console.Write(
+                    this.logger.LogInformation(
                         string.Format("Error while syncing resources: {0}", serializedResources)
                     );
                     return false;
@@ -439,8 +462,8 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write("Error while syncing resources");
+                this.logger.LogError(e);
+                this.logger.LogInformation("Error while syncing resources");
                 return false;
             }
         }

@@ -7,6 +7,7 @@ using System.Text.Json;
 using PermitSDK.Models;
 using System.Net.Http.Headers;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 public class PermissionCheckException : Exception
 {
@@ -42,9 +43,10 @@ namespace PermitSDK
         string CheckURI = "/allowed";
         Config Config;
         HttpClient Client = new HttpClient();
+        ILogger logger;
         public JsonSerializerOptions options { get; private set; }
 
-        public Enforcer(Config config, string url = Permit.DEFAULT_PDP_URL)
+        public Enforcer(Config config, string url = Permit.DEFAULT_PDP_URL, ILogger logger = null)
         {
             this.Url = url;
             this.Config = config;
@@ -58,6 +60,7 @@ namespace PermitSDK
             );
             this.options = new JsonSerializerOptions();
             this.options.IgnoreNullValues = true;
+            this.logger = logger;
         }
 
         /// <inheritdoc />
@@ -95,7 +98,7 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(
+                        this.logger.LogInformation(
                             string.Format(
                                 "Checking permission for {0} to perform {1} on {2}",
                                 user,
@@ -110,8 +113,7 @@ namespace PermitSDK
                 }
                 else
                 {
-                    //throw new PermissionCheckException("Permission check failed");
-                    Console.Write(
+                    this.logger.LogInformation(
                         string.Format(
                             "Error while checking permission for {0} to perform {1} on {2}",
                             user,
@@ -124,8 +126,8 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                Console.Write(
+                this.logger.LogError(e);
+                this.logger.LogInformation(
                     string.Format(
                         "Error while checking permission for {0} to perform {1} on {2}",
                         user,

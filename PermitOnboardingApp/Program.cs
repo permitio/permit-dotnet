@@ -30,7 +30,7 @@ namespace PermitOnboardingApp
                 HttpListenerContext ctx = await listener.GetContextAsync();
                 HttpListenerResponse resp = ctx.Response;
 
-                string testToken = "";
+                string testToken = "PJUKkuwiJkKxbIoC4o4cguWxB_2gX6MyATYKc2OCM";
                 string testUser = "tester@test.com";
 
                 string testAction = "delete";
@@ -61,7 +61,7 @@ namespace PermitOnboardingApp
             listener = new HttpListener();
             listener.Prefixes.Add(url);
             listener.Start();
-            Console.WriteLine("Listening for connections on {0}", url);
+            this.logger.LogError("Listening for connections on {0}", url);
 
             // Handle requests
             Task listenTask = HandleIncomingConnections();

@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using PermitSDK.Models;
 
 //.net standart
@@ -31,8 +32,13 @@ namespace PermitSDK
         string Url;
         Config Config;
         HttpClient Client = new HttpClient();
+        ILogger logger;
 
-        public Cache(Config config, string url = global::PermitSDK.Permit.DEFAULT_PDP_URL)
+        public Cache(
+            Config config,
+            string url = global::PermitSDK.Permit.DEFAULT_PDP_URL,
+            ILogger logger = null
+        )
         {
             this.Url = url;
             this.Config = config;
@@ -44,8 +50,7 @@ namespace PermitSDK
             Client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
             );
-
-
+            this.logger = logger;
         }
 
         public async Task<T> GetCache<T>(string uri)
@@ -60,7 +65,9 @@ namespace PermitSDK
                         .ConfigureAwait(false);
                     if (Config.DebugMode)
                     {
-                        Console.Write(string.Format("Sending {0} request to local sidecar", uri));
+                        this.logger.LogInformation(
+                            string.Format("Sending {0} request to local sidecar", uri)
+                        );
                     }
                     return JsonSerializer.Deserialize<T>(responseContent);
                 }
@@ -71,7 +78,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                this.logger.LogError(e);
                 return default(T);
             }
         }
@@ -124,12 +131,14 @@ namespace PermitSDK
                 var response = await Client
                     .PostAsync("policy-updater/trigger", httpContent)
                     .ConfigureAwait(false);
-                Console.Write("Sending Trigger Policy update request to local sidecar");
+                this.logger.LogInformation(
+                    "Sending Trigger Policy update request to local sidecar"
+                );
                 return (response.StatusCode == HttpStatusCode.OK);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                this.logger.LogError(e);
                 return false;
             }
         }
@@ -142,12 +151,12 @@ namespace PermitSDK
                 var response = await Client
                     .PostAsync("data-updater/trigger", httpContent)
                     .ConfigureAwait(false);
-                Console.Write("Sending Trigger Data update request to local sidecar");
+                this.logger.LogInformation("Sending Trigger Data update request to local sidecar");
                 return (response.StatusCode == HttpStatusCode.OK);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                this.logger.LogError(e);
                 return false;
             }
         }

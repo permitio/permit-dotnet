@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using PermitSDK.Models;
 
 namespace PermitSDK
@@ -34,9 +35,15 @@ namespace PermitSDK
                 label,
                 logAsJson
             );
-            this.Enforcer = new Enforcer(this.Config, this.Config.Pdp);
-            this.Cache = new Cache(this.Config, this.Config.Pdp);
-            this.Api = new Api(this.Config, this.Config.Pdp);
+
+            ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+            ILogger logger = loggerFactory.CreateLogger<Permit>();
+
+            this.Enforcer = new Enforcer(this.Config, this.Config.Pdp, logger);
+            this.Cache = new Cache(this.Config, this.Config.Pdp, logger);
+            this.Api = new Api(this.Config, this.Config.Pdp, logger);
+
+
         }
 
         public async Task<bool> Check(
