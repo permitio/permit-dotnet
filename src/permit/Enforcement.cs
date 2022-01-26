@@ -7,7 +7,6 @@ using System.Text.Json;
 using PermitSDK.Models;
 using System.Net.Http.Headers;
 using System.Text;
-using Permit.Dotnet.Models;
 
 public class PermissionCheckException : Exception
 {

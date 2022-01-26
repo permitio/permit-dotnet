@@ -1,4 +1,4 @@
-﻿namespace Permit.Dotnet.Models
+﻿namespace PermitSDK.Models
 {
     public class PermitCheck
     {
