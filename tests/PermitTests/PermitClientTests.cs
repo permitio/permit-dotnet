@@ -1,30 +1,13 @@
 ﻿using Xunit;
 using System.Collections.Generic;
 using Moq;
-using Permit;
-using Permit.Models;
+using PermitDotnet;
+using PermitDotnet.Models;
 
-namespace Permit.Tests
+namespace PermitDotnet.Tests
 {
     public class ClientTest
     {
-        //[Fact]
-        //public async void TestPermitCheck()
-        //{
-        //    Dictionary<string, string> openWith = new Dictionary<string, string>();
-        //    User myUser = new User("test@email.com");
-        //    var testUser = (IUserKey) (new Dictionary<string, string> { { "key" , "test" } });
-        //    ResourceInput resource = new ResourceInput("Document");
-
-        //    // Add some elements to the dictionary. There are no
-        //    // duplicate keys, but some of the values are duplicates.
-        //    openWith.Add("txt", "notepad.exe");
-
-        //    //var enforcer = new Enforcer("testurl");
-        //    //Assert.True(await enforcer.Check("user", "action", "resource", openWith));
-        //    //Assert.True(await enforcer.Check(testUser, "action", resource, openWith));
-        //}
-
         [Fact]
         public void TestPermitConfig()
         {
@@ -42,7 +25,7 @@ namespace Permit.Tests
 
             string testAction = "testAction";
             string testResource = "testResource";
-            Permit permitClient = new Permit(testToken);
+            Permit permitClient = new Permit(testToken, "http://localhost:7000", "default", true);
             Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
             Assert.False(
                 await permitClient.Enforcer.Check(
@@ -58,7 +41,7 @@ namespace Permit.Tests
         {
             Mock<IUserKey> testUserKey = new Mock<IUserKey>();
             testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
-            Permit permitClient = new Permit(testToken);
+            Permit permitClient = new Permit(testToken, "http://localhost:7000", "default", true);
 
             SyncedUser[] users = await permitClient.Cache.GetUsers();
             Assert.True(users.Length > 0);
@@ -83,7 +66,7 @@ namespace Permit.Tests
         [Fact]
         public async void TestPermitClientApi()
         {
-            Permit permitClient = new Permit(testToken);
+            Permit permitClient = new Permit(testToken, "http://localhost:7000", "default", true);
             string testKey = "testKey";
             string testFirstName = "testFirstName";
             string testLastName = "testlastName";

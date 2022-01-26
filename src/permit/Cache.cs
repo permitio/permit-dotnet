@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Permit.Models;
+using PermitDotnet.Models;
 
 //.net standart
 //ClassLib.Model ?
@@ -24,7 +24,7 @@ public class ResponseData<T>
     ResponseData() { }
 }
 
-namespace Permit
+namespace PermitDotnet
 {
     public class Cache
     {
@@ -32,7 +32,7 @@ namespace Permit
         Config Config;
         HttpClient Client = new HttpClient();
 
-        public Cache(Config config, string url = Permit.Client.DEFAULT_PDP_URL)
+        public Cache(Config config, string url = global::PermitDotnet.Permit.DEFAULT_PDP_URL)
         {
             this.Url = url;
             this.Config = config;

@@ -5,13 +5,15 @@ VisualStudioVersion = 25.0.1700.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BEEB2F4F-2961-4200-9096-A322BC6D5EED}"
 	ProjectSection(SolutionItems) = preProject
-		LICENSE.TXT = LICENSE.TXT
 		README.md = README.md
+		LICENSE.TXT = LICENSE.TXT
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermitTests", "tests\PermitTests\PermitTests.csproj", "{B7F4C872-D26A-47A2-A401-8416AE1D59DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permit", "src\permit\Permit.csproj", "{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Permit.Dotnet", "src\permit\Permit.Dotnet.csproj", "{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermitOnboardingApp", "PermitOnboardingApp\PermitOnboardingApp.csproj", "{2E89DA69-4987-4795-834A-16598CBCEC78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E89DA69-4987-4795-834A-16598CBCEC78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E89DA69-4987-4795-834A-16598CBCEC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E89DA69-4987-4795-834A-16598CBCEC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E89DA69-4987-4795-834A-16598CBCEC78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Permit.Models;
+using PermitDotnet.Models;
 
-namespace Permit
+namespace PermitDotnet
 {
     public class Permit
     {
@@ -16,14 +16,24 @@ namespace Permit
         public Permit(
             string token,
             string pdp = DEFAULT_PDP_URL,
+            string defaultTenant = "default",
+            bool useDefaultTenantIfEmpty = false,
             bool debugMode = false,
             string level = "info",
             string label = "permitio-sdk",
-            string defaultTenant = "default",
             bool logAsJson = false
         )
         {
-            this.Config = new Config(token, pdp, debugMode, level, label, defaultTenant, logAsJson);
+            this.Config = new Config(
+                token,
+                pdp,
+                defaultTenant,
+                useDefaultTenantIfEmpty,
+                debugMode,
+                level,
+                label,
+                logAsJson
+            );
             this.Enforcer = new Enforcer(this.Config, this.Config.Pdp);
             this.Cache = new Cache(this.Config, this.Config.Pdp);
             this.Api = new Api(this.Config, this.Config.Pdp);
@@ -33,6 +43,16 @@ namespace Permit
             IUserKey user,
             string action,
             ResourceInput resource,
+            Dictionary<string, string> context = null
+        )
+        {
+            return await this.Enforcer.Check(user, action, resource, context);
+        }
+
+        public async Task<bool> Check(
+            string user,
+            string action,
+            string resource,
             Dictionary<string, string> context = null
         )
         {

@@ -1,4 +1,4 @@
-﻿namespace Permit.Models
+﻿namespace PermitDotnet.Models
 {
     public interface ITenant
     {

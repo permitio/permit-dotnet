@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Permit.Models
+namespace PermitDotnet.Models
 {
     public class RoleAssignment
     {

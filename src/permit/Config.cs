@@ -1,4 +1,4 @@
-﻿namespace Permit
+﻿namespace PermitDotnet
 {
     public class LoggerConfig
     {
@@ -32,11 +32,11 @@
         public Config(
             string token,
             string pdp = DEFAULT_PDP_URL,
+            string defaultTenant = null,
+            bool useDefaultTenantIfEmpty = false,
             bool debugMode = false,
             string level = "info",
             string label = "permitio-sdk",
-            string defaultTenant = null,
-            bool useDefaultTenantIfEmpty = false,
             bool logAsJson = false
         )
         {
@@ -44,7 +44,7 @@
             this.Pdp = pdp;
             this.DebugMode = debugMode;
             this.DefaultTenant = defaultTenant;
-            this.UseDefaultTenantIfEmpty = UseDefaultTenantIfEmpty;
+            this.UseDefaultTenantIfEmpty = useDefaultTenantIfEmpty;
             this.Log = new LoggerConfig(level, label, logAsJson);
         }
     }

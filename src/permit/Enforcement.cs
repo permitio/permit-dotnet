@@ -4,8 +4,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
-using Permit.Models;
+using PermitDotnet.Models;
 using System.Net.Http.Headers;
+using System.Text;
 
 public class PermissionCheckException : Exception
 {
@@ -21,16 +22,20 @@ public class CreateResourceException : Exception
     public CreateResourceException(string message) : base(message) { }
 }
 
-namespace Permit
+namespace PermitDotnet
 {
-    public interface IPermitCheckData
+    public class PermitCheckData
     {
         public bool allow { get; }
+
+        private PermitCheckData() { }
     }
 
-    public interface IPermitCheck
+    public class PermitCheck
     {
-        public IPermitCheckData data { get; }
+        public bool allow { get; }
+
+        private PermitCheck() { }
     }
 
     public interface IResource
@@ -51,8 +56,9 @@ namespace Permit
         string CheckURI = "/allowed";
         Config Config;
         HttpClient Client = new HttpClient();
+        public JsonSerializerOptions options { get; private set; }
 
-        public Enforcer(Config config, string url = Permit.Client.DEFAULT_PDP_URL)
+        public Enforcer(Config config, string url = Permit.DEFAULT_PDP_URL)
         {
             this.Url = url;
             this.Config = config;
@@ -64,6 +70,8 @@ namespace Permit
             Client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json")
             );
+            this.options = new JsonSerializerOptions();
+            this.options.IgnoreNullValues = true;
         }
 
         /// <inheritdoc />
@@ -74,21 +82,25 @@ namespace Permit
             Dictionary<string, string> context = null
         )
         {
-            var normalizedResource = JsonSerializer.Serialize(
-                ResourceInput.Normalize(resource, Config)
-            );
-            var parameters = new Dictionary<string, string>
+            var normalizedResource = ResourceInput.Normalize(resource, Config);
+            var parameters = new Dictionary<string, object>
             {
                 { "user", user.key },
                 { "action", action },
                 { "resource", normalizedResource },
-                { "context", context == null ? JsonSerializer.Serialize(context) : "" }
+                { "context", context }
             };
-            var encodedContent = new FormUrlEncodedContent(parameters);
+            var serializedResources = JsonSerializer.Serialize(parameters, options);
+            var httpContent = new StringContent(
+                serializedResources,
+                Encoding.UTF8,
+                "application/json"
+            );
+
             try
             {
                 var response = await Client
-                    .PostAsync(Url + CheckURI, encodedContent)
+                    .PostAsync(Url + CheckURI, httpContent)
                     .ConfigureAwait(false);
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
@@ -107,8 +119,7 @@ namespace Permit
                         );
                     }
                     bool decision =
-                        JsonSerializer.Deserialize<IPermitCheck>(responseContent).data.allow
-                        || false;
+                        JsonSerializer.Deserialize<PermitCheck>(responseContent).allow || false;
                     return decision;
                 }
                 else
