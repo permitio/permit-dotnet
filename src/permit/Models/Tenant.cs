@@ -1,4 +1,4 @@
-﻿namespace PermitDotnet.Models
+﻿namespace PermitSDK.Models
 {
     public class Tenant : ITenant
     {

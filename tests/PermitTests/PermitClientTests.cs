@@ -1,10 +1,10 @@
 ﻿using Xunit;
 using System.Collections.Generic;
 using Moq;
-using PermitDotnet;
-using PermitDotnet.Models;
+using PermitSDK;
+using PermitSDK.Models;
 
-namespace PermitDotnet.Tests
+namespace PermitSDK.Tests
 {
     public class ClientTest
     {

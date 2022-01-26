@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PermitDotnet.Models
+namespace PermitSDK.Models
 {
     public class ResourceInput
     {

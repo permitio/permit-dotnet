@@ -4,9 +4,10 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
-using PermitDotnet.Models;
+using PermitSDK.Models;
 using System.Net.Http.Headers;
 using System.Text;
+using Permit.Dotnet.Models;
 
 public class PermissionCheckException : Exception
 {
@@ -22,22 +23,8 @@ public class CreateResourceException : Exception
     public CreateResourceException(string message) : base(message) { }
 }
 
-namespace PermitDotnet
+namespace PermitSDK
 {
-    public class PermitCheckData
-    {
-        public bool allow { get; }
-
-        private PermitCheckData() { }
-    }
-
-    public class PermitCheck
-    {
-        public bool allow { get; }
-
-        private PermitCheck() { }
-    }
-
     public interface IResource
     {
         public string type { get; }

@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Permit.Dotnet</RootNamespace>
+    <RootNamespace>PermitSDK</RootNamespace>
     <AssemblyName>Permit</AssemblyName>
   </PropertyGroup>
 <PropertyGroup>
   <VersionPrefix>0.2</VersionPrefix>
-  <VersionSuffix>alpha</VersionSuffix>
+  <VersionSuffix>beta</VersionSuffix>
 </PropertyGroup>
 <PropertyGroup>
   <PackageLicenseExpression>MIT</PackageLicenseExpression>

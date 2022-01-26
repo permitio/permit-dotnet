@@ -6,9 +6,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using PermitDotnet.Models;
+using PermitSDK.Models;
 
-namespace PermitDotnet
+namespace PermitSDK
 {
     public class Api
     {

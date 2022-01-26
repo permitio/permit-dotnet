@@ -1,4 +1,4 @@
-﻿namespace PermitDotnet
+﻿namespace PermitSDK
 {
     public class LoggerConfig
     {

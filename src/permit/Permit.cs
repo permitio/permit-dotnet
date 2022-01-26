@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using PermitDotnet.Models;
+using PermitSDK.Models;
 
-namespace PermitDotnet
+namespace PermitSDK
 {
     public class Permit
     {
