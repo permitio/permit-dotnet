@@ -8,7 +8,7 @@ namespace PermitSDK.Tests
 {
     public class ClientTest
     {
-        private string testToken = "PJUKkuwiJkKxbIoC4o4cguWxB_2gX6MyATYKc2OCM";
+        private string testToken = "";
 
         [Fact]
         public void TestPermitConfig()

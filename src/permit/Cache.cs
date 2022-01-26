@@ -78,7 +78,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 return default(T);
             }
         }
@@ -138,7 +138,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 return false;
             }
         }
@@ -156,7 +156,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 return false;
             }
         }

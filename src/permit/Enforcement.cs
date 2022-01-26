@@ -126,7 +126,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation(
                     string.Format(
                         "Error while checking permission for {0} to perform {1} on {2}",

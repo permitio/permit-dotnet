@@ -62,7 +62,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 return default(T);
             }
         }
@@ -92,7 +92,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 return default(T);
             }
         }
@@ -133,7 +133,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation("Error while syncing user");
                 return null;
             }
@@ -155,7 +155,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation(string.Format("Error while deleting user {0}", userKey));
                 return false;
             }
@@ -172,7 +172,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation(
                     string.Format("Error while deleting tenant {0}", tenantKey)
                 );
@@ -230,7 +230,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation("Error while syncing tenant");
                 return null;
             }
@@ -277,7 +277,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation("Error while syncing tenant");
                 return null;
             }
@@ -322,7 +322,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation("Error while syncing role");
                 return null;
             }
@@ -385,7 +385,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation("Error while assigning role");
                 return null;
             }
@@ -416,7 +416,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation(string.Format("Error while deleting role {0}", roleKey));
                 return false;
             }
@@ -462,7 +462,7 @@ namespace PermitSDK
             }
             catch (Exception e)
             {
-                this.logger.LogError(e);
+                this.logger.LogError(e.ToString());
                 this.logger.LogInformation("Error while syncing resources");
                 return false;
             }
