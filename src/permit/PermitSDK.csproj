@@ -6,11 +6,10 @@
     <AssemblyName>Permit</AssemblyName>
   </PropertyGroup>
 <PropertyGroup>
-  <VersionPrefix>0.2.1</VersionPrefix>
-  <VersionSuffix>beta</VersionSuffix>
+  <VersionPrefix>0.2.2</VersionPrefix>
 </PropertyGroup>
 <PropertyGroup>
-  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 </PropertyGroup>
 <ItemGroup>
     <None Remove="Newtonsoft.Json" />
