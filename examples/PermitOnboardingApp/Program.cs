@@ -2,6 +2,7 @@
 using System.Text;
 using System.Net;
 using System.Threading.Tasks;
+using PermitSDK;
 
 namespace PermitOnboardingApp
 {

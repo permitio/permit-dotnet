@@ -6,7 +6,7 @@
     <AssemblyName>Permit</AssemblyName>
   </PropertyGroup>
 <PropertyGroup>
-  <VersionPrefix>0.2.2</VersionPrefix>
+  <VersionPrefix>0.3</VersionPrefix>
 </PropertyGroup>
 <PropertyGroup>
   <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

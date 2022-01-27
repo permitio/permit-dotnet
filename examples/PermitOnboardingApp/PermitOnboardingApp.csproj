@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\permit\PermitSDK.csproj">
+    <None Remove="Permit" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\permit\PermitSDK.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

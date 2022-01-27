@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermitTests", "tests\Permit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermitSDK", "src\permit\PermitSDK.csproj", "{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermitOnboardingApp", "PermitOnboardingApp\PermitOnboardingApp.csproj", "{2E89DA69-4987-4795-834A-16598CBCEC78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermitOnboardingApp", "examples\PermitOnboardingApp\PermitOnboardingApp.csproj", "{1850C39A-8900-4722-89EE-9CF6EC19B10F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96B791B4-A3FD-4BFE-A43F-7FAF96809ADA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E89DA69-4987-4795-834A-16598CBCEC78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E89DA69-4987-4795-834A-16598CBCEC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E89DA69-4987-4795-834A-16598CBCEC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E89DA69-4987-4795-834A-16598CBCEC78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1850C39A-8900-4722-89EE-9CF6EC19B10F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1850C39A-8900-4722-89EE-9CF6EC19B10F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1850C39A-8900-4722-89EE-9CF6EC19B10F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1850C39A-8900-4722-89EE-9CF6EC19B10F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
