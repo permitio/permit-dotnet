@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PermitSDK.Models
+﻿namespace PermitSDK.Models
 {
     public class Role
     {
@@ -9,21 +7,13 @@ namespace PermitSDK.Models
         public string description { get; set; }
         public string tenantId { get; set; }
 
-        //public Permissions permissions { get; set; }
-
-        public Role(
-            string name,
-            string description,
-            string tenantId = null
-        //Permissions permissions = null
-        )
+        public Role(string name, string description, string tenantId = null)
         {
             this.name = name;
             this.tenantId = tenantId;
             this.description = description;
-            //this.permissions = permissions;
         }
 
-        private Role() { }
+        public Role() { }
     }
 }

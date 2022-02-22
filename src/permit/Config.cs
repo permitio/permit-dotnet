@@ -40,8 +40,15 @@
             bool logAsJson = false
         )
         {
+            if (pdp.EndsWith('/'))
+            {
+                this.Pdp = pdp.Remove(pdp.Length - 1, 1);
+            }
+            else
+            {
+                this.Pdp = pdp;
+            }
             this.Token = token;
-            this.Pdp = pdp;
             this.DebugMode = debugMode;
             this.DefaultTenant = defaultTenant;
             this.UseDefaultTenantIfEmpty = useDefaultTenantIfEmpty;

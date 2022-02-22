@@ -22,7 +22,7 @@ public class ResponseData<T>
 {
     public T data { get; set; }
 
-    ResponseData() { }
+    public ResponseData() { }
 }
 
 namespace PermitSDK
