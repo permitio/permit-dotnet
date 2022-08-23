@@ -1,8 +1,14 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using Moq;
 using PermitSDK;
 using PermitSDK.Models;
+using PermitSDK.NewAPI;
+using Role = PermitSDK.Models.Role;
+using Tenant = PermitSDK.Models.Tenant;
 
 namespace PermitSDK.Tests
 {
@@ -10,6 +16,18 @@ namespace PermitSDK.Tests
     {
         private string testToken = "";
 
+        [Fact]
+        public async void TestC()
+        {
+            var httpClient = new HttpClient();
+            var apiUrl = "http://localhost:8000";
+            var token =
+                "permit_key_enEfdDEyWzR7em0yldQMKNBYxXssPAf2QsIwsJpuWj2SQC4IGBpOVmAnllCsgWN6Iwlh1pHLpyLsiPPVgj1Ylu";
+            var client = new APINew(new NewApiConfig { ApiURL = apiUrl, Token = token});
+            var user =await client.SyncUser(new UserCreate { Key = "aaaa", Email = "a@a.com"});
+            Console.WriteLine(user.ToString());
+        }
+  
         [Fact]
         public void TestPermitConfig()
         {
