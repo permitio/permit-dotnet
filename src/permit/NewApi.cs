@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using PermitSDK.NewAPI;
+using Role = PermitSDK.Models.Role;
 
 
 namespace PermitSDK
@@ -60,12 +61,12 @@ namespace PermitSDK
             return await _client.Get_tenantAsync(_projId, _envId, tenantKey);
         }
 
-        public async Task<ICollection<RoleAssignmentRead>> GetAssignedRoles(string userKey, string tenantKey = default, int page = default, int perPage = default)
+        public async Task<ICollection<RoleAssignmentRead>> GetAssignedRoles(string userKey, string tenantKey = default, int page = 1, int perPage = 30)
         {
             return await _client.List_role_assignmentsAsync(_projId, _envId, userKey, tenantKey, page: page, per_page: perPage);
         }
         
-        public async Task<ICollection<TenantRead>> ListTenants(int page = default, int perPage = default)
+        public async Task<ICollection<TenantRead>> ListTenants(int page = 1, int perPage = 30)
         {
             return await _client.List_tenantsAsync(_projId, _envId, page: page, per_page: perPage);
         }
@@ -101,7 +102,7 @@ namespace PermitSDK
             }
         }
 
-        public async void DeleteUser(string userKey)
+        public async Task DeleteUser(string userKey)
         {
             await _client.Delete_userAsync(_projId, _envId, userKey);
         }
@@ -116,7 +117,7 @@ namespace PermitSDK
             return await _client.Update_tenantAsync(_projId, _envId, tenantKey, tenantUpdate);
         }
 
-        public async void DeleteTenant(string tenantKey)
+        public async Task DeleteTenant(string tenantKey)
         {
             await _client.Delete_tenantAsync(_projId, _envId, tenantKey);
         }
@@ -137,7 +138,7 @@ namespace PermitSDK
                 new RoleAssignmentCreate { Role = roleKey, User = userKey, Tenant = tenantKey });
         }
 
-        public async void UnassignRole(string userKey, string roleKey, string tenantKey)
+        public async Task UnassignRole(string userKey, string roleKey, string tenantKey)
         {
             await _client.Unassign_roleAsync(_projId, _envId, new RoleAssignmentRemove
             {
@@ -145,7 +146,7 @@ namespace PermitSDK
             });
         }
 
-        public async void DeleteRole(string roleKey)
+        public async Task DeleteRole(string roleKey)
         {
             await _client.Delete_roleAsync(_projId, _envId, roleKey);
         }
@@ -163,6 +164,11 @@ namespace PermitSDK
         public async void DeleteResource(string resourceKey)
         {
             await _client.Delete_resourceAsync(_projId, _envId, resourceKey);
+        }
+
+        public async Task<ICollection<RoleRead>> ListRoles()
+        {
+            return await _client.List_rolesAsync(_projId, _envId);
         }
     }
 }

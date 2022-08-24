@@ -8,15 +8,17 @@ namespace PermitSDK
     public class Permit
     {
         public const string DEFAULT_PDP_URL = "http://localhost:7000";
+        public const string DEFAULT_API_URL = "http://app.permit.io";
 
         public Config Config { get; private set; }
         public Enforcer Enforcer { get; private set; }
         public Cache Cache { get; private set; }
-        public Api Api { get; private set; }
+        public APINew Api { get; private set; }
 
         public Permit(
             string token,
             string pdp = DEFAULT_PDP_URL,
+            string apiUrl = DEFAULT_API_URL,
             string defaultTenant = "default",
             bool useDefaultTenantIfEmpty = false,
             bool debugMode = false,
@@ -41,7 +43,10 @@ namespace PermitSDK
 
             this.Enforcer = new Enforcer(this.Config, this.Config.Pdp, logger);
             this.Cache = new Cache(this.Config, this.Config.Pdp, logger);
-            this.Api = new Api(this.Config, this.Config.Pdp, logger);
+            this.Api = new APINew(new NewApiConfig
+            {
+                ApiURL = apiUrl, DebugMode = debugMode, PdpURL = pdp, Token = token
+            });
 
 
         }

@@ -27,6 +27,7 @@ namespace PermitOnboardingApp
                 PermitSDK.Permit permit = new PermitSDK.Permit(
                     testToken,
                     "http://localhost:7000",
+                    Permit.DEFAULT_API_URL,
                     "default",
                     true
                 );
