@@ -1,0 +1,28 @@
+{
+  "runtime": "Net60",
+  "defaultVariables": "Configuration=Debug",
+  "documentGenerator": {
+    "fromDocument": {
+      "json": "openapi.json"
+    }
+  },
+  "codeGenerators": {
+    "openApiToCSharpClient": {
+      "generateClientInterfaces": false,
+      "exceptionClass": "PermitApiException",
+      "useBaseUrl": true,
+      "generateBaseUrlProperty": true,
+      "generateClientClasses": true,
+      "generateDataAnnotations": false,
+      "generateSyncMethods": true,
+      "className": "PermitClient",
+      "operationGenerationMode": "SingleClientFromOperationId",
+      "namespace": "PermitSDK.OpenAPI",
+      "output": "src/permit/PermitOpenAPI.cs",
+      "classStyle": "poco",
+      "generateOptionalParameters": true,
+      "generateOptionalPropertiesAsNullable": true,
+      "generateNullableReferenceTypes": true
+    }
+  }
+}

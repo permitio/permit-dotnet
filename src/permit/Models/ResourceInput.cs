@@ -7,14 +7,14 @@ namespace PermitSDK.Models
         public string type { get; set; }
         public string id { get; set; }
         public string tenant { get; set; }
-        public Dictionary<string, string> attributes { get; set; }
+        public Dictionary<string, dynamic> attributes { get; set; }
         public Dictionary<string, string> context { get; set; }
 
         public ResourceInput(
             string type,
             string id = null,
             string tenant = null,
-            Dictionary<string, string> attributes = null,
+            Dictionary<string, dynamic> attributes = null,
             Dictionary<string, string> context = null
         )
         {

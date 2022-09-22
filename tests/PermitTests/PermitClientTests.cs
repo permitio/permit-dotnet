@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Moq;
 using PermitSDK;
 using PermitSDK.Models;
+using PermitSDK.OpenAPI;
 
 namespace PermitSDK.Tests
 {
@@ -37,34 +38,7 @@ namespace PermitSDK.Tests
                 )
             );
         }
-
-        [Fact]
-        public async void TestPermitClientCache()
-        {
-            Mock<IUserKey> testUserKey = new Mock<IUserKey>();
-            testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
-            Permit permitClient = new Permit(testToken, "http://localhost:7000", "default", true);
-
-            SyncedUser[] users = await permitClient.Cache.GetUsers();
-            Assert.True(users.Length > 0);
-            SyncedUser user = await permitClient.Cache.getUser(users[0].id);
-            Assert.True(await permitClient.Cache.isUser(user.id));
-            string[] userTenatns = await permitClient.Cache.getUserTenants(user.id);
-            Assert.True(userTenatns.Length > 0);
-            SyncedRole[] userRoles = await permitClient.Cache.getAssignedRoles(user.id);
-            Assert.True(userRoles != null);
-            SyncedRole[] roles = await permitClient.Cache.GetRoles();
-            Assert.True(roles != null);
-            SyncedRole roleById = await permitClient.Cache.GetRoleById(roles[0].id);
-            Assert.True(roleById != null);
-            SyncedRole roleByName = await permitClient.Cache.GetRoleByName(roleById.name);
-            Assert.True(roleByName != null);
-
-            Assert.True(await permitClient.Cache.TriggerDataUpdate());
-            Assert.True(await permitClient.Cache.TriggerPolicyUpdate());
-            Assert.True(await permitClient.Cache.TriggerDataAndPolicyUpdate());
-        }
-
+        
         [Fact]
         public async void TestPermitClientApi()
         {
@@ -77,76 +51,61 @@ namespace PermitSDK.Tests
             testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
 
             // Test User Api
-            UserKey userObj = new UserKey(testKey, testFirstName, testLastName, testEmail);
-            UserKey user = await permitClient.Api.SyncUser(userObj);
-            Assert.True(user.firstName == testFirstName);
-            UserKey getUser = await permitClient.Api.getUser(user.customId);
-            Assert.True(getUser.email == testEmail);
+            var userObj = new UserCreate
+                { Key = testKey, Email = testEmail, First_name = testFirstName, Last_name = testLastName };
+            var user = await permitClient.Api.CreateUser(userObj);
+            Assert.True(user.First_name == testFirstName);
+            var getUser = await permitClient.Api.GetUser(user.Key);
+            Assert.True(getUser.Email == testEmail);
 
             // test Tenant Api
             //string desc = "desc";
             string desc2 = "desc2";
             string tenantName = "tName";
             string tenantKey = "tKey";
-            Tenant tenantObj = new Tenant(tenantKey, tenantName);
-            Tenant tenant = await permitClient.Api.CreateTenant(tenantObj);
-            Tenant getTenant = await permitClient.Api.getTenant(tenantKey);
-            Assert.True(tenant.externalId == getTenant.externalId);
-            getTenant.description = desc2;
-            Tenant getTenant2 = await permitClient.Api.UpdateTenant(getTenant);
-            Assert.True(getTenant2.description == desc2);
-            Assert.True(getTenant.externalId == tenantKey);
+            var tenantCreate = new TenantCreate {Key = tenantKey, Name = tenantName};
+            var tenant = await permitClient.Api.CreateTenant(tenantCreate);
+            var getTenant = await permitClient.Api.GetTenant(tenantKey);
+            Assert.True(tenant.Key == getTenant.Key);
+            
+            var getTenant2 = await permitClient.Api.UpdateTenant(tenantKey, new TenantUpdate {Description = desc2});
+            Assert.True(getTenant2.Description == desc2);
+            Assert.True(getTenant.Key == tenantKey);
 
             // test roles Api
             string roleName = "rName";
             string roleDesc = "rDesc";
-            Role roleObj = new Role(roleName, roleDesc);
-            Role createdRole = await permitClient.Api.CreateRole(roleObj);
-            Role[] roles = await permitClient.Api.GetRoles();
-            Assert.True(roles.Length > 0);
-            Role getRole = await permitClient.Api.GetRoleById(createdRole.id);
+            var roleCreate = new RoleCreate { Name = roleName, Description = roleDesc, Key = roleName };
+            var createdRole = await permitClient.Api.CreateRole(roleCreate);
+            var roles = await permitClient.Api.ListRoles();
+            Assert.True(roles.Count > 0);
+            
+            var getRole = await permitClient.Api.GetRole(createdRole.Id.ToString());
             var assignedRole = await permitClient.Api.AssignRole(
-                user.customId,
-                getRole.id,
-                getTenant.externalId
+                user.Key,
+                getRole.Key,
+                getTenant.Key
             );
-            RoleAssignment[] assignedRoles = await permitClient.Api.getAssignedRoles(
-                getUser.customId
+            var assignedRoles = await permitClient.Api.ListAssignedRoles(
+                getUser.Key
             );
-            RoleAssignment[] assignedRoles2 = await permitClient.Api.getAssignedRoles(
-                getUser.customId,
-                getTenant.externalId
+            var assignedRoles2 = await permitClient.Api.ListAssignedRoles(
+                getUser.Key,
+                getTenant.Key
             );
-            Assert.True(assignedRoles.Length == assignedRoles2.Length);
+            Assert.True(assignedRoles.Count == assignedRoles2.Count);
 
-            await permitClient.Api.unassignRole(user.customId, getRole.id, getTenant.externalId);
-            assignedRoles = await permitClient.Api.getAssignedRoles(getUser.customId);
-            Assert.True(assignedRoles.Length == (assignedRoles2.Length - 1));
+            await permitClient.Api.UnassignRole(user.Key, getRole.Id.ToString(), getTenant.Key);
+            assignedRoles = await permitClient.Api.ListAssignedRoles(getUser.Key);
+            Assert.True(assignedRoles.Count == (assignedRoles2.Count - 1));
 
-            await permitClient.Api.DeleteUser(getUser.customId);
-            getUser = await permitClient.Api.getUser(user.key);
+            await permitClient.Api.DeleteUser(getUser.Key);
+            getUser = await permitClient.Api.GetUser(user.Key);
             Assert.True(getUser == null);
+            
             await permitClient.Api.DeleteTenant(tenantKey);
-            getTenant = await permitClient.Api.getTenant(getTenant.externalId);
+            getTenant = await permitClient.Api.GetTenant(getTenant.Id.ToString());
             Assert.True(getTenant == null);
-
-            // sync resources
-            string testType = "document";
-            ActionProperties testActionProperties = new ActionProperties(
-                "Create document",
-                "Ability to create document"
-            );
-            Dictionary<string, ActionProperties> testActions = new Dictionary<
-                string,
-                ActionProperties
-            >
-            {
-                { "create", testActionProperties }
-            };
-            ResourceType[] testResources = { new ResourceType(testType, testActions) };
-            var syncResources = await permitClient.Api.SyncResources(testResources);
-
-            Assert.True(syncResources);
         }
     }
 }
