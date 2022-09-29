@@ -74,7 +74,7 @@ namespace PermitSDK
             var normalizedResource = ResourceInput.Normalize(resource, Config);
             var parameters = new Dictionary<string, object>
             {
-                { "user", user.key },
+                { "user", user },
                 { "action", action },
                 { "resource", normalizedResource },
                 { "context", context }

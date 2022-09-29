@@ -9,9 +9,8 @@ namespace PermitSDK
     {
         public const string DEFAULT_PDP_URL = "http://localhost:7000";
 
-        public Config Config { get; private set; }
+        private Config _config;
         public Enforcer Enforcer { get; private set; }
-        public Cache Cache { get; private set; }
         public Api Api { get; private set; }
 
         public Permit(
@@ -22,10 +21,11 @@ namespace PermitSDK
             bool debugMode = false,
             string level = "info",
             string label = "permitio-sdk",
-            bool logAsJson = false
+            bool logAsJson = false,
+            string apiUrl = "https://api.permit.io"
         )
         {
-            this.Config = new Config(
+            _config = new Config(
                 token,
                 pdp,
                 defaultTenant,
@@ -33,17 +33,15 @@ namespace PermitSDK
                 debugMode,
                 level,
                 label,
-                logAsJson
+                logAsJson,
+                apiUrl
             );
 
             ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
             ILogger logger = loggerFactory.CreateLogger<Permit>();
 
-            this.Enforcer = new Enforcer(this.Config, this.Config.Pdp, logger);
-            this.Cache = new Cache(this.Config, this.Config.Pdp, logger);
-            this.Api = new Api(this.Config, this.Config.Pdp, logger);
-
-
+            Enforcer = new Enforcer(_config, _config.Pdp, logger);
+            Api = new Api(_config, logger);
         }
 
         public async Task<bool> Check(
@@ -53,7 +51,7 @@ namespace PermitSDK
             Dictionary<string, string> context = null
         )
         {
-            return await this.Enforcer.Check(user, action, resource, context);
+            return await Enforcer.Check(user, action, resource, context);
         }
 
         public async Task<bool> Check(
@@ -63,7 +61,7 @@ namespace PermitSDK
             Dictionary<string, string> context = null
         )
         {
-            return await this.Enforcer.Check(user, action, resource, context);
+            return await Enforcer.Check(user, action, resource, context);
         }
     }
 }

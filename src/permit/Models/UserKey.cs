@@ -15,7 +15,7 @@ namespace PermitSDK.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
-        public Dictionary<string, string> attributes { get; set; }
+        public Dictionary<string, dynamic> attributes { get; set; }
         public ISyncedRole[] Roles { get; set; }
 
         public UserKey(
@@ -23,7 +23,7 @@ namespace PermitSDK.Models
             string firstName = "",
             string lastName = "",
             string email = "",
-            Dictionary<string, string> attributes = null,
+            Dictionary<string, dynamic> attributes = null,
             SyncedRole[] roles = null
         )
         {
