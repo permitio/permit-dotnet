@@ -49,6 +49,11 @@ namespace PermitSDK
             return await _api_client.Create_userAsync(_projectId, _environmentId, user);
         }
         
+        public async Task<UserRead> SyncUser(string userId, UserCreate user)
+        {
+            return await _api_client.Replace_userAsync(_projectId, _environmentId, userId, user);
+        }
+        
         public async Task<UserRead> GetUser(string userId)
         {
             return await _api_client.Get_userAsync(_projectId, _environmentId, userId);
