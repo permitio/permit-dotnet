@@ -69,6 +69,11 @@ namespace PermitSDK
             await _api_client.Delete_tenantAsync(_projectId, _environmentId, tenantId);
         }
 
+        public async Task<ICollection<TenantRead>> ListTenants()
+        {
+            return await _api_client.List_tenantsAsync(_projectId, _environmentId);
+        }
+
         public async Task<TenantRead> GetTenant(string tenantId)
         {
             return await _api_client.Get_tenantAsync(_projectId, _environmentId, tenantId);
