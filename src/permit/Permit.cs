@@ -14,6 +14,7 @@ namespace PermitSDK
         public Enforcer Enforcer { get; private set; }
         public Cache Cache { get; private set; }
         public APINew Api { get; private set; }
+        public ElementsApi Elements { get; private set; }
 
         public Permit(
             string token,
@@ -44,6 +45,10 @@ namespace PermitSDK
             this.Enforcer = new Enforcer(this.Config, this.Config.Pdp, logger);
             this.Cache = new Cache(this.Config, this.Config.Pdp, logger);
             this.Api = new APINew(new NewApiConfig
+            {
+                ApiURL = apiUrl, DebugMode = debugMode, PdpURL = pdp, Token = token
+            });
+            this.Elements = new ElementsApi(new NewApiConfig
             {
                 ApiURL = apiUrl, DebugMode = debugMode, PdpURL = pdp, Token = token
             });
