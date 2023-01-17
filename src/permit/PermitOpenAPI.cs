@@ -589,7 +589,7 @@ namespace PermitSDK.NewAPI
         /// Elements Login As
         /// </summary>
         /// <returns>Successful Response</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<EmbeddedLoginRequestOutput> AsAsync(UserLoginRequestInput body)
         {
             return AsAsync(body, System.Threading.CancellationToken.None);
@@ -600,7 +600,7 @@ namespace PermitSDK.NewAPI
         /// Elements Login As
         /// </summary>
         /// <returns>Successful Response</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<EmbeddedLoginRequestOutput> AsAsync(UserLoginRequestInput body, System.Threading.CancellationToken cancellationToken)
         {
             if (body == null)
@@ -648,7 +648,7 @@ namespace PermitSDK.NewAPI
                             var objectResponse_ = await ReadObjectResponseAsync<EmbeddedLoginRequestOutput>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -658,14 +658,14 @@ namespace PermitSDK.NewAPI
                             var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -690,7 +690,7 @@ namespace PermitSDK.NewAPI
         /// <br/>The user session is stored on an httpOnly + secure cookie.
         /// </remarks>
         /// <returns>Logged in successfully (stored session cookie).</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<LoginResult> ElementsAsync(string token)
         {
             return ElementsAsync(token, System.Threading.CancellationToken.None);
@@ -705,7 +705,7 @@ namespace PermitSDK.NewAPI
         /// <br/>The user session is stored on an httpOnly + secure cookie.
         /// </remarks>
         /// <returns>Logged in successfully (stored session cookie).</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<LoginResult> ElementsAsync(string token, System.Threading.CancellationToken cancellationToken)
         {
             if (token == null)
@@ -751,7 +751,7 @@ namespace PermitSDK.NewAPI
                             var objectResponse_ = await ReadObjectResponseAsync<LoginResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -759,7 +759,7 @@ namespace PermitSDK.NewAPI
                         if (status_ == 401)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("Log in failed (no cookie stored).", status_, responseText_, headers_, null);
+                            throw new PermitApiException("Log in failed (no cookie stored).", status_, responseText_, headers_, null);
                         }
                         else
                         if (status_ == 422)
@@ -767,14 +767,14 @@ namespace PermitSDK.NewAPI
                             var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -824,7 +824,7 @@ namespace PermitSDK.NewAPI
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new ApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                    throw new PermitApiException(message, (int)response.StatusCode, responseText, headers, exception);
                 }
             }
             else
@@ -843,7 +843,7 @@ namespace PermitSDK.NewAPI
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                    throw new PermitApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
         }
@@ -13251,6 +13251,51 @@ namespace PermitSDK.NewAPI
 
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class EmbeddedLoginRequestOutput
+    {
+        /// <summary>
+        /// If the login request failed, this field will contain the error message
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("error", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Error { get; set; }
+
+        /// <summary>
+        /// If the login request failed, this field will contain the error code
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("error_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Error_code { get; set; }
+
+        /// <summary>
+        /// The auth token that lets your users login into permit elements
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("token", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Token { get; set; }
+
+        /// <summary>
+        /// Extra data that you can pass to the login request
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("extra", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Extra { get; set; }
+
+        /// <summary>
+        /// The full URL to which the user should be redirected in order to complete the login process
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("redirect_url", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Redirect_url { get; set; }
+
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class APIKeyRead
     {
@@ -17040,7 +17085,7 @@ namespace PermitSDK.NewAPI
         /// Elements Login As
         /// </summary>
         /// <returns>Successful Response</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<EmbeddedLoginRequestOutput> Login_AsAsync(UserLoginRequestInput body)
         {
             return Login_AsAsync(body, System.Threading.CancellationToken.None);
@@ -17051,7 +17096,7 @@ namespace PermitSDK.NewAPI
         /// Elements Login As
         /// </summary>
         /// <returns>Successful Response</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<EmbeddedLoginRequestOutput> Login_AsAsync(UserLoginRequestInput body, System.Threading.CancellationToken cancellationToken)
         {
             if (body == null)
@@ -17099,7 +17144,7 @@ namespace PermitSDK.NewAPI
                             var objectResponse_ = await ReadObjectResponseAsync<EmbeddedLoginRequestOutput>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -17109,14 +17154,14 @@ namespace PermitSDK.NewAPI
                             var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -17141,7 +17186,7 @@ namespace PermitSDK.NewAPI
         /// <br/>The user session is stored on an httpOnly + secure cookie.
         /// </remarks>
         /// <returns>Logged in successfully (stored session cookie).</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<LoginResult> ElementsAsync(string token)
         {
             return ElementsAsync(token, System.Threading.CancellationToken.None);
@@ -17156,7 +17201,7 @@ namespace PermitSDK.NewAPI
         /// <br/>The user session is stored on an httpOnly + secure cookie.
         /// </remarks>
         /// <returns>Logged in successfully (stored session cookie).</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<LoginResult> ElementsAsync(string token, System.Threading.CancellationToken cancellationToken)
         {
             if (token == null)
@@ -17202,7 +17247,7 @@ namespace PermitSDK.NewAPI
                             var objectResponse_ = await ReadObjectResponseAsync<LoginResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
@@ -17210,7 +17255,7 @@ namespace PermitSDK.NewAPI
                         if (status_ == 401)
                         {
                             string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("Log in failed (no cookie stored).", status_, responseText_, headers_, null);
+                            throw new PermitApiException("Log in failed (no cookie stored).", status_, responseText_, headers_, null);
                         }
                         else
                         if (status_ == 422)
@@ -17218,14 +17263,14 @@ namespace PermitSDK.NewAPI
                             var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            throw new ApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -17275,7 +17320,7 @@ namespace PermitSDK.NewAPI
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new ApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                    throw new PermitApiException(message, (int)response.StatusCode, responseText, headers, exception);
                 }
             }
             else
@@ -17294,7 +17339,7 @@ namespace PermitSDK.NewAPI
                 catch (Newtonsoft.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                    throw new PermitApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
         }
