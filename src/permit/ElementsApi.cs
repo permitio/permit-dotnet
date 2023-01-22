@@ -7,6 +7,18 @@ using System.Threading.Tasks;
 using PermitSDK.NewAPI;
 using Role = PermitSDK.Models.Role;
 
+public class EmbeddedLoginContentRequestOutput
+{
+    public Dictionary<string,string> Content { get; set; }
+    public string Error { get; set; }
+    public int ErrorCode { get; set; }
+    public string RedirectUrl { get; set; }
+    public string Token { get; set; }
+    public string Extra { get; set; }
+
+}
+
+
 
 namespace PermitSDK
 {
@@ -29,12 +41,21 @@ namespace PermitSDK
         {
 
         }
-        public async Task<EmbeddedLoginRequestOutput> LoginAs(string userId, string tenantId)
+        public async Task<EmbeddedLoginContentRequestOutput> LoginAs(string userId, string tenantId)
         {
             var userLogin =  new UserLoginRequestInput();
             userLogin.User_id = userId;
             userLogin.Tenant_id = tenantId;
-            return await _client.Login_AsAsync(userLogin);
+            var response = await _client.Login_AsAsync(userLogin);
+            var output = new EmbeddedLoginContentRequestOutput();
+            output.Content = new Dictionary<string, string>();
+            output.Content.Add("token", response.Token);
+            output.Error = response.Error;
+            output.ErrorCode = response.Error_code;
+            output.RedirectUrl = response.Redirect_url;
+            output.Token = response.Token;
+            output.Extra = response.Extra;
+            return output;
         }
 
     }

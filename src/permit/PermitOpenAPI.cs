@@ -19,8 +19,8 @@ namespace PermitSDK.NewAPI
 {
     using System = global::System;
 
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial cla ss PermitClient
+    //[System.CodeDom.Compiler.GeneratedCode("NSwag", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PermitClient
     {
         private string _baseUrl = "";
         private System.Net.Http.HttpClient _httpClient;
@@ -13257,25 +13257,25 @@ namespace PermitSDK.NewAPI
         /// <summary>
         /// If the login request failed, this field will contain the error message
         /// </summary>
-        [Newtonsoft.Json.JsonProperty("error", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("error", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Error { get; set; }
 
         /// <summary>
         /// If the login request failed, this field will contain the error code
         /// </summary>
-        [Newtonsoft.Json.JsonProperty("error_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("error_code", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Error_code { get; set; }
 
         /// <summary>
         /// The auth token that lets your users login into permit elements
         /// </summary>
-        [Newtonsoft.Json.JsonProperty("token", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("token", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Token { get; set; }
 
         /// <summary>
         /// Extra data that you can pass to the login request
         /// </summary>
-        [Newtonsoft.Json.JsonProperty("extra", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("extra", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Extra { get; set; }
 
         /// <summary>

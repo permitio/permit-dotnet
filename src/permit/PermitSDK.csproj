@@ -7,7 +7,7 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 <PropertyGroup>
-  <VersionPrefix>0.3</VersionPrefix>
+  <VersionPrefix>0.4.3-rc</VersionPrefix>
 </PropertyGroup>
 <PropertyGroup>
   <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

@@ -8,7 +8,7 @@ namespace PermitSDK
     public class Permit
     {
         public const string DEFAULT_PDP_URL = "http://localhost:7000";
-        public const string DEFAULT_API_URL = "http://app.permit.io";
+        public const string DEFAULT_API_URL = "https://api.permit.io";
 
         public Config Config { get; private set; }
         public Enforcer Enforcer { get; private set; }
