@@ -26,8 +26,8 @@ namespace PermitOnboardingApp
                 string testUserId = "tester@test.com";
                 PermitSDK.Permit permit = new PermitSDK.Permit(
                     testToken,
-                    "http://localhost:7000",
-                    Permit.DEFAULT_API_URL,
+                    "http://localhost:7766",
+                    "http://localhost:8000",
                     "default",
                     true
                 );
