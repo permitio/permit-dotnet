@@ -7,10 +7,13 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 <PropertyGroup>
-  <VersionPrefix>0.4.3-rc</VersionPrefix>
+  <VersionPrefix>1.0.0</VersionPrefix>
 </PropertyGroup>
 <PropertyGroup>
   <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+</PropertyGroup>
+<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <DebugSymbols>true</DebugSymbols>
 </PropertyGroup>
 <ItemGroup>
     <None Remove="Newtonsoft.Json" />
