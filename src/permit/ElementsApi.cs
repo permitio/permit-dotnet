@@ -49,7 +49,7 @@ namespace PermitSDK
             var response = await _client.Login_AsAsync(userLogin);
             var output = new EmbeddedLoginContentRequestOutput();
             output.Content = new Dictionary<string, string>();
-            output.Content.Add("token", response.Token);
+            output.Content.Add("url", response.Redirect_url);
             output.Error = response.Error;
             output.ErrorCode = response.Error_code;
             output.RedirectUrl = response.Redirect_url;
