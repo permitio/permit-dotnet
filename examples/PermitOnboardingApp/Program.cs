@@ -26,10 +26,7 @@ namespace PermitOnboardingApp
                 string testUserId = "tester@test.com";
                 PermitSDK.Permit permit = new PermitSDK.Permit(
                     testToken,
-                    "http://localhost:7766",
-                    "http://localhost:8000",
-                    "default",
-                    true
+                    "http://localhost:7766"
                 );
                 bool permitted = await permit.Check(
                     testUserId,
