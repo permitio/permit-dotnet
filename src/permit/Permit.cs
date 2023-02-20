@@ -7,7 +7,7 @@ namespace PermitSDK
 {
     public class Permit
     {
-        public const string DEFAULT_PDP_URL = "http://localhost:7000";
+        public const string DEFAULT_PDP_URL = "http://localhost:7766";
         public const string DEFAULT_API_URL = "https://api.permit.io";
 
         public Config Config { get; private set; }
@@ -19,10 +19,10 @@ namespace PermitSDK
         public Permit(
             string token,
             string pdp = DEFAULT_PDP_URL,
-            string apiUrl = DEFAULT_API_URL,
             string defaultTenant = "default",
             bool useDefaultTenantIfEmpty = false,
             bool debugMode = false,
+            string apiUrl = DEFAULT_API_URL,
             string level = "info",
             string label = "permitio-sdk",
             bool logAsJson = false
@@ -57,7 +57,7 @@ namespace PermitSDK
         }
 
         public async Task<bool> Check(
-            IUserKey user,
+            UserKey user,
             string action,
             ResourceInput resource,
             Dictionary<string, string> context = null
