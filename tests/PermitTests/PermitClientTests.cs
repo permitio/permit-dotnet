@@ -35,11 +35,14 @@ namespace PermitSDK.Tests
             string testResource = "testResource";
             Permit permitClient = new Permit(testToken, "http://localhost:7000", "http://localhost:8000", "default", true);
             Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
+            // create dictionary with partition key and value 11
+            Dictionary<string, dynamic> attributes = new Dictionary<string, dynamic>();
+            attributes.Add("partition", 11);
             Assert.False(
                 await permitClient.Enforcer.Check(
                     testUserKey.Object,
                     testAction,
-                    new ResourceInput(testResource)
+                    new ResourceInput(testResource, null, null, attributes)
                 )
             );
         }
