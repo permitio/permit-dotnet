@@ -30,7 +30,7 @@ namespace PermitSDK
         public string type { get; }
         public string id { get; }
         public string tenant { get; }
-        public IDictionary<string, string> attributes { get; }
+        public IDictionary<string, dynamic> attributes { get; }
         public IDictionary<string, string> context { get; }
     }
 
