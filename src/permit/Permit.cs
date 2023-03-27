@@ -20,7 +20,7 @@ namespace PermitSDK
             string token,
             string pdp = DEFAULT_PDP_URL,
             string defaultTenant = "default",
-            bool useDefaultTenantIfEmpty = false,
+            bool useDefaultTenantIfEmpty = true,
             bool debugMode = false,
             string apiUrl = DEFAULT_API_URL,
             string level = "info",
