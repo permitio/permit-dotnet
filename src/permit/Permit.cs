@@ -17,7 +17,7 @@ namespace PermitSDK
             string token,
             string pdp = DEFAULT_PDP_URL,
             string defaultTenant = "default",
-            bool useDefaultTenantIfEmpty = false,
+            bool useDefaultTenantIfEmpty = true,
             bool debugMode = false,
             string level = "info",
             string label = "permitio-sdk",

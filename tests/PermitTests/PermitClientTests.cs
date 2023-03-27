@@ -28,13 +28,16 @@ namespace PermitSDK.Tests
 
             string testAction = "testAction";
             string testResource = "testResource";
-            Permit permitClient = new Permit(testToken, "http://localhost:7000", "default", true);
+            Permit permitClient = new Permit(testToken,useDefaultTenantIfEmpty:true);
             Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
+            // create dictionary with partition key and value 11
+            Dictionary<string, dynamic> attributes = new Dictionary<string, dynamic>();
+            attributes.Add("partition", 11);
             Assert.False(
                 await permitClient.Enforcer.Check(
-                    testUserKey.Object,
+                    new UserKey(testUserKey.Object.key),
                     testAction,
-                    new ResourceInput(testResource)
+                    new ResourceInput(testResource, null, null, attributes)
                 )
             );
         }
@@ -42,7 +45,7 @@ namespace PermitSDK.Tests
         [Fact]
         public async void TestPermitClientApi()
         {
-            Permit permitClient = new Permit(testToken, "http://localhost:7000", "default", true);
+            Permit permitClient = new Permit(testToken, "http://localhost:7000");
             string testKey = "testKey";
             string testFirstName = "testFirstName";
             string testLastName = "testlastName";
