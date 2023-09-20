@@ -5,9 +5,10 @@
     <AssemblyName>Permit</AssemblyName>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>disable</Nullable>
+    <Configurations>Release;Debug</Configurations>
   </PropertyGroup>
 <PropertyGroup>
-  <VersionPrefix>1.1.2</VersionPrefix>
+  <VersionPrefix>1.1.4</VersionPrefix>
 </PropertyGroup>
 <PropertyGroup>
   <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
