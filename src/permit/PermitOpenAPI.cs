@@ -8178,11 +8178,13 @@ namespace PermitSDK.NewAPI
         /// <param name="user">optional user filter, will only return role assignments granted to this user.</param>
         /// <param name="role">optional role filter, will only return role assignments granting this role.</param>
         /// <param name="tenant">optional tenant filter, will only return role assignments granted in that tenant.</param>
+        /// <param name="resource_instance">optional resource instance filter, will only return role assignments granted on that resource instance.</param>
+        /// <param name="detailed">Whether to return full details about the user, tenant and role</param>
         /// <param name="page">Page number of the results to fetch, starting at 1.</param>
         /// <param name="per_page">The number of results per page (max 100).</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RoleAssignmentRead>> List_role_assignmentsAsync(string proj_id, string env_id, string? user = null, string? role = null, string? tenant = null, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RoleAssignmentRead>> List_role_assignmentsAsync(string proj_id, string env_id, string? user = null, string? role = null, string? tenant = null, string? resource_instance = null, bool? detailed = null, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (proj_id == null)
                 throw new System.ArgumentNullException("proj_id");
@@ -8205,6 +8207,14 @@ namespace PermitSDK.NewAPI
             if (tenant != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("tenant") + "=").Append(System.Uri.EscapeDataString(ConvertToString(tenant, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (resource_instance != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("resource_instance") + "=").Append(System.Uri.EscapeDataString(ConvertToString(resource_instance, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (detailed != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("detailed") + "=").Append(System.Uri.EscapeDataString(ConvertToString(detailed, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (page != null)
             {
@@ -16088,6 +16098,18 @@ namespace PermitSDK.NewAPI
         [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         public System.Guid Tenant_id { get; set; } = default!;
+
+        /// <summary>
+        /// the resource instance the role is associated with
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Resource_instance { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the resource instance
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance_id", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid? Resource_instance_id { get; set; } = default!;
 
         /// <summary>
         /// Unique id of the organization that the role assignment belongs to.
