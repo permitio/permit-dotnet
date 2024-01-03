@@ -76,9 +76,11 @@ namespace PermitSDK
             {
                 { "user", user },
                 { "action", action },
-                { "resource", normalizedResource },
-                { "context", context }
+                { "resource", normalizedResource }
             };
+            if (context != null)
+                parameters.Add("context", context);
+
             var serializedResources = JsonSerializer.Serialize(parameters, options);
             var httpContent = new StringContent(
                 serializedResources,
