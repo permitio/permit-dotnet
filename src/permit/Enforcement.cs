@@ -8,6 +8,7 @@ using PermitSDK.Models;
 using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using System.Collections;
 
 public class PermissionCheckException : Exception
 {
@@ -41,6 +42,7 @@ namespace PermitSDK
     {
         string Url;
         string CheckURI = "/allowed";
+        string BulkCheckURI = "/allowed/bulk";
         Config Config;
         HttpClient Client = new HttpClient();
         ILogger logger;
@@ -150,5 +152,105 @@ namespace PermitSDK
             var userKey = new UserKey(user);
             return await Check(userKey, action, resourceObject, context);
         }
+
+
+        public Dictionary<string, object> BuildCheckInput(IUserKey user, string action, ResourceInput resource, Dictionary<string, string> context = null)
+        {
+
+            var normalizedResource = ResourceInput.Normalize(resource, Config);
+            var parameters = new Dictionary<string, object>
+            {
+                { "user", user },
+                { "action", action },
+                { "resource", normalizedResource },
+                { "context", context }
+            };
+            return parameters;
+        }
+
+        public async Task<List<bool>> BulkCheck(List<CheckQuery> checks, Dictionary<string, string> context = null)
+        {
+            var inputs = new List<CheckQueryObj>();
+            foreach (var check in checks)
+            {
+                var input = new CheckQueryObj(
+                    new UserKey(check.user),
+                    check.action,
+                    ResourceInput.ResourceFromString(check.resource),
+                    context
+                );
+                inputs.Add(input);
+            }
+            return await BulkCheck(inputs, context);
+        }
+
+
+
+        public async Task<List<bool>> BulkCheck(List<CheckQueryObj> checks, Dictionary<string, string> context = null)
+        {
+            var inputs = new List<Dictionary<string, object>>();
+            foreach (var check in checks)
+            {
+                var input = BuildCheckInput(check.user, check.action, check.resource, context);
+                inputs.Add(input);
+            }
+
+
+
+            try
+            {
+                var serializeBulkCheck = JsonSerializer.Serialize(inputs, options);
+                var httpContent = new StringContent(
+                    serializeBulkCheck,
+                    Encoding.UTF8,
+                    "application/json"
+                );
+                var response = await Client.PostAsync(
+                    Url + BulkCheckURI,
+                    httpContent
+                ).ConfigureAwait(false);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (Config.DebugMode)
+                    {
+                        this.logger.LogInformation(
+                            string.Format(
+                                "Performing bulk check for {0} queries",
+                                checks.Count
+                            )
+                        );
+                    }
+                    var bulkData = JsonSerializer.Deserialize<BulkPolicyDecision>(responseContent);
+                    var result = new List<bool>();
+                    foreach (var decision in bulkData.allow)
+                    {
+                        result.Add(decision.allow);
+                    }
+                    return result;
+                }
+                else
+                {
+                    this.logger.LogError(
+                        string.Format(
+                            "Error while performing bulk check"
+                        )
+                    );
+                    return new List<bool>();
+                }
+            }
+            catch (Exception e)
+            {
+                this.logger.LogError(e.ToString());
+                this.logger.LogInformation(
+                    string.Format(
+                        "Error while performing bulk check"
+                    )
+                );
+                return new List<bool>();
+            }
+        }
+
     }
 }

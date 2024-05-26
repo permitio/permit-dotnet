@@ -89,6 +89,37 @@ namespace PermitSDK
             return await _api_client.Update_tenantAsync(_projectId, _environmentId, tenantId, tenant);
         }
 
+        public async Task<ResourceRead> CreateResource(ResourceCreate resource)
+        {
+            ResourceRead resourceObj = await _api_client.Create_resourceAsync(_projectId, _environmentId, resource);
+            return resourceObj;
+        }
+
+        public async Task<ResourceRead> GetResource(string resourceId)
+        {
+            return await _api_client.Get_resourceAsync(_projectId, _environmentId, resourceId);
+        }
+
+        public async Task DeleteResource(string resourceId)
+        {
+            await _api_client.Delete_resourceAsync(_projectId, _environmentId, resourceId);
+        }
+
+        public async Task DeleteResourceInstance(string resourceInstanceId)
+        {
+            await _api_client.Delete_resource_instanceAsync(_projectId, _environmentId, resourceInstanceId);
+        }
+        // create resource instance
+        public async Task<ResourceInstanceRead> CreateResourceInstance(ResourceInstanceCreate resourceInstance)
+        {
+            return await _api_client.Create_resource_instanceAsync(_projectId, _environmentId, resourceInstance);
+        }
+
+        public async Task<ResourceInstanceRead> GetResourceInstance(string resourceInstanceId)
+        {
+            return await _api_client.Get_resource_instanceAsync(_projectId, _environmentId, resourceInstanceId);
+        }
+
         public async Task<RoleRead> CreateRole(RoleCreate role)
         {
             return await _api_client.Create_roleAsync(_projectId, _environmentId, role);

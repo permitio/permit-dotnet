@@ -63,5 +63,22 @@ namespace PermitSDK
         {
             return await Enforcer.Check(user, action, resource, context);
         }
+
+
+        public async Task<List<bool>> BulkCheck(
+            List<CheckQuery> checks,
+            Dictionary<string, string> context = null
+        )
+        {
+            return await Enforcer.BulkCheck(checks, context);
+        }
+
+        public async Task<List<bool>> BulkCheck(
+            List<CheckQueryObj> checks,
+            Dictionary<string, string> context = null
+        )
+        {
+            return await Enforcer.BulkCheck(checks, context);
+        }
     }
 }
