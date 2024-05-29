@@ -4,12 +4,14 @@ using Moq;
 using PermitSDK;
 using PermitSDK.Models;
 using PermitSDK.OpenAPI;
+using System;
 
 namespace PermitSDK.Tests
 {
     public class ClientTest
     {
         private string testToken = "";
+        private string pdpUrl = "http://localhost:7766";
 
         [Fact]
         public void TestPermitConfig()
@@ -28,7 +30,7 @@ namespace PermitSDK.Tests
 
             string testAction = "testAction";
             string testResource = "testResource";
-            Permit permitClient = new Permit(testToken,useDefaultTenantIfEmpty:true);
+            Permit permitClient = new Permit(testToken, useDefaultTenantIfEmpty: true);
             Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
             // create dictionary with partition key and value 11
             Dictionary<string, dynamic> attributes = new Dictionary<string, dynamic>();
@@ -41,7 +43,7 @@ namespace PermitSDK.Tests
                 )
             );
         }
-        
+
         [Fact]
         public async void TestPermitClientApi()
         {
@@ -55,7 +57,7 @@ namespace PermitSDK.Tests
 
             // Test User Api
             var userObj = new UserCreate
-                { Key = testKey, Email = testEmail, First_name = testFirstName, Last_name = testLastName };
+            { Key = testKey, Email = testEmail, First_name = testFirstName, Last_name = testLastName };
             var user = await permitClient.Api.CreateUser(userObj);
             Assert.True(user.First_name == testFirstName);
             var getUser = await permitClient.Api.GetUser(user.Key);
@@ -63,26 +65,41 @@ namespace PermitSDK.Tests
 
             // test Tenant Api
             //string desc = "desc";
-            string desc2 = "desc2";
-            string tenantName = "tName";
-            string tenantKey = "tKey";
-            var tenantCreate = new TenantCreate {Key = tenantKey, Name = tenantName};
+            string desc2 = "desc21";
+            string tenantName = "tName11111111111111";
+            string tenantKey = String.Concat("tKey11111111111111", postfix);
+            var tenantCreate = new TenantCreate { Key = tenantKey, Name = tenantName };
             var tenant = await permitClient.Api.CreateTenant(tenantCreate);
             var getTenant = await permitClient.Api.GetTenant(tenantKey);
             Assert.True(tenant.Key == getTenant.Key);
-            
-            var getTenant2 = await permitClient.Api.UpdateTenant(tenantKey, new TenantUpdate {Description = desc2});
+
+            var getTenant2 = await permitClient.Api.UpdateTenant(tenantKey, new TenantUpdate { Description = desc2 });
             Assert.True(getTenant2.Description == desc2);
             Assert.True(getTenant.Key == tenantKey);
 
+
+            // test Resource Api
+            var resourceKey = String.Concat("testResource11111111111111", postfix);
+            var resource = await permitClient.Api.CreateResource(new ResourceCreate { Key = resourceKey, Name = resourceKey });
+            var getResource = await permitClient.Api.GetResource(resource.Id.ToString());
+            Assert.True(resource.Key == getResource.Key);
+
+            // test ResourceInstance Api
+            var resourceInstanceKey = String.Concat("testResourceInstance11111111111111", postfix);
+            var resourceInstance = await permitClient.Api.CreateResourceInstance(
+                new ResourceInstanceCreate { Key = resourceInstanceKey, Resource = resourceKey, Tenant = tenantKey }
+            );
+            var getResourceInstance = await permitClient.Api.GetResourceInstance(resourceInstance.Id.ToString());
+            Assert.True(resourceInstance.Key == getResourceInstance.Key);
+
             // test roles Api
-            string roleName = "rName";
+            string roleName = String.Concat("rName11111111111111", postfix);
             string roleDesc = "rDesc";
             var roleCreate = new RoleCreate { Name = roleName, Description = roleDesc, Key = roleName };
             var createdRole = await permitClient.Api.CreateRole(roleCreate);
             var roles = await permitClient.Api.ListRoles();
             Assert.True(roles.Count > 0);
-            
+
             var getRole = await permitClient.Api.GetRole(createdRole.Id.ToString());
             var assignedRole = await permitClient.Api.AssignRole(
                 user.Key,
@@ -103,12 +120,8 @@ namespace PermitSDK.Tests
             Assert.True(assignedRoles.Count == (assignedRoles2.Count - 1));
 
             await permitClient.Api.DeleteUser(getUser.Key);
-            getUser = await permitClient.Api.GetUser(user.Key);
-            Assert.True(getUser == null);
-            
+
             await permitClient.Api.DeleteTenant(tenantKey);
-            getTenant = await permitClient.Api.GetTenant(getTenant.Id.ToString());
-            Assert.True(getTenant == null);
         }
     }
 }

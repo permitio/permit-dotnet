@@ -11792,7 +11792,7 @@ namespace PermitSDK.OpenAPI
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class APIKeyScopeRead
+public partial class APIKeyScopeRead
     {
         /// <summary>
         /// Unique id of the organization that the api_key belongs to.
