@@ -47,8 +47,10 @@ namespace PermitSDK.Tests
         [Fact]
         public async void TestPermitClientApi()
         {
-            Permit permitClient = new Permit(testToken, "http://localhost:7000");
-            string testKey = "testKey";
+            Permit permitClient = new Permit(testToken, pdpUrl);
+            // adding UUID postfix so I will not have conflicts
+            string postfix = Guid.NewGuid().ToString();
+            string testKey = string.Concat("testKey", postfix);
             string testFirstName = "testFirstName";
             string testLastName = "testlastName";
             string testEmail = "testEmail@email.com";
@@ -66,8 +68,8 @@ namespace PermitSDK.Tests
             // test Tenant Api
             //string desc = "desc";
             string desc2 = "desc21";
-            string tenantName = "tName11111111111111";
-            string tenantKey = String.Concat("tKey11111111111111", postfix);
+            string tenantName = "tName";
+            string tenantKey = String.Concat("tKey", postfix);
             var tenantCreate = new TenantCreate { Key = tenantKey, Name = tenantName };
             var tenant = await permitClient.Api.CreateTenant(tenantCreate);
             var getTenant = await permitClient.Api.GetTenant(tenantKey);
@@ -79,13 +81,13 @@ namespace PermitSDK.Tests
 
 
             // test Resource Api
-            var resourceKey = String.Concat("testResource11111111111111", postfix);
+            var resourceKey = String.Concat("testResource", postfix);
             var resource = await permitClient.Api.CreateResource(new ResourceCreate { Key = resourceKey, Name = resourceKey });
             var getResource = await permitClient.Api.GetResource(resource.Id.ToString());
             Assert.True(resource.Key == getResource.Key);
 
             // test ResourceInstance Api
-            var resourceInstanceKey = String.Concat("testResourceInstance11111111111111", postfix);
+            var resourceInstanceKey = String.Concat("testResourceInstance", postfix);
             var resourceInstance = await permitClient.Api.CreateResourceInstance(
                 new ResourceInstanceCreate { Key = resourceInstanceKey, Resource = resourceKey, Tenant = tenantKey }
             );
@@ -93,7 +95,7 @@ namespace PermitSDK.Tests
             Assert.True(resourceInstance.Key == getResourceInstance.Key);
 
             // test roles Api
-            string roleName = String.Concat("rName11111111111111", postfix);
+            string roleName = String.Concat("rName", postfix);
             string roleDesc = "rDesc";
             var roleCreate = new RoleCreate { Name = roleName, Description = roleDesc, Key = roleName };
             var createdRole = await permitClient.Api.CreateRole(roleCreate);
