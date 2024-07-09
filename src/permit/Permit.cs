@@ -10,7 +10,7 @@ namespace PermitSDK
         public const string DEFAULT_PDP_URL = "http://localhost:7766";
         public const string DEFAULT_API_URL = "https://api.permit.io";
 
-        public Config Config { get; private set; }
+        private Config _config;
         public Enforcer Enforcer { get; private set; }
         public Cache Cache { get; private set; }
         public APINew Api { get; private set; }
@@ -25,10 +25,11 @@ namespace PermitSDK
             string apiUrl = DEFAULT_API_URL,
             string level = "info",
             string label = "permitio-sdk",
-            bool logAsJson = false
+            bool logAsJson = false,
+            string apiUrl = "https://api.permit.io"
         )
         {
-            this.Config = new Config(
+            _config = new Config(
                 token,
                 pdp,
                 defaultTenant,
@@ -36,7 +37,8 @@ namespace PermitSDK
                 debugMode,
                 level,
                 label,
-                logAsJson
+                logAsJson,
+                apiUrl
             );
 
             ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
@@ -63,7 +65,7 @@ namespace PermitSDK
             Dictionary<string, string> context = null
         )
         {
-            return await this.Enforcer.Check(user, action, resource, context);
+            return await Enforcer.Check(user, action, resource, context);
         }
 
         public async Task<bool> Check(
@@ -73,7 +75,24 @@ namespace PermitSDK
             Dictionary<string, string> context = null
         )
         {
-            return await this.Enforcer.Check(user, action, resource, context);
+            return await Enforcer.Check(user, action, resource, context);
+        }
+
+
+        public async Task<List<bool>> BulkCheck(
+            List<CheckQuery> checks,
+            Dictionary<string, string> context = null
+        )
+        {
+            return await Enforcer.BulkCheck(checks, context);
+        }
+
+        public async Task<List<bool>> BulkCheck(
+            List<CheckQueryObj> checks,
+            Dictionary<string, string> context = null
+        )
+        {
+            return await Enforcer.BulkCheck(checks, context);
         }
     }
 }

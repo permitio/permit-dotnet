@@ -1,4 +1,5 @@
-﻿# Permit.io client for dotnet
+﻿![NET.png](imgs/NET.png)
+# Permit.io client for dotnet
 
 dotnet client library for the Permit.io full-stack permissions platform.
 

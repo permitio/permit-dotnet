@@ -28,6 +28,7 @@
         public string DefaultTenant { get; private set; }
         public bool UseDefaultTenantIfEmpty { get; private set; }
         LoggerConfig Log { get; }
+        public string ApiUrl { get; private set; }
 
         public Config(
             string token,
@@ -37,15 +38,17 @@
             bool debugMode = false,
             string level = "info",
             string label = "permitio-sdk",
-            bool logAsJson = false
+            bool logAsJson = false,
+            string apiUrl = "https://api.permit.io"
         )
         {
-            this.Token = token;
-            this.Pdp = pdp;
-            this.DebugMode = debugMode;
-            this.DefaultTenant = defaultTenant;
-            this.UseDefaultTenantIfEmpty = useDefaultTenantIfEmpty;
-            this.Log = new LoggerConfig(level, label, logAsJson);
+            Token = token;
+            Pdp = pdp;
+            DebugMode = debugMode;
+            DefaultTenant = defaultTenant;
+            UseDefaultTenantIfEmpty = useDefaultTenantIfEmpty;
+            Log = new LoggerConfig(level, label, logAsJson);
+            ApiUrl = apiUrl;
         }
     }
 }
