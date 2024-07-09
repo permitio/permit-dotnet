@@ -18,6 +18,15 @@ public class EmbeddedLoginContentRequestOutput
 
 }
 
+    public class NewApiConfig
+    {
+        public static readonly string DefaultApiUrl = "http://api.permit.io";
+        public static readonly string DefaultPdpUrl = "http://localhost:7000";
+        public string ApiURL { get; set; }
+        public string PdpURL { get; set; }
+        public bool DebugMode { get; set; }
+        public string Token { get; set; }
+    }
 
 
 namespace PermitSDK

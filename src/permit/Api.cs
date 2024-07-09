@@ -44,65 +44,133 @@ namespace PermitSDK
             _environmentId = scope.Environment_id.Value!.ToString();
         }
         
-        public async Task<UserRead> CreateUser(UserCreate user)
+                public async Task<UserRead> CreateUser(UserCreate user)
         {
             return await _api_client.Create_userAsync(_projectId, _environmentId, user);
         }
+        public async Task<UserRead> GetUser(string userKey)
+        {
+            return await _api_client.Get_userAsync(_projectId, _environmentId, userKey);
+        }
+
+        public async Task<RoleRead> GetRole(string roleKey)
+        {
+            return await _api_client.Get_roleAsync(_projectId, _environmentId, roleKey);
+        }
+
+        public async Task<TenantRead> GetTenant(string tenantKey)
+        {
+            return await _api_client.Get_tenantAsync(_projectId, _environmentId, tenantKey);
+        }
+
+        public async Task<ICollection<RoleAssignmentRead>> GetAssignedRoles(string userKey, string tenantKey = default, int page = 1, int perPage = 30)
+        {
+            return await _api_client.List_role_assignmentsAsync(_projectId, _environmentId, userKey, tenantKey, page: page, per_page: perPage);
+        }
         
-        public async Task<UserRead> SyncUser(string userId, UserCreate user)
+        public async Task<ICollection<TenantRead>> ListTenants(int page = 1, int perPage = 30)
         {
-            return await _api_client.Replace_userAsync(_projectId, _environmentId, userId, user);
-        }
-        
-        public async Task<UserRead> GetUser(string userId)
-        {
-            return await _api_client.Get_userAsync(_projectId, _environmentId, userId);
+            return await _api_client.List_tenantsAsync(_projectId, _environmentId, page: page, per_page: perPage);
         }
 
-        public async Task DeleteUser(string userId)
+        public async Task<ResourceRead> GetResource(string resourceKey)
         {
-            await _api_client.Delete_userAsync(_projectId, _environmentId, userId);
+            return await _api_client.Get_resourceAsync(_projectId, _environmentId, resourceKey);
         }
 
-        public async Task DeleteTenant(string tenantId)
+        public async Task<UserRead> SyncUser(UserCreate userCreate)
         {
-            await _api_client.Delete_tenantAsync(_projectId, _environmentId, tenantId);
+            try
+            {
+                var user = await _api_client.Get_userAsync(_projectId, _environmentId, userCreate.Key);
+
+                return await _api_client.Update_userAsync(_projectId, _environmentId, user.Id.ToString(),
+                    new UserUpdate()
+                    {
+                        Attributes = user.Attributes, Email = user.Email, First_name = user.First_name,
+                        Last_name = user.Last_name
+                    });
+            }
+            catch (PermitApiException ex)
+            {
+                if (ex.StatusCode == 404)
+                {
+                    return await _api_client.Create_userAsync(_projectId, _environmentId, userCreate);
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
 
-        public async Task<ICollection<TenantRead>> ListTenants()
+        public async Task DeleteUser(string userKey)
         {
-            return await _api_client.List_tenantsAsync(_projectId, _environmentId);
+            await _api_client.Delete_userAsync(_projectId, _environmentId, userKey);
         }
 
-        public async Task<TenantRead> GetTenant(string tenantId)
+        public async Task<TenantRead> CreateTenant(TenantCreate tenantCreate)
         {
-            return await _api_client.Get_tenantAsync(_projectId, _environmentId, tenantId);
+            return await _api_client.Create_tenantAsync(_projectId, _environmentId, tenantCreate);
         }
 
-        public async Task<TenantRead> CreateTenant(TenantCreate tenant)
+        public async Task<TenantRead> UpdateTenant(string tenantKey, TenantUpdate tenantUpdate)
         {
-            return await _api_client.Create_tenantAsync(_projectId, _environmentId, tenant);
+            return await _api_client.Update_tenantAsync(_projectId, _environmentId, tenantKey, tenantUpdate);
         }
 
-        public async Task<TenantRead> UpdateTenant(string tenantId, TenantUpdate tenant)
+        public async Task DeleteTenant(string tenantKey)
         {
-            return await _api_client.Update_tenantAsync(_projectId, _environmentId, tenantId, tenant);
+            await _api_client.Delete_tenantAsync(_projectId, _environmentId, tenantKey);
         }
 
-        public async Task<ResourceRead> CreateResource(ResourceCreate resource)
+        public async Task<RoleRead> CreateRole(RoleCreate role)
         {
-            ResourceRead resourceObj = await _api_client.Create_resourceAsync(_projectId, _environmentId, resource);
-            return resourceObj;
+            return await _api_client.Create_roleAsync(_projectId, _environmentId, role);
         }
 
-        public async Task<ResourceRead> GetResource(string resourceId)
+        public async Task<RoleRead> UpdateRole(string roleKey, RoleUpdate roleUpdate)
         {
-            return await _api_client.Get_resourceAsync(_projectId, _environmentId, resourceId);
+            return await _api_client.Update_roleAsync(_projectId, _environmentId, roleKey, roleUpdate);
         }
 
-        public async Task DeleteResource(string resourceId)
+        public async Task<RoleAssignmentRead> AssignRole(string userKey, string roleKey, string tenantKey)
         {
-            await _api_client.Delete_resourceAsync(_projectId, _environmentId, resourceId);
+            return await _api_client.Assign_roleAsync(_projectId, _environmentId,
+                new RoleAssignmentCreate { Role = roleKey, User = userKey, Tenant = tenantKey });
+        }
+
+        public async Task UnassignRole(string userKey, string roleKey, string tenantKey)
+        {
+            await _api_client.Unassign_roleAsync(_projectId, _environmentId, new RoleAssignmentRemove
+            {
+                Role = roleKey, Tenant = tenantKey, User = userKey
+            });
+        }
+
+        public async Task DeleteRole(string roleKey)
+        {
+            await _api_client.Delete_roleAsync(_projectId, _environmentId, roleKey);
+        }
+
+        public async Task<ResourceRead> CreateResource(ResourceCreate resourceCreate)
+        {
+            return await _api_client.Create_resourceAsync(_projectId, _environmentId, resourceCreate);
+        }
+
+        public async Task<ResourceRead> UpdateResource(string resourceKey, ResourceUpdate resourceUpdate)
+        {
+            return await _api_client.Update_resourceAsync(_projectId, _environmentId, resourceKey, resourceUpdate);
+        }
+
+        public async void DeleteResource(string resourceKey)
+        {
+            await _api_client.Delete_resourceAsync(_projectId, _environmentId, resourceKey);
+        }
+
+        public async Task<ICollection<RoleRead>> ListRoles()
+        {
+            return await _api_client.List_rolesAsync(_projectId, _environmentId);
         }
 
         public async Task DeleteResourceInstance(string resourceInstanceId)
@@ -119,47 +187,10 @@ namespace PermitSDK
         {
             return await _api_client.Get_resource_instanceAsync(_projectId, _environmentId, resourceInstanceId);
         }
-
-        public async Task<RoleRead> CreateRole(RoleCreate role)
-        {
-            return await _api_client.Create_roleAsync(_projectId, _environmentId, role);
-        }
-
-        public async Task<RoleRead> GetRole(string roleId)
-        {
-            return await _api_client.Get_roleAsync(_projectId, _environmentId, roleId);
-        }
-
-        public async Task<ICollection<RoleRead>> ListRoles()
-        {
-            return await _api_client.List_rolesAsync(_projectId, _environmentId);
-        }
-
-        public async Task<RoleAssignmentRead> AssignRole(
-            string userId,
-            string roleId,
-            string tenantId
-        )
-        {
-
-            return await _api_client.Assign_role_to_userAsync(_projectId, _environmentId, userId,
-                new UserRoleCreate
-                {
-                    Role = roleId, Tenant = tenantId
-                });
-        }
-
         public async Task<ICollection<RoleAssignmentRead>> ListAssignedRoles(string userId, string tenantId = null)
         {
             return await _api_client.List_role_assignmentsAsync(_projectId, _environmentId, userId);
         }
 
-        public async Task UnassignRole(string userId, string roleId, string tenantId)
-        {
-            await _api_client.Unassign_role_from_userAsync(_projectId, _environmentId, userId, new UserRoleRemove
-            {
-                Role = roleId, Tenant = tenantId
-            });
-        }
     }
 }

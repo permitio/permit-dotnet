@@ -117,6 +117,11 @@ namespace PermitSDK.Tests
             );
             Assert.True(assignedRoles.Count == assignedRoles2.Count);
 
+            // test elements login as with this user only after assigning roles to it
+            var elementsLogin = await permitClient.Elements.LoginAs(user.Key, getTenant.Key);
+            Assert.True(elementsLogin.Token != null);
+            Assert.True(elementsLogin.RedirectUrl != null);
+
             await permitClient.Api.UnassignRole(user.Key, getRole.Id.ToString(), getTenant.Key);
             assignedRoles = await permitClient.Api.ListAssignedRoles(getUser.Key);
             Assert.True(assignedRoles.Count == (assignedRoles2.Count - 1));

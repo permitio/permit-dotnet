@@ -12,7 +12,7 @@ namespace PermitSDK
 
         public Config Config { get; private set; }
         public Enforcer Enforcer { get; private set; }
-        public APINew Api { get; private set; }
+        public Api Api { get; private set; }
         public ElementsApi Elements { get; private set; }
 
         public Permit(
@@ -25,10 +25,9 @@ namespace PermitSDK
             string level = "info",
             string label = "permitio-sdk",
             bool logAsJson = false
-            "
         )
         {
-            _config = new Config(
+            Config = new Config(
                 token,
                 pdp,
                 defaultTenant,
@@ -45,13 +44,14 @@ namespace PermitSDK
 
             this.Enforcer = new Enforcer(this.Config, this.Config.Pdp, logger);
 
-            this.Api = new APINew(new NewApiConfig
-            {
-                ApiURL = apiUrl, DebugMode = debugMode, PdpURL = pdp, Token = token
-            });
+            this.Api = new Api(this.Config, logger);
+            // todo need to move elements to work with the regular config
             this.Elements = new ElementsApi(new NewApiConfig
             {
-                ApiURL = apiUrl, DebugMode = debugMode, PdpURL = pdp, Token = token
+                ApiURL = apiUrl,
+                PdpURL = pdp,
+                DebugMode = debugMode,
+                Token = token
             });
 
 
