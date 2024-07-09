@@ -5,21 +5,21 @@ namespace PermitSDK.Models
     public class ResourceInput
     {
         public string type { get; set; }
-        public string id { get; set; }
+        public string key { get; set; }
         public string tenant { get; set; }
         public Dictionary<string, dynamic> attributes { get; set; }
-        public Dictionary<string, string> context { get; set; }
+        public Dictionary<string, dynamic> context { get; set; }
 
         public ResourceInput(
             string type,
-            string id = null,
+            string key = null,
             string tenant = null,
             Dictionary<string, dynamic> attributes = null,
-            Dictionary<string, string> context = null
+            Dictionary<string, dynamic> context = null
         )
         {
             this.type = type;
-            this.id = id;
+            this.key = key;
             this.tenant = tenant;
             this.attributes = attributes;
             this.context = context;
@@ -44,7 +44,7 @@ namespace PermitSDK.Models
         {
             ResourceInput normalizedResource = new ResourceInput(
                 resource.type,
-                resource.id,
+                resource.key,
                 resource.tenant,
                 resource.attributes,
                 resource.context
@@ -57,7 +57,7 @@ namespace PermitSDK.Models
             {
                 if (normalizedResource.context == null)
                 {
-                    normalizedResource.context = new Dictionary<string, string>()
+                    normalizedResource.context = new Dictionary<string, dynamic>()
                     {
                         { "tenant", normalizedResource.tenant }
                     };
