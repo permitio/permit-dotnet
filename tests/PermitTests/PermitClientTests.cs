@@ -44,6 +44,28 @@ namespace PermitSDK.Tests
             );
         }
 
+        // test resource input parsing
+        [Fact]
+        public async void TestResourceInput()
+        {
+            string testResource = "testResource";
+            string testResourceKey = "testResourceKey";
+            string testTenant = "testTenant";
+            Dictionary<string, dynamic> attributes = new Dictionary<string, dynamic>();
+            attributes.Add("partition", 11);
+            ResourceInput resourceInput = new ResourceInput(testResource, testResourceKey, testTenant, attributes);
+            Assert.True(resourceInput.type == testResource);
+            Assert.True(resourceInput.key == testResourceKey);
+            Assert.True(resourceInput.tenant == testTenant);
+            Assert.True(resourceInput.attributes == attributes);
+
+            // ReBAC parsing
+            string rebacResource = "Folder:project1";
+            ResourceInput rebacResourceInput = ResourceInput.ResourceFromString(rebacResource);
+            Assert.True(rebacResourceInput.type == "Folder");
+
+        }
+
         [Fact]
         public async void TestPermitClientApi()
         {
