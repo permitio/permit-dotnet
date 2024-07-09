@@ -31,7 +31,7 @@ namespace PermitSDK
         public string type { get; }
         public string id { get; }
         public string tenant { get; }
-        public IDictionary<string, string> attributes { get; }
+        public IDictionary<string, dynamic> attributes { get; }
         public IDictionary<string, string> context { get; }
     }
 
@@ -67,7 +67,7 @@ namespace PermitSDK
 
         /// <inheritdoc />
         public async Task<bool> Check(
-            IUserKey user,
+            UserKey user,
             string action,
             ResourceInput resource,
             Dictionary<string, string> context = null
@@ -78,9 +78,11 @@ namespace PermitSDK
             {
                 { "user", user },
                 { "action", action },
-                { "resource", normalizedResource },
-                { "context", context }
+                { "resource", normalizedResource }
             };
+            if (context != null)
+                parameters.Add("context", context);
+
             var serializedResources = JsonSerializer.Serialize(parameters, options);
             var httpContent = new StringContent(
                 serializedResources,

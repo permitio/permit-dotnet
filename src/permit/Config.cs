@@ -20,7 +20,7 @@
 
     public class Config
     {
-        public const string DEFAULT_PDP_URL = "http://localhost:7000";
+        public const string DEFAULT_PDP_URL = "http://localhost:7766";
 
         public string Token { get; private set; }
         public string Pdp { get; private set; }

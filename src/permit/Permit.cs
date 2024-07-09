@@ -7,11 +7,13 @@ namespace PermitSDK
 {
     public class Permit
     {
-        public const string DEFAULT_PDP_URL = "http://localhost:7000";
+        public const string DEFAULT_PDP_URL = "http://localhost:7766";
+        public const string DEFAULT_API_URL = "https://api.permit.io";
 
-        private Config _config;
+        public Config Config { get; private set; }
         public Enforcer Enforcer { get; private set; }
         public Api Api { get; private set; }
+        public ElementsApi Elements { get; private set; }
 
         public Permit(
             string token,
@@ -19,13 +21,13 @@ namespace PermitSDK
             string defaultTenant = "default",
             bool useDefaultTenantIfEmpty = true,
             bool debugMode = false,
+            string apiUrl = DEFAULT_API_URL,
             string level = "info",
             string label = "permitio-sdk",
-            bool logAsJson = false,
-            string apiUrl = "https://api.permit.io"
+            bool logAsJson = false
         )
         {
-            _config = new Config(
+            Config = new Config(
                 token,
                 pdp,
                 defaultTenant,
@@ -40,12 +42,23 @@ namespace PermitSDK
             ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
             ILogger logger = loggerFactory.CreateLogger<Permit>();
 
-            Enforcer = new Enforcer(_config, _config.Pdp, logger);
-            Api = new Api(_config, logger);
+            this.Enforcer = new Enforcer(this.Config, this.Config.Pdp, logger);
+
+            this.Api = new Api(this.Config, logger);
+            // todo need to move elements to work with the regular config
+            this.Elements = new ElementsApi(new NewApiConfig
+            {
+                ApiURL = apiUrl,
+                PdpURL = pdp,
+                DebugMode = debugMode,
+                Token = token
+            });
+
+
         }
 
         public async Task<bool> Check(
-            IUserKey user,
+            UserKey user,
             string action,
             ResourceInput resource,
             Dictionary<string, string> context = null

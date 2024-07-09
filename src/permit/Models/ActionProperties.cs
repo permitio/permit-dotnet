@@ -7,13 +7,13 @@ namespace PermitSDK.Models
         public string title { get; set; }
         public string description { get; set; }
         public string path { get; set; } //todo can I remove this?
-        public Dictionary<string, string> attributes { get; set; }
+        public Dictionary<string, dynamic> attributes { get; set; }
 
         public ActionProperties(
             string title,
             string description = "",
             string path = "",
-            Dictionary<string, string> attributes = null
+            Dictionary<string, dynamic> attributes = null
         )
         {
             this.title = title;
