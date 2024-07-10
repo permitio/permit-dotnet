@@ -10,18 +10,25 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using System.Collections;
 
-public class PermissionCheckException : Exception
+public class PermitException : Exception
 {
-    public PermissionCheckException() { }
+    public PermitException() { }
 
-    public PermissionCheckException(string message) : base(message) { }
+    public PermitException(string message) : base(message) { }
 }
 
-public class CreateResourceException : Exception
+public class PermitConnectionError : PermitException
 {
-    public CreateResourceException() { }
+    public PermitConnectionError() { }
 
-    public CreateResourceException(string message) : base(message) { }
+    public PermitConnectionError(string message) : base(message) { }
+}
+
+public class PermitPDPResponseError : PermitException
+{
+    public PermitPDPResponseError() { }
+
+    public PermitPDPResponseError(string message) : base(message) { }
 }
 
 namespace PermitSDK
@@ -125,7 +132,13 @@ namespace PermitSDK
                             resource.type
                         )
                     );
-                    return false;
+                    throw new PermitPDPResponseError(
+                        string.Format(
+                            "Permit SDK got status: {0}, please check your SDK init and make sure the PDP sidecar is configured correctly. \n"
+                                + "Read more about setting up the PDP at https://docs.permit.io/reference/SDKs/dotnet/",
+                            response.StatusCode
+                        )
+                    );
                 }
             }
             catch (Exception e)
@@ -139,7 +152,15 @@ namespace PermitSDK
                         resource.type
                     )
                 );
-                return false;
+                throw new PermitConnectionError(
+                    string.Format(
+                        "Permit SDK got error: {0}, \n"
+                            + "and cannot connect to the PDP, please check your configuration and make sure the PDP is running at {1} and accepting requests. \n"
+                            + "Read more about setting up the PDP at https://docs.permit.io/reference/SDKs/dotnet/",
+                        e.ToString(),
+                        Url
+                    )
+                );
             }
         }
 
