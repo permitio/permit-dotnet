@@ -254,5 +254,81 @@ namespace PermitSDK
             }
         }
 
+        public async Task<Dictionary<string, Object>> GetUserPermissions(
+            IUser user,
+            string[] tenants = null,
+            string[] resources = null,
+            string[] resourceTypes = null
+        )
+        {
+            var input = new Dictionary<string, object>
+            {
+                { "user", user },
+                { "tenants", tenants },
+                { "resources", resources },
+                { "resource_types", resourceTypes }
+            };
+            var serializedInput = JsonSerializer.Serialize(input, options);
+            var httpContent = new StringContent(
+                serializedInput,
+                Encoding.UTF8,
+                "application/json"
+            );
+            try
+            {
+                var response = await Client.PostAsync(
+                    Url + "/user-permissions",
+                    httpContent
+                ).ConfigureAwait(false);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (Config.DebugMode)
+                    {
+                        this.logger.LogInformation(
+                            string.Format(
+                                "Getting user permissions for {0}",
+                                user
+                            )
+                        );
+                    }
+                    var permissions = JsonSerializer.Deserialize<Dictionary<string, Object>>(responseContent);
+                    return permissions;
+                }
+                else
+                {
+                    this.logger.LogError(
+                        string.Format(
+                            "Error while getting user permissions for {0}",
+                            user
+                        )
+                    );
+                    return new Dictionary<string, Object>();
+                }
+            }
+            catch (Exception e)
+            {
+                this.logger.LogError(e.ToString());
+                this.logger.LogInformation(
+                    string.Format(
+                        "Error while getting user permissions for {0}",
+                        user
+                    )
+                );
+                return new Dictionary<string, Object>();
+            }
+        }
+
+        public async Task<Dictionary<string, Object>> GetUserPermissions(
+            string user,
+            string[] tenants = null,
+            string[] resources = null,
+            string[] resourceTypes = null
+        )
+        {
+            var userKey = new UserKey(user);
+            return await GetUserPermissions(userKey, tenants, resources, resourceTypes);
+        }
+
     }
 }

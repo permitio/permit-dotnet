@@ -14135,6 +14135,14 @@ public partial class APIKeyScopeRead
         [Newtonsoft.Json.JsonProperty("user", Required = Newtonsoft.Json.Required.Always)]
         public string User { get; set; } = default!;
 
+        /// <summary>
+        /// the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Resource_instance { get; set; } = default!;
+
+
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.16.1.0 (NJsonSchema v10.7.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -14228,6 +14236,12 @@ public partial class APIKeyScopeRead
         /// </summary>
         [Newtonsoft.Json.JsonProperty("user", Required = Newtonsoft.Json.Required.Always)]
         public string User { get; set; } = default!;
+
+        /// <summary>
+        /// the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Resource_instance { get; set; } = default!;
 
     }
 
@@ -14686,6 +14700,15 @@ public partial class APIKeyScopeRead
         /// </summary>
         [Newtonsoft.Json.JsonProperty("tenant", Required = Newtonsoft.Json.Required.Always)]
         public string Tenant { get; set; } = default!;
+
+        // add optional resource instance
+        /// <summary>
+        /// the resource instance the role is associated with (accepts either the resource instance id or key using this format resource_type:resource_instance)The resource instance will be implicitly created if the tenant parameter is specified and the resource instance does not exist.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Resource_instance { get; set; } = default!;
+
+
 
     }
 
