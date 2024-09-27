@@ -42,10 +42,10 @@ jobs:
         working-directory: ./tests/PermitTests
         run: dotnet test --configuration Release
 
-      - name: Update VersionPrefix in .csproj
-        run: |
-          sed -i 's/<VersionPrefix>.*<\/VersionPrefix>/<VersionPrefix>${{ github.event.release.tag_name }}<\/VersionPrefix>/g' ./src/permit/PermitSDK.csproj
-          cat ./src/permit/PermitSDK.csproj
+      # - name: Update VersionPrefix in .csproj
+      #   run: |
+      #     sed -i 's/<VersionPrefix>.*<\/VersionPrefix>/<VersionPrefix>${{ github.event.release.tag_name }}<\/VersionPrefix>/g' ./src/permit/PermitSDK.csproj
+      #     cat ./src/permit/PermitSDK.csproj
           
       - name: Pack project
         working-directory: ./src/permit
