@@ -1,4 +1,4 @@
-name: Publish to NuGet
+name: Test pack and Publish to NuGet
 
 on: push
   # release:
@@ -26,7 +26,9 @@ jobs:
         run: dotnet build --configuration Release
       
       - name: Insert Token to tests file by secret API key
-        run: sed -i 's/private string testToken = "";/private string testToken = "${{ secrets.PERMIT_API_KEY }}";/' ./tests/PermitTests/PermitClientTests.cs
+        run: |
+          sed -i 's/private string testToken = "";/private string testToken = "${{ secrets.PERMIT_API_KEY }}";/' ./tests/PermitTests/PermitClientTests.cs
+          cat ./tests/PermitTests/PermitClientTests.cs
 
       - name: Install Docker
         uses: docker-practice/actions-setup-docker@master
