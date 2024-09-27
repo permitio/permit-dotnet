@@ -15,7 +15,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '8.0.x'
 
       - name: Restore dependencies
         working-directory: ./src/permit
@@ -42,7 +42,9 @@ jobs:
 
       - name: Run Tests
         working-directory: ./tests/PermitTests
-        run: dotnet test --configuration Release
+        run: |
+          dotnet restore
+          dotnet test --configuration Release
 
       # - name: Update VersionPrefix in .csproj
       #   run: |
