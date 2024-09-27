@@ -43,7 +43,6 @@ jobs:
       - name: Run Tests
         working-directory: ./tests/PermitTests
         run: |
-          dotnet restore
           dotnet test --configuration Release
 
       # - name: Update VersionPrefix in .csproj
