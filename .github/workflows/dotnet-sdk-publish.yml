@@ -37,14 +37,14 @@ jobs:
           PDP_DEBUG: true
         run: docker run -d -p 7766:7000 permitio/pdp-v2:latest
 
-      - name: Run Tests
-        working-directory: ./tests/PermitTests
-        run: dotnet test --filter FullyQualifiedName~PermitSDK.Tests.ClientTest.TestPermitClientEnforcer
-          
       - name: Build project
         working-directory: ./src/permit
         run: dotnet build --configuration Release
 
+      - name: Run Tests
+        working-directory: ./tests/PermitTests
+        run: dotnet test --no-build
+          
       # - name: Update VersionPrefix in .csproj
       #   run: |
       #     sed -i 's/<VersionPrefix>.*<\/VersionPrefix>/<VersionPrefix>${{ github.event.release.tag_name }}<\/VersionPrefix>/g' ./src/permit/PermitSDK.csproj
