@@ -66,9 +66,9 @@ jobs:
           sed -i 's/<VersionPrefix>.*<\/VersionPrefix>/<VersionPrefix>${{ github.event.release.tag_name }}<\/VersionPrefix>/g' ./src/permit/PermitSDK.csproj
           cat ./src/permit/PermitSDK.csproj
 
-      - name: Build project
-        working-directory: ./src/permit
-        run: dotnet build --configuration Release
+      # - name: Build project
+      #   working-directory: ./src/permit
+      #   run: dotnet build --configuration Release
 
       - name: Pack project
         working-directory: ./src/permit
