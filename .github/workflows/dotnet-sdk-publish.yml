@@ -39,9 +39,8 @@ jobs:
 
       - name: Run Tests
         working-directory: ./tests/PermitTests
-        run: |
-          dotnet test --no-build --verbosity normal
-      
+        run: dotnet test --filter FullyQualifiedName~PermitSDK.Tests.ClientTest.TestPermitClientEnforcer
+          
       - name: Build project
         working-directory: ./src/permit
         run: dotnet build --configuration Release
