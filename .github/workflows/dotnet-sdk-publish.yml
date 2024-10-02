@@ -21,6 +21,10 @@ jobs:
       # - name: Restore dependencies
       #   working-directory: ./src/permit
       #   run: dotnet restore
+
+      - name: Build project
+        working-directory: ./src/permit
+        run: dotnet build
       
       - name: Insert Token to tests file by secret API key
         run: |
@@ -41,10 +45,6 @@ jobs:
         working-directory: ./tests/PermitTests
         run: |
           dotnet test
-      
-      - name: Build project
-        working-directory: ./src/permit
-        run: dotnet build
 
       # - name: Update VersionPrefix in .csproj
       #   run: |
