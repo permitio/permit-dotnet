@@ -18,14 +18,10 @@ jobs:
           dotnet-version: |
             8.0.x
             
-      # - name: Restore dependencies
-      #   working-directory: ./src/permit
-      #   run: dotnet restore
-
-      - name: Build project
+      - name: Restore dependencies
         working-directory: ./src/permit
-        run: dotnet build
-      
+        run: dotnet restore
+
       - name: Insert Token to tests file by secret API key
         run: |
           sed -i 's/private string testToken = "";/private string testToken = "${{ secrets.PERMIT_API_KEY }}";/' ./tests/PermitTests/PermitClientTests.cs
@@ -44,7 +40,11 @@ jobs:
       - name: Run Tests
         working-directory: ./tests/PermitTests
         run: |
-          dotnet test
+          dotnet test --no-build --verbosity normal
+      
+      - name: Build project
+        working-directory: ./src/permit
+        run: dotnet build --configuration Release
 
       # - name: Update VersionPrefix in .csproj
       #   run: |
