@@ -1,8 +1,8 @@
 name: Test pack and Publish to NuGet
 
-on:
-  release:
-    types: [published]
+on: push
+  # release:
+  #   types: [published]
 
 jobs:
   build:
@@ -37,7 +37,7 @@ jobs:
         run: docker run -d -p 7766:7000 permitio/pdp-v2:latest
 
       - name: Run Tests
-        working-directory: ./tests/PermitTests
+        #working-directory: ./tests/PermitTests
         run: |
           dotnet test --configuration Release
       
@@ -45,15 +45,15 @@ jobs:
         working-directory: ./src/permit
         run: dotnet build --configuration Release
 
-      - name: Update VersionPrefix in .csproj
-        run: |
-          sed -i 's/<VersionPrefix>.*<\/VersionPrefix>/<VersionPrefix>${{ github.event.release.tag_name }}<\/VersionPrefix>/g' ./src/permit/PermitSDK.csproj
-          cat ./src/permit/PermitSDK.csproj
+      # - name: Update VersionPrefix in .csproj
+      #   run: |
+      #     sed -i 's/<VersionPrefix>.*<\/VersionPrefix>/<VersionPrefix>${{ github.event.release.tag_name }}<\/VersionPrefix>/g' ./src/permit/PermitSDK.csproj
+      #     cat ./src/permit/PermitSDK.csproj
           
-      - name: Pack project
-        working-directory: ./src/permit
-        run: dotnet pack --configuration Release
+      # - name: Pack project
+      #   working-directory: ./src/permit
+      #   run: dotnet pack --configuration Release
 
-      - name: Push package to NuGet
-        working-directory: ./src/permit
-        run: dotnet nuget push bin/Release/Permit.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
+      # - name: Push package to NuGet
+      #   working-directory: ./src/permit
+      #   run: dotnet nuget push bin/Release/Permit.${{ github.event.release.tag_name }}.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
