@@ -1,11 +1,12 @@
-name: Test pack and Publish to NuGet
+name: Test and Publish to NuGet
 
 on: push
   # release:
   #   types: [published]
 
 jobs:
-  build:
+  # Job for running tests
+  test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -17,7 +18,7 @@ jobs:
         with:
           dotnet-version: |
             8.0.x
-            
+
       - name: Restore dependencies
         working-directory: ./src/permit
         run: dotnet restore
@@ -37,22 +38,41 @@ jobs:
           PDP_DEBUG: true
         run: docker run -d -p 7766:7000 permitio/pdp-v2:latest
 
+      - name: Run Tests
+        working-directory: ./tests/PermitTests
+        run: dotnet test
+
+  # Job for building and publishing the NuGet package
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: test  # Ensures the build runs only if the test job passes
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+
+      - name: Restore dependencies
+        working-directory: ./src/permit
+        run: dotnet restore
+
+      - name: Update VersionPrefix in .csproj
+        run: |
+          sed -i 's/<VersionPrefix>.*<\/VersionPrefix>/<VersionPrefix>${{ github.event.release.tag_name }}<\/VersionPrefix>/g' ./src/permit/PermitSDK.csproj
+          cat ./src/permit/PermitSDK.csproj
+
       - name: Build project
         working-directory: ./src/permit
         run: dotnet build --configuration Release
 
-      - name: Run Tests
-        working-directory: ./tests/PermitTests
-        run: dotnet test
-          
-      # - name: Update VersionPrefix in .csproj
-      #   run: |
-      #     sed -i 's/<VersionPrefix>.*<\/VersionPrefix>/<VersionPrefix>${{ github.event.release.tag_name }}<\/VersionPrefix>/g' ./src/permit/PermitSDK.csproj
-      #     cat ./src/permit/PermitSDK.csproj
-          
-      # - name: Pack project
-      #   working-directory: ./src/permit
-      #   run: dotnet pack --configuration Release
+      - name: Pack project
+        working-directory: ./src/permit
+        run: dotnet pack --configuration Release
 
       # - name: Push package to NuGet
       #   working-directory: ./src/permit
