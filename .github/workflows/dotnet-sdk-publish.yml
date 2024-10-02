@@ -43,7 +43,7 @@ jobs:
 
       - name: Run Tests
         working-directory: ./tests/PermitTests
-        run: dotnet test --no-build
+        run: dotnet test
           
       # - name: Update VersionPrefix in .csproj
       #   run: |
