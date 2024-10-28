@@ -132,10 +132,14 @@ namespace PermitSDK
                             resource.type
                         )
                     );
-                    var responseContent = await response
+                    if (this.Config.RaiseErrors)
+                    {
+                        var responseContent = await response
                         .Content.ReadAsStringAsync()
                         .ConfigureAwait(false);
-                    throw new PermitApiException($"Got {response.StatusCode} status code while performing permit.check", (int)response.StatusCode, responseContent, null, null);
+                        throw new PermitApiException($"Got {response.StatusCode} status code while performing permit.check", (int)response.StatusCode, responseContent, null, null);
+                    }
+                    return false;
                 }
             }
             catch (Exception e)
@@ -149,7 +153,11 @@ namespace PermitSDK
                         resource.type
                     )
                 );
-                throw; // Rethrow the caught exception
+                if (this.Config.RaiseErrors)
+                {
+                    throw; // Rethrow the caught exception
+                }
+                return false;
             }
         }
 
@@ -273,16 +281,24 @@ namespace PermitSDK
                 else
                 {
                     this.logger.LogError("Got {0} status code while performing bulk check", response.StatusCode);
-                    var responseContent = await response
-                        .Content.ReadAsStringAsync()
-                        .ConfigureAwait(false);
-                    throw new PermitApiException($"Got {response.StatusCode} status code while performing bulk check", (int)response.StatusCode, responseContent, null, null);
+                    if (this.Config.RaiseErrors)
+                    {
+                        var responseContent = await response
+                            .Content.ReadAsStringAsync()
+                            .ConfigureAwait(false);
+                        throw new PermitApiException($"Got {response.StatusCode} status code while performing bulk check", (int)response.StatusCode, responseContent, null, null);
+                    }
+                    return new List<bool>();
                 }
             }
             catch (Exception e)
             {
                 this.logger.LogError(e, "An exception occurred while performing bulk check");
-                throw; // Rethrow the caught exception
+                if (this.Config.RaiseErrors)
+                {
+                    throw; // Rethrow the caught exception
+                }
+                return new List<bool>();
             }
         }
 
@@ -312,7 +328,11 @@ namespace PermitSDK
                 this.logger.LogInformation(
                     string.Format("Error while getting user permissions for {0}", user)
                 );
-                throw; // Rethrow the caught exception
+                if (this.Config.RaiseErrors)
+                {
+                    throw; // Rethrow the caught exception
+                }
+                return new Dictionary<string, _UserPermissionsResult>();
             }
         }
 
