@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Moq;
 using PermitSDK;
 using PermitSDK.Models;
@@ -279,6 +280,99 @@ namespace PermitSDK.Tests
             await permitClient.Api.DeleteTenant(tenantKey);
 
             await permitClient.Api.DeleteResource(resource.Id.ToString());
+        }
+
+        [Fact]
+        public async void TestBulkCheck()
+        {
+            Permit permit = new Permit(testToken, pdpUrl);
+            const string TEST_USER = "test_user";
+            const string TEST_TENANT = "test_tenant";
+            const string TEST_RESOURCE = "test_doc";
+            const string TEST_ROLE = "test_reader";
+            UserKey user = new UserKey(TEST_USER);
+
+            // Policy
+            var actions = new Dictionary<string, PermitSDK.OpenAPI.ActionBlockEditable>
+            {
+                { "read", new() },
+                { "write", new() }
+            };
+            try
+            {
+                var resource = await permit.Api.CreateResource(
+                    new ResourceCreate { Key = TEST_RESOURCE, Name = TEST_RESOURCE, Actions = actions }
+                );
+
+                var role = await permit.Api.CreateRole(new RoleCreate
+                {
+                    Key = TEST_ROLE,
+                    Name = TEST_ROLE,
+                    Permissions = new[] { String.Format("{0}:read", TEST_RESOURCE) }
+                });
+
+                // Directory
+                var userObj = await permit.Api.CreateUser(new UserCreate
+                {
+                    Key = user.key,
+                    Email = "test@user.com",
+                    First_name = "test",
+                    Last_name = "user"
+                });
+                var tenant = await permit.Api.CreateTenant(new TenantCreate { Key = TEST_TENANT, Name = TEST_TENANT });
+                await permit.Api.AssignRole(userObj.Key, role.Key, tenant.Key);
+            }
+            catch (PermitApiException e)
+            {
+                if (e.StatusCode != 409)
+                {
+                    throw;
+                }
+                Console.WriteLine("skipped 409 error on setup", e.Message);
+            }
+
+            // bulk check inputs
+            var inputs = new List<CheckQueryObj>{
+                new CheckQueryObj(user, "read", new ResourceInput(TEST_RESOURCE, tenant: TEST_TENANT), new()),
+                new CheckQueryObj(user, "write", new ResourceInput(TEST_RESOURCE, tenant: TEST_TENANT), new()),
+            };
+
+            // wait until all changes arrive to the PDP
+            Console.WriteLine("sleeping for 10 seconds");
+            await Task.Delay(10000); // Delay for 10 seconds
+
+            // bulk check
+            var results = await permit.BulkCheck(inputs);
+
+            // verify bulk check results
+            Assert.True(results[0]);
+            Assert.False(results[1]);
+
+            // bulk check verbose
+            var verboseResults = await permit.BulkCheckVerbose(inputs);
+
+            // verify bulk check verbose results
+            Assert.Equal(verboseResults[0].Query, inputs[0]);
+            Assert.True(verboseResults[0].Result);
+            Assert.Equal(verboseResults[1].Query, inputs[1]);
+            Assert.False(verboseResults[1].Result);
+
+            // cleanup
+            try
+            {
+                await permit.Api.UnassignRole(TEST_USER, TEST_ROLE, TEST_TENANT);
+                await permit.Api.DeleteUser(TEST_USER);
+                await permit.Api.DeleteTenant(TEST_TENANT);
+                await permit.Api.DeleteResource(TEST_RESOURCE);
+            }
+            catch (PermitApiException e)
+            {
+                if (e.StatusCode != 404)
+                {
+                    throw;
+                }
+                Console.WriteLine("skipped 404 error on cleanup", e.Message);
+            }
         }
     }
 }
