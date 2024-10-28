@@ -93,5 +93,13 @@ namespace PermitSDK
         {
             return await Enforcer.BulkCheck(checks, context);
         }
+
+        public async Task<List<CheckQueryResult>> BulkCheckVerbose(
+            List<CheckQueryObj> checks,
+            Dictionary<string, string> context = null
+        )
+        {
+            return await Enforcer.BulkCheckVerbose(checks, context);
+        }
     }
 }

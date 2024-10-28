@@ -205,6 +205,25 @@ namespace PermitSDK
             return await BulkCheck(inputs, context);
         }
 
+        // returns each check result with its query
+        public async Task<List<CheckQueryResult>> BulkCheckVerbose(
+            List<CheckQueryObj> checks,
+            Dictionary<string, string> context = null
+        )
+        {
+            var results = new List<CheckQueryResult>();
+            var decisions = await BulkCheck(checks, context);
+            if (checks.Count != decisions.Count)
+            {
+                throw new InvalidOperationException(string.Format("Got {0} decision for {1} check queries", decisions.Count, checks.Count));
+            }
+            for (int i = 0; i < checks.Count; i++)
+            {
+                results.Add(new CheckQueryResult(checks[i], decisions[i]));
+            }
+            return results;
+        }
+
         public async Task<List<bool>> BulkCheck(
             List<CheckQueryObj> checks,
             Dictionary<string, string> context = null
