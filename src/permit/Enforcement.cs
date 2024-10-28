@@ -170,6 +170,9 @@ namespace PermitSDK
         )
         {
             var normalizedResource = ResourceInput.Normalize(resource, Config);
+            // Assign a new dictionary if context is null
+            context ??= new Dictionary<string, string>();
+
             var parameters = new Dictionary<string, object>
             {
                 { "user", user },
