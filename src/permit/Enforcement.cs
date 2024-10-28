@@ -132,7 +132,10 @@ namespace PermitSDK
                             resource.type
                         )
                     );
-                    return false;
+                    var responseContent = await response
+                        .Content.ReadAsStringAsync()
+                        .ConfigureAwait(false);
+                    throw new PermitApiException($"Got {response.StatusCode} status code while performing permit.check", (int)response.StatusCode, responseContent, null, null);
                 }
             }
             catch (Exception e)
@@ -146,7 +149,7 @@ namespace PermitSDK
                         resource.type
                     )
                 );
-                return false;
+                throw; // Rethrow the caught exception
             }
         }
 
@@ -239,23 +242,28 @@ namespace PermitSDK
                     }
                     var bulkData = JsonSerializer.Deserialize<BulkPolicyDecision>(responseContent);
                     var result = new List<bool>();
-                    foreach (var decision in bulkData.allow)
+                    if (bulkData != null)
                     {
-                        result.Add(decision.allow);
+                        foreach (var decision in bulkData.allow)
+                        {
+                            result.Add(decision.allow);
+                        }
                     }
                     return result;
                 }
                 else
                 {
-                    this.logger.LogError(string.Format("Error while performing bulk check"));
-                    return new List<bool>();
+                    this.logger.LogError("Got {0} status code while performing bulk check", response.StatusCode);
+                    var responseContent = await response
+                        .Content.ReadAsStringAsync()
+                        .ConfigureAwait(false);
+                    throw new PermitApiException($"Got {response.StatusCode} status code while performing bulk check", (int)response.StatusCode, responseContent, null, null);
                 }
             }
             catch (Exception e)
             {
-                this.logger.LogError(e.ToString());
-                this.logger.LogInformation(string.Format("Error while performing bulk check"));
-                return new List<bool>();
+                this.logger.LogError(e, "An exception occurred while performing bulk check");
+                throw; // Rethrow the caught exception
             }
         }
 
@@ -279,13 +287,13 @@ namespace PermitSDK
                     input
                 );
             }
-            catch (Exception e)
+            catch (PermitApiException e)
             {
                 this.logger.LogError(e.ToString());
                 this.logger.LogInformation(
                     string.Format("Error while getting user permissions for {0}", user)
                 );
-                return new Dictionary<string, _UserPermissionsResult>();
+                throw; // Rethrow the caught exception
             }
         }
 
