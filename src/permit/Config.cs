@@ -31,6 +31,7 @@
         public string ApiUrl { get; private set; }
         public string EnvId { get; set; }
         public string ProjectId { get; set; }
+        public bool RaiseErrors { get; private set; }
 
         public Config(
             string token,
@@ -43,7 +44,8 @@
             bool logAsJson = false,
             string apiUrl = "https://api.permit.io",
             string projectId = null,
-            string envId = null
+            string envId = null,
+            bool raiseErrors = false
         )
         {
             Token = token;
@@ -55,6 +57,7 @@
             ApiUrl = apiUrl;
             ProjectId = projectId;
             EnvId = envId;
+            RaiseErrors = raiseErrors;
         }
     }
 }

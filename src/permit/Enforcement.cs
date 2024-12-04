@@ -132,6 +132,13 @@ namespace PermitSDK
                             resource.type
                         )
                     );
+                    if (this.Config.RaiseErrors)
+                    {
+                        var responseContent = await response
+                        .Content.ReadAsStringAsync()
+                        .ConfigureAwait(false);
+                        throw new PermitApiException($"Got {response.StatusCode} status code while performing permit.check", (int)response.StatusCode, responseContent, null, null);
+                    }
                     return false;
                 }
             }
@@ -146,6 +153,10 @@ namespace PermitSDK
                         resource.type
                     )
                 );
+                if (this.Config.RaiseErrors)
+                {
+                    throw; // Rethrow the caught exception
+                }
                 return false;
             }
         }
@@ -170,6 +181,9 @@ namespace PermitSDK
         )
         {
             var normalizedResource = ResourceInput.Normalize(resource, Config);
+            // Assign a new dictionary if context is null
+            context ??= new Dictionary<string, string>();
+
             var parameters = new Dictionary<string, object>
             {
                 { "user", user },
@@ -197,6 +211,25 @@ namespace PermitSDK
                 inputs.Add(input);
             }
             return await BulkCheck(inputs, context);
+        }
+
+        // returns each check result with its query
+        public async Task<List<CheckQueryResult>> BulkCheckVerbose(
+            List<CheckQueryObj> checks,
+            Dictionary<string, string> context = null
+        )
+        {
+            var results = new List<CheckQueryResult>();
+            var decisions = await BulkCheck(checks, context);
+            if (checks.Count != decisions.Count)
+            {
+                throw new InvalidOperationException(string.Format("Got {0} decision for {1} check queries", decisions.Count, checks.Count));
+            }
+            for (int i = 0; i < checks.Count; i++)
+            {
+                results.Add(new CheckQueryResult(checks[i], decisions[i]));
+            }
+            return results;
         }
 
         public async Task<List<bool>> BulkCheck(
@@ -236,22 +269,35 @@ namespace PermitSDK
                     }
                     var bulkData = JsonSerializer.Deserialize<BulkPolicyDecision>(responseContent);
                     var result = new List<bool>();
-                    foreach (var decision in bulkData.allow)
+                    if (bulkData != null)
                     {
-                        result.Add(decision.allow);
+                        foreach (var decision in bulkData.allow)
+                        {
+                            result.Add(decision.allow);
+                        }
                     }
                     return result;
                 }
                 else
                 {
-                    this.logger.LogError(string.Format("Error while performing bulk check"));
+                    this.logger.LogError("Got {0} status code while performing bulk check", response.StatusCode);
+                    if (this.Config.RaiseErrors)
+                    {
+                        var responseContent = await response
+                            .Content.ReadAsStringAsync()
+                            .ConfigureAwait(false);
+                        throw new PermitApiException($"Got {response.StatusCode} status code while performing bulk check", (int)response.StatusCode, responseContent, null, null);
+                    }
                     return new List<bool>();
                 }
             }
             catch (Exception e)
             {
-                this.logger.LogError(e.ToString());
-                this.logger.LogInformation(string.Format("Error while performing bulk check"));
+                this.logger.LogError(e, "An exception occurred while performing bulk check");
+                if (this.Config.RaiseErrors)
+                {
+                    throw; // Rethrow the caught exception
+                }
                 return new List<bool>();
             }
         }
@@ -276,12 +322,16 @@ namespace PermitSDK
                     input
                 );
             }
-            catch (Exception e)
+            catch (PermitApiException e)
             {
                 this.logger.LogError(e.ToString());
                 this.logger.LogInformation(
                     string.Format("Error while getting user permissions for {0}", user)
                 );
+                if (this.Config.RaiseErrors)
+                {
+                    throw; // Rethrow the caught exception
+                }
                 return new Dictionary<string, _UserPermissionsResult>();
             }
         }

@@ -26,7 +26,8 @@ namespace PermitSDK
             string label = "permitio-sdk",
             bool logAsJson = false,
             string projectId = null,
-            string envId = null
+            string envId = null,
+            bool raiseErrors = false
         )
         {
             Config = new Config(
@@ -40,7 +41,8 @@ namespace PermitSDK
                 logAsJson,
                 apiUrl,
                 projectId,
-                envId
+                envId,
+                raiseErrors
             );
 
             ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
@@ -95,6 +97,14 @@ namespace PermitSDK
         )
         {
             return await Enforcer.BulkCheck(checks, context);
+        }
+
+        public async Task<List<CheckQueryResult>> BulkCheckVerbose(
+            List<CheckQueryObj> checks,
+            Dictionary<string, string> context = null
+        )
+        {
+            return await Enforcer.BulkCheckVerbose(checks, context);
         }
     }
 }

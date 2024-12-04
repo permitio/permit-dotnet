@@ -66,6 +66,18 @@ namespace PermitSDK.Models
         public CheckQuery() { }
     }
 
+    public class CheckQueryResult
+    {
+        public CheckQueryObj Query { get; set; }
+        public bool Result { get; set; }
+
+        public CheckQueryResult(CheckQueryObj query, bool result)
+        {
+            this.Query = query;
+            this.Result = result;
+        }
+    }
+
 
     public class BulkPolicyDecision
     {
