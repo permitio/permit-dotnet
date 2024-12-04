@@ -24,7 +24,9 @@ namespace PermitSDK
             string apiUrl = DEFAULT_API_URL,
             string level = "info",
             string label = "permitio-sdk",
-            bool logAsJson = false
+            bool logAsJson = false,
+            string projectId = null,
+            string envId = null
         )
         {
             Config = new Config(
@@ -36,7 +38,9 @@ namespace PermitSDK
                 level,
                 label,
                 logAsJson,
-                apiUrl
+                apiUrl,
+                projectId,
+                envId
             );
 
             ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
@@ -46,15 +50,15 @@ namespace PermitSDK
 
             this.Api = new Api(this.Config, logger);
             // todo need to move elements to work with the regular config
-            this.Elements = new ElementsApi(new NewApiConfig
-            {
-                ApiURL = apiUrl,
-                PdpURL = pdp,
-                DebugMode = debugMode,
-                Token = token
-            });
-
-
+            this.Elements = new ElementsApi(
+                new NewApiConfig
+                {
+                    ApiURL = apiUrl,
+                    PdpURL = pdp,
+                    DebugMode = debugMode,
+                    Token = token
+                }
+            );
         }
 
         public async Task<bool> Check(
@@ -76,7 +80,6 @@ namespace PermitSDK
         {
             return await Enforcer.Check(user, action, resource, context);
         }
-
 
         public async Task<List<bool>> BulkCheck(
             List<CheckQuery> checks,
