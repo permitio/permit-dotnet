@@ -29,6 +29,8 @@
         public bool UseDefaultTenantIfEmpty { get; private set; }
         LoggerConfig Log { get; }
         public string ApiUrl { get; private set; }
+        public string EnvId { get; set; }
+        public string ProjectId { get; set; }
         public bool RaiseErrors { get; private set; }
 
         public Config(
@@ -41,6 +43,8 @@
             string label = "permitio-sdk",
             bool logAsJson = false,
             string apiUrl = "https://api.permit.io",
+            string projectId = null,
+            string envId = null,
             bool raiseErrors = false
         )
         {
@@ -51,6 +55,8 @@
             UseDefaultTenantIfEmpty = useDefaultTenantIfEmpty;
             Log = new LoggerConfig(level, label, logAsJson);
             ApiUrl = apiUrl;
+            ProjectId = projectId;
+            EnvId = envId;
             RaiseErrors = raiseErrors;
         }
     }

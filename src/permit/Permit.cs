@@ -25,6 +25,8 @@ namespace PermitSDK
             string level = "info",
             string label = "permitio-sdk",
             bool logAsJson = false,
+            string projectId = null,
+            string envId = null,
             bool raiseErrors = false
         )
         {
@@ -38,6 +40,8 @@ namespace PermitSDK
                 label,
                 logAsJson,
                 apiUrl,
+                projectId,
+                envId,
                 raiseErrors
             );
 
@@ -48,15 +52,15 @@ namespace PermitSDK
 
             this.Api = new Api(this.Config, logger);
             // todo need to move elements to work with the regular config
-            this.Elements = new ElementsApi(new NewApiConfig
-            {
-                ApiURL = apiUrl,
-                PdpURL = pdp,
-                DebugMode = debugMode,
-                Token = token
-            });
-
-
+            this.Elements = new ElementsApi(
+                new NewApiConfig
+                {
+                    ApiURL = apiUrl,
+                    PdpURL = pdp,
+                    DebugMode = debugMode,
+                    Token = token
+                }
+            );
         }
 
         public async Task<bool> Check(
@@ -78,7 +82,6 @@ namespace PermitSDK
         {
             return await Enforcer.Check(user, action, resource, context);
         }
-
 
         public async Task<List<bool>> BulkCheck(
             List<CheckQuery> checks,
