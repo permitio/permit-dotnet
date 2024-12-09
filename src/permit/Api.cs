@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using PermitSDK.Models;
 using PermitSDK.OpenAPI;
+using PermitSDK.OpenAPI.Models;
 
 namespace PermitSDK
 {
@@ -73,7 +71,7 @@ namespace PermitSDK
             return await _api_client.Get_tenantAsync(_projectId, _environmentId, tenantKey);
         }
 
-        public async Task<ICollection<RoleAssignmentRead>> GetAssignedRoles(
+        public async Task<PaginatedResult_RoleAssignmentRead_> GetAssignedRoles(
             string userKey,
             string tenantKey = default,
             int page = 1,
@@ -83,14 +81,14 @@ namespace PermitSDK
             return await _api_client.List_role_assignmentsAsync(
                 _projectId,
                 _environmentId,
-                userKey,
-                tenantKey,
+                new List<string> { userKey },
+                new List<string> { tenantKey },
                 page: page,
                 per_page: perPage
             );
         }
 
-        public async Task<ICollection<TenantRead>> ListTenants(int page = 1, int perPage = 30)
+        public async Task<PaginatedResult_TenantRead_> ListTenants(int page = 1, int perPage = 30)
         {
             return await _api_client.List_tenantsAsync(
                 _projectId,
@@ -124,7 +122,7 @@ namespace PermitSDK
                         Attributes = user.Attributes,
                         Email = user.Email,
                         First_name = user.First_name,
-                        Last_name = user.Last_name
+                        Last_name = user.Last_name,
                     }
                 );
             }
@@ -216,7 +214,7 @@ namespace PermitSDK
                     Role = roleKey,
                     User = userKey,
                     Tenant = tenantKey,
-                    Resource_instance = resourceInstanceIdent
+                    Resource_instance = resourceInstanceIdent,
                 }
             );
         }
@@ -251,7 +249,7 @@ namespace PermitSDK
                     Role = roleKey,
                     Tenant = tenantKey,
                     User = userKey,
-                    Resource_instance = resourceInstanceIdent
+                    Resource_instance = resourceInstanceIdent,
                 }
             );
         }
@@ -288,7 +286,7 @@ namespace PermitSDK
             await _api_client.Delete_resourceAsync(_projectId, _environmentId, resourceKey);
         }
 
-        public async Task<ICollection<RoleRead>> ListRoles()
+        public async Task<PaginatedResult_RoleRead_> ListRoles()
         {
             return await _api_client.List_rolesAsync(_projectId, _environmentId);
         }
@@ -440,12 +438,16 @@ namespace PermitSDK
             );
         }
 
-        public async Task<ICollection<RoleAssignmentRead>> ListAssignedRoles(
+        public async Task<PaginatedResult_RoleAssignmentRead_> ListAssignedRoles(
             string userId,
             string tenantId = null
         )
         {
-            return await _api_client.List_role_assignmentsAsync(_projectId, _environmentId, userId);
+            return await _api_client.List_role_assignmentsAsync(
+                _projectId,
+                _environmentId,
+                new List<string> { userId }
+            );
         }
     }
 }
