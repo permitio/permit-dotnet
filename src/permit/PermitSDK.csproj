@@ -38,7 +38,4 @@
   </PackageReference>
   <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 </ItemGroup>
-    <Target Name="GenerateSdk" BeforeTargets="Build" Inputs="openapi.json" Outputs="PermitOpenAPI.cs">
-        <Exec Command="$(NSwagExe_Net60) run nswag.json /variables=InputDocument=openapi.json" />
-    </Target>
 </Project>

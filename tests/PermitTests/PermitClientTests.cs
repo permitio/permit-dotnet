@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Moq;
 using PermitSDK.Models;
-using PermitSDK.OpenAPI;
+using PermitSDK.OpenAPI.Models;
 using Xunit;
 
 namespace PermitSDK.Tests
@@ -65,11 +65,9 @@ namespace PermitSDK.Tests
 
             var resourceKey = String.Concat("testResource", postfix);
             // create resource actions
-            System.Collections.Generic.IDictionary<
-                string,
-                PermitSDK.OpenAPI.ActionBlockEditable
-            > actions = new Dictionary<string, PermitSDK.OpenAPI.ActionBlockEditable>();
-            actions.Add("read", new PermitSDK.OpenAPI.ActionBlockEditable { Description = "read" });
+            System.Collections.Generic.IDictionary<string, ActionBlockEditable> actions =
+                new Dictionary<string, ActionBlockEditable>();
+            actions.Add("read", new ActionBlockEditable { Description = "read" });
             var resource = await permitClient.Api.CreateResource(
                 new ResourceCreate
                 {
@@ -221,7 +219,7 @@ namespace PermitSDK.Tests
             };
             var createdRole = await permitClient.Api.CreateRole(roleCreate);
             var roles = await permitClient.Api.ListRoles();
-            Assert.True(roles.Count > 0);
+            Assert.True(roles.Total_count > 0);
 
             var getRole = await permitClient.Api.GetRole(createdRole.Id.ToString());
             var assignedRole = await permitClient.Api.AssignRole(
@@ -234,7 +232,7 @@ namespace PermitSDK.Tests
                 getUser.Key,
                 getTenant.Key
             );
-            Assert.True(assignedRoles.Count == assignedRoles2.Count);
+            Assert.True(assignedRoles.Total_count == assignedRoles2.Total_count);
 
             // test elements login as with this user only after assigning roles to it
             var elementsLogin = await permitClient.Elements.LoginAs(user.Key, getTenant.Key);
@@ -273,7 +271,7 @@ namespace PermitSDK.Tests
             await permitClient.Api.UnassignRole(user.Key, getRole.Id.ToString(), getTenant.Key);
 
             assignedRoles = await permitClient.Api.ListAssignedRoles(getUser.Key);
-            Assert.True(assignedRoles.Count == (assignedRoles2.Count - 1));
+            Assert.True(assignedRoles.Total_count == (assignedRoles2.Total_count - 1));
 
             await permitClient.Api.DeleteUser(getUser.Key);
 
