@@ -21,8 +21,14 @@ jobs:
 
       - name: Run SDK generation script
         run: generate_openapi.sh
-
+        
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --exit-code || echo "changes"
+          
       - name: Commit changes
+        if: steps.check_changes.outputs.changes == 'changes'
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
