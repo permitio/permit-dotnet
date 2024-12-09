@@ -6,12 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
-    "update-openapi.json": "curl https://api.permit.io/v2/openapi.json -o openapi.json",
     "update-api": "nswag run nswag.json",
-    "update-status-check": "pwd; sed -i -f update_status_check.sed PermitOpenAPI.cs", 
-    "update-pdp-openapi": "curl https://pdp-api.permit.io/openapi.json -o pdp-openapi.json",
-    "update-pdp-api": "nswag run nswag-pdp.json",
-    "update-status-check-pdp": "pwd; sed -i -f update_status_check.sed PermitPDPOpenAPI.cs"
+    "update-pdp-api": "nswag run nswag-pdp.json"
   },
   "lint-staged": {
     "*.cs": "dotnet csharpier "
@@ -32,6 +28,6 @@
     "lint-staged": "^12.2.2"
   },
   "dependencies": {
-    "nswag": "^13.1.0"
+    "nswag": "^14.2.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "runtime": "Net60",
+  "runtime": "Net90",
   "defaultVariables": "Configuration=Debug",
   "documentGenerator": {
     "fromDocument": {
@@ -18,11 +18,19 @@
       "className": "PermitClient",
       "operationGenerationMode": "SingleClientFromOperationId",
       "namespace": "PermitSDK.OpenAPI",
-      "output": "src/permit/PermitOpenAPI.cs",
+      "output": "./src/permit/PermitOpenAPI.cs",
       "classStyle": "poco",
       "generateOptionalParameters": true,
       "generateOptionalPropertiesAsNullable": true,
-      "generateNullableReferenceTypes": true
+      "generateNullableReferenceTypes": true,
+      "nullableReferenceTypes": true,
+      "requiredPropertiesMustBeDefined": false,
+      "generateNullableProperties": true,
+      "generateResponseClasses": false,
+      "responseClass": "SwaggerResponse",
+      "generateContractsOutput": true,
+      "contractsOutputFilePath": "./src/permit/PermitOpenAPIModels.cs",
+      "contractsNamespace": "PermitSDK.OpenAPI.Models"
     }
   }
 }
