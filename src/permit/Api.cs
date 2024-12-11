@@ -242,6 +242,7 @@ namespace PermitSDK
             {
                 resourceInstanceIdent = string.Concat(resource_type, ":", resourceInstanceId);
             }
+
             return await _api_client.Assign_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -277,6 +278,7 @@ namespace PermitSDK
             {
                 resourceInstanceIdent = string.Concat(resource_type, ":", resourceInstanceId);
             }
+
             await _api_client.Unassign_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -335,6 +337,22 @@ namespace PermitSDK
             return await _api_client.List_rolesAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
+                include_total_count: true
+            );
+        }
+
+        public async Task<PaginatedResult_ResourceInstanceRead_> ListResourceInstances(
+            string resourceId,
+            int page = 1,
+            int perPage = 30
+        )
+        {
+            return await _api_client.List_resource_instancesAsync(
+                proj_id: _projectId,
+                env_id: _environmentId,
+                resource: resourceId,
+                page: page,
+                per_page: perPage,
                 include_total_count: true
             );
         }
@@ -492,6 +510,52 @@ namespace PermitSDK
                 proj_id: _projectId,
                 env_id: _environmentId,
                 user: new List<string> { userId },
+                include_total_count: true
+            );
+        }
+
+        public async Task<RelationshipTupleRead> CreateRelationshipTuple(
+            RelationshipTupleCreate relationshipTuple
+        )
+        {
+            return await _api_client.Create_relationship_tupleAsync(
+                proj_id: _projectId,
+                env_id: _environmentId,
+                body: relationshipTuple
+            );
+        }
+
+        public async Task DeleteRelationshipTuple(RelationshipTupleDelete relationshipTuple)
+        {
+            await _api_client.Delete_relationship_tupleAsync(
+                proj_id: _projectId,
+                env_id: _environmentId,
+                body: relationshipTuple
+            );
+        }
+
+        public async Task<PaginatedResult_RelationshipTupleRead_> ListRelationshipTuples(
+            string tenant = null,
+            string subject = null,
+            string relation = null,
+            string @object = null,
+            string objectType = null,
+            string subjectType = null,
+            int page = 1,
+            int perPage = 30
+        )
+        {
+            return await _api_client.List_relationship_tuplesAsync(
+                proj_id: _projectId,
+                env_id: _environmentId,
+                tenant: tenant,
+                subject: subject,
+                relation: relation,
+                @object: @object,
+                object_type: objectType,
+                subject_type: subjectType,
+                page: page,
+                per_page: perPage,
                 include_total_count: true
             );
         }
