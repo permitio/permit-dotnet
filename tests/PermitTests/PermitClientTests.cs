@@ -100,7 +100,7 @@ namespace PermitSDK.Tests
                 tenant.Key
             );
             // sleep for 10 second to let the role be assigned
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(10_000);
             // check if the user has the permission
             Assert.True(
                 await permitClient.Enforcer.Check(
