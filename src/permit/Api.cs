@@ -126,42 +126,12 @@ namespace PermitSDK
 
         public async Task<UserRead> SyncUser(UserCreate userCreate)
         {
-            try
-            {
-                var user = await _api_client.Get_userAsync(
-                    proj_id: _projectId,
-                    env_id: _environmentId,
-                    user_id: userCreate.Key
-                );
-
-                return await _api_client.Update_userAsync(
-                    proj_id: _projectId,
-                    env_id: _environmentId,
-                    user_id: user.Id.ToString(),
-                    body: new UserUpdate()
-                    {
-                        Attributes = user.Attributes,
-                        Email = user.Email,
-                        First_name = user.First_name,
-                        Last_name = user.Last_name,
-                    }
-                );
-            }
-            catch (PermitApiException ex)
-            {
-                if (ex.StatusCode == 404)
-                {
-                    return await _api_client.Create_userAsync(
-                        proj_id: _projectId,
-                        env_id: _environmentId,
-                        body: userCreate
-                    );
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            return await _api_client.Replace_userAsync(
+                proj_id: _projectId,
+                env_id: _environmentId,
+                user_id: userCreate.Key,
+                body: userCreate
+            );
         }
 
         public async Task DeleteUser(string userKey)
