@@ -30,9 +30,6 @@ jobs:
         working-directory: ./src/permit
         run: dotnet restore
 
-      - name: Install Docker
-        uses: docker-practice/actions-setup-docker@master
-
       - name: Run Tests
         working-directory: ./tests/PermitTests
         env: 
