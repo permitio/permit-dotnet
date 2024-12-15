@@ -1,0 +1,42 @@
+name: Run tests
+
+on:
+  push:
+      branches:
+      - main
+  pull_request:
+      branches:
+      - main
+
+jobs:
+  test-dotnet-sdk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      pdp:
+        image: permitio/pdp-v2:latest
+        ports:
+          - 7766:7000
+        env:
+          PDP_API_KEY: ${{ secrets.PERMIT_API_KEY }}
+          PDP_DEBUG: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            9.0.x
+
+      - name: Restore dependencies
+        working-directory: ./src/permit
+        run: dotnet restore
+
+
+      - name: Run Tests
+        working-directory: ./tests/PermitTests
+        env:
+          PERMIT_API_KEY: ${{ secrets.PERMIT_API_KEY }}
+        run: dotnet test

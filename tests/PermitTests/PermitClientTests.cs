@@ -1,121 +1,120 @@
 ﻿using System;
 using System.Collections.Generic;
 using Moq;
-using PermitSDK;
 using PermitSDK.Models;
-using PermitSDK.OpenAPI;
+using PermitSDK.OpenAPI.Models;
 using Xunit;
 
 namespace PermitSDK.Tests
 {
     public class ClientTest
     {
-        private string testToken = "";
-        private string pdpUrl = "http://localhost:7766";
+        private string testToken = Environment.GetEnvironmentVariable("PERMIT_API_KEY");
+        private string pdpUrl =
+            Environment.GetEnvironmentVariable("PDP_URL") ?? "http://localhost:7766";
 
         [Fact]
         public void TestPermitConfig()
         {
+            Assert.True(testToken != null, "PERMIT_API_KEY environment variable is not set");
             Config config = new Config(testToken);
             Assert.True(config.Token == testToken);
             Assert.True(config.Pdp == Config.DEFAULT_PDP_URL);
         }
 
-        // [Fact]
-        // public async void TestPermitClientEnforcer()
-        // {
-        //     string testUser = "testUser";
-        //     Mock<IUserKey> testUserKey = new Mock<IUserKey>();
-        //     testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
+        [Fact]
+        public async void TestPermitClientEnforcer()
+        {
+            string testUser = "testUser";
+            Mock<IUserKey> testUserKey = new Mock<IUserKey>();
+            testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
 
-        //     string testAction = "testAction";
-        //     string testResource = "testResource";
-        //     Permit permitClient = new Permit(testToken, useDefaultTenantIfEmpty: true);
-        //     Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
-        //     // create dictionary with partition key and value 11
-        //     Dictionary<string, dynamic> attributes = new Dictionary<string, dynamic>();
-        //     attributes.Add("partition", 11);
-        //     Assert.False(
-        //         await permitClient.Enforcer.Check(
-        //             new UserKey(testUserKey.Object.key),
-        //             testAction,
-        //             new ResourceInput(testResource, null, null, attributes)
-        //         )
-        //     );
+            string testAction = "testAction";
+            string testResource = "testResource";
+            Permit permitClient = new Permit(testToken, useDefaultTenantIfEmpty: true);
+            Assert.False(await permitClient.Enforcer.Check(testUser, testAction, testResource));
+            // create dictionary with partition key and value 11
+            Dictionary<string, dynamic> attributes = new Dictionary<string, dynamic>();
+            attributes.Add("partition", 11);
+            Assert.False(
+                await permitClient.Enforcer.Check(
+                    new UserKey(testUserKey.Object.key),
+                    testAction,
+                    new ResourceInput(testResource, null, null, attributes)
+                )
+            );
 
-        //     // create user resource and assign role to it to get the permission
-        //     string postfix = Guid.NewGuid().ToString();
-        //     string testKey = string.Concat("testKey", postfix);
-        //     string testFirstName = "testFirstName";
-        //     string testLastName = "testlastName";
-        //     string testEmail = "testEmail@email.com";
-        //     testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
+            // create user resource and assign role to it to get the permission
+            string postfix = Guid.NewGuid().ToString();
+            string testKey = string.Concat("testKey", postfix);
+            string testFirstName = "testFirstName";
+            string testLastName = "testlastName";
+            string testEmail = "testEmail@email.com";
+            testUserKey.Setup(testUserKey => testUserKey.key).Returns("test");
 
-        //     // Test User Api
-        //     var userObj = new UserCreate
-        //     {
-        //         Key = testKey,
-        //         Email = testEmail,
-        //         First_name = testFirstName,
-        //         Last_name = testLastName,
-        //         Attributes = { }
-        //     };
-        //     var user = await permitClient.Api.CreateUser(userObj);
+            // Test User Api
+            var userObj = new UserCreate
+            {
+                Key = testKey,
+                Email = testEmail,
+                First_name = testFirstName,
+                Last_name = testLastName,
+                Attributes = { },
+            };
+            var user = await permitClient.Api.CreateUser(userObj);
 
-        //     var resourceKey = String.Concat("testResource", postfix);
-        //     // create resource actions
-        //     System.Collections.Generic.IDictionary<
-        //         string,
-        //         PermitSDK.OpenAPI.ActionBlockEditable
-        //     > actions = new Dictionary<string, PermitSDK.OpenAPI.ActionBlockEditable>();
-        //     actions.Add("read", new PermitSDK.OpenAPI.ActionBlockEditable { Description = "read" });
-        //     var resource = await permitClient.Api.CreateResource(
-        //         new ResourceCreate
-        //         {
-        //             Key = resourceKey,
-        //             Name = resourceKey,
-        //             Actions = actions
-        //         }
-        //     );
-        //     var roleName = String.Concat("rName", postfix);
-        //     string roleDesc = "rDesc";
-        //     // add permission to the role
-        //     System.Collections.Generic.ICollection<string> permissions = new List<string>();
-        //     permissions.Add(string.Concat(resourceKey, ":read"));
-        //     var roleCreate = new RoleCreate
-        //     {
-        //         Name = roleName,
-        //         Description = roleDesc,
-        //         Key = roleName,
-        //         Permissions = permissions
-        //     };
-        //     var createdRole = await permitClient.Api.CreateRole(roleCreate);
-        //     // create tenant
-        //     string tenantKey = String.Concat("tKey", postfix);
-        //     var tenantCreate = new TenantCreate { Key = tenantKey, Name = tenantKey };
-        //     var tenant = await permitClient.Api.CreateTenant(tenantCreate);
-        //     // assign role to the user
-        //     var assignedRole = await permitClient.Api.AssignRole(
-        //         user.Key,
-        //         createdRole.Key,
-        //         tenant.Key
-        //     );
-        //     // sleep for 10 second to let the role be assigned
-        //     System.Threading.Thread.Sleep(1000);
-        //     // check if the user has the permission
-        //     Assert.True(
-        //         await permitClient.Enforcer.Check(
-        //             new UserKey(user.Key),
-        //             "read",
-        //             new ResourceInput(resourceKey, null, tenant.Key, attributes)
-        //         )
-        //     );
-        //     // get user permissions
-        //     var userPermissions = await permitClient.Enforcer.GetUserPermissions(
-        //         new PermitSDK.PDP.OpenAPI.User() { Key = user.Key }
-        //     );
-        //     Assert.True(userPermissions.Count > 0);
-        // }
+            var resourceKey = String.Concat("testResource", postfix);
+            // create resource actions
+            System.Collections.Generic.IDictionary<string, ActionBlockEditable> actions =
+                new Dictionary<string, ActionBlockEditable>();
+            actions.Add("read", new ActionBlockEditable { Description = "read" });
+            var resource = await permitClient.Api.CreateResource(
+                new ResourceCreate
+                {
+                    Key = resourceKey,
+                    Name = resourceKey,
+                    Actions = actions,
+                }
+            );
+            var roleName = String.Concat("rName", postfix);
+            string roleDesc = "rDesc";
+            // add permission to the role
+            System.Collections.Generic.ICollection<string> permissions = new List<string>();
+            permissions.Add(string.Concat(resourceKey, ":read"));
+            var roleCreate = new RoleCreate
+            {
+                Name = roleName,
+                Description = roleDesc,
+                Key = roleName,
+                Permissions = permissions,
+            };
+            var createdRole = await permitClient.Api.CreateRole(roleCreate);
+            // create tenant
+            string tenantKey = String.Concat("tKey", postfix);
+            var tenantCreate = new TenantCreate { Key = tenantKey, Name = tenantKey };
+            var tenant = await permitClient.Api.CreateTenant(tenantCreate);
+            // assign role to the user
+            var assignedRole = await permitClient.Api.AssignRole(
+                user.Key,
+                createdRole.Key,
+                tenant.Key
+            );
+            // sleep for 10 second to let the role be assigned
+            System.Threading.Thread.Sleep(10_000);
+            // check if the user has the permission
+            Assert.True(
+                await permitClient.Enforcer.Check(
+                    new UserKey(user.Key),
+                    "read",
+                    new ResourceInput(resourceKey, null, tenant.Key, attributes)
+                )
+            );
+            // get user permissions
+            var userPermissions = await permitClient.Enforcer.GetUserPermissions(
+                new PermitSDK.PDP.OpenAPI.User() { Key = user.Key }
+            );
+            Assert.True(userPermissions.Count > 0);
+        }
 
         // test resource input parsing
         [Fact]
@@ -162,7 +161,7 @@ namespace PermitSDK.Tests
                 Key = testKey,
                 Email = testEmail,
                 First_name = testFirstName,
-                Last_name = testLastName
+                Last_name = testLastName,
             };
             var user = await permitClient.Api.CreateUser(userObj);
             Assert.True(user.First_name == testFirstName);
@@ -201,7 +200,7 @@ namespace PermitSDK.Tests
                 {
                     Key = resourceInstanceKey,
                     Resource = resourceKey,
-                    Tenant = tenantKey
+                    Tenant = tenantKey,
                 }
             );
             var getResourceInstance = await permitClient.Api.GetResourceInstance(
@@ -216,11 +215,11 @@ namespace PermitSDK.Tests
             {
                 Name = roleName,
                 Description = roleDesc,
-                Key = roleName
+                Key = roleName,
             };
             var createdRole = await permitClient.Api.CreateRole(roleCreate);
             var roles = await permitClient.Api.ListRoles();
-            Assert.True(roles.Count > 0);
+            Assert.True(roles.Total_count > 0);
 
             var getRole = await permitClient.Api.GetRole(createdRole.Id.ToString());
             var assignedRole = await permitClient.Api.AssignRole(
@@ -233,7 +232,7 @@ namespace PermitSDK.Tests
                 getUser.Key,
                 getTenant.Key
             );
-            Assert.True(assignedRoles.Count == assignedRoles2.Count);
+            Assert.True(assignedRoles.Total_count == assignedRoles2.Total_count);
 
             // test elements login as with this user only after assigning roles to it
             var elementsLogin = await permitClient.Elements.LoginAs(user.Key, getTenant.Key);
@@ -272,7 +271,7 @@ namespace PermitSDK.Tests
             await permitClient.Api.UnassignRole(user.Key, getRole.Id.ToString(), getTenant.Key);
 
             assignedRoles = await permitClient.Api.ListAssignedRoles(getUser.Key);
-            Assert.True(assignedRoles.Count == (assignedRoles2.Count - 1));
+            Assert.True(assignedRoles.Total_count == (assignedRoles2.Total_count - 1));
 
             await permitClient.Api.DeleteUser(getUser.Key);
 

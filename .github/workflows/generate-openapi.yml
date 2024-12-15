@@ -1,0 +1,58 @@
+name: Generate SDK and Open PR
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 0' # Runs every Sunday at 12:00 UTC
+    
+
+jobs:
+  generate-sdk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run SDK generation script
+        run: generate_openapi.sh
+        
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --exit-code || echo "changes"
+          
+      - name: Commit changes
+        if: steps.check_changes.outputs.changes == 'changes'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git checkout -b feat/sdk-update-$(date +'%Y%m%d')
+          git add .
+          git commit -m "Update SDK from OpenAPI specs"
+
+      - name: Push changes to a new branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git push origin feat/sdk-update-$(date +'%Y%m%d')
+
+      - name: Create a pull request
+        id: create_pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: sdk-update-$(date +'%Y%m%d')
+          title: "OpenAPI SDK Update"
+          body: "This PR updates the SDK based on the latest OpenAPI specifications."
+
+      - name: Output PR URL
+        if: steps.create_pr.outputs.pull-request-url != ''
+        run: |
+          echo "Pull Request URL: ${{ steps.create_pr.outputs.pull-request-url }}"
+        

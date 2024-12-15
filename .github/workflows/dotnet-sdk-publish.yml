@@ -8,6 +8,14 @@ jobs:
   test-dotnet-sdk:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services: 
+      pdp:
+        image: permitio/pdp-v2:latest
+        ports:
+          - 7766:7000
+        env:
+          PDP_API_KEY: ${{ secrets.PERMIT_API_KEY }}
+          PDP_DEBUG: true
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,29 +24,16 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            8.0.x
+            9.0.x
 
       - name: Restore dependencies
         working-directory: ./src/permit
         run: dotnet restore
 
-      - name: Insert Token to tests file by secret API key
-        run: |
-          sed -i 's/private string testToken = "";/private string testToken = "${{ secrets.PERMIT_API_KEY }}";/' ./tests/PermitTests/PermitClientTests.cs
-          cat ./tests/PermitTests/PermitClientTests.cs
-
-      - name: Install Docker
-        uses: docker-practice/actions-setup-docker@master
-      
-      - name: Run local PDP
-        env:
-          PDP_API_KEY: ${{ secrets.PERMIT_API_KEY }}
-          PERMIT_API_KEY: ${{ secrets.PERMIT_API_KEY }}
-          PDP_DEBUG: true
-        run: docker run -d -p 7766:7000 permitio/pdp-v2:latest
-
       - name: Run Tests
         working-directory: ./tests/PermitTests
+        env: 
+          PERMIT_API_KEY: ${{ secrets.PERMIT_API_KEY }}
         run: dotnet test
 
   # Job for building and publishing the NuGet package
@@ -54,7 +49,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
-            8.0.x
+            9.0.x
 
       - name: Restore dependencies
         working-directory: ./src/permit

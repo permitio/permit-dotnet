@@ -3,10 +3,10 @@
   <PropertyGroup>
     <RootNamespace>PermitSDK</RootNamespace>
     <AssemblyName>Permit</AssemblyName>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
     <Nullable>disable</Nullable>
     <LangVersion>latest</LangVersion>
     <Configurations>Release;Debug</Configurations>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 <PropertyGroup>
   <VersionPrefix>1.4.1</VersionPrefix>
@@ -38,7 +38,4 @@
   </PackageReference>
   <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 </ItemGroup>
-    <Target Name="GenerateSdk" BeforeTargets="Build" Inputs="openapi.json" Outputs="PermitOpenAPI.cs">
-        <Exec Command="$(NSwagExe_Net60) run nswag.json /variables=InputDocument=openapi.json" />
-    </Target>
 </Project>
