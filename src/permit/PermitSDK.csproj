@@ -6,7 +6,7 @@
     <Nullable>disable</Nullable>
     <LangVersion>latest</LangVersion>
     <Configurations>Release;Debug</Configurations>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
   </PropertyGroup>
 <PropertyGroup>
   <VersionPrefix>1.4.1</VersionPrefix>
@@ -22,10 +22,6 @@
     <None Remove="Models\" />
     <None Remove="Microsoft.Extensions.Logging" />
     <None Remove="Microsoft.Extensions.Logging.Console" />
-</ItemGroup>
-<ItemGroup>
-    <Folder Include="..\Permit\Models\" />
-    <Folder Include="Models\" />
 </ItemGroup>
 
 <ItemGroup>

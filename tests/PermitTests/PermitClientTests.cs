@@ -118,7 +118,7 @@ namespace PermitSDK.Tests
 
         // test resource input parsing
         [Fact]
-        public async void TestResourceInput()
+        public void TestResourceInput()
         {
             string testResource = "testResource";
             string testResourceKey = "testResourceKey";
