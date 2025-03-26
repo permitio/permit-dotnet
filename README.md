@@ -16,8 +16,15 @@ npm run update-status-check-pdp # this checks the status of the PDP API to suppo
 Updating the Permit.io cloud API needs a fix in the openapi.json file first and then it will work in the same way as the PDP API.
 
 ## Installation
+
+1. Add the NuGet package to your project:
+```bash
+dotnet add package Permit
 ```
-Add nuget package to your project and use with:
-using Permit
-using Permit.Models
+
+2. Import the necessary namespaces:
+
+```csharp
+using Permit;
+using Permit.Models;
 ```
