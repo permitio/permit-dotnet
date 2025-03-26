@@ -83,7 +83,8 @@
               }
             }
           }
-        }
+        },
+        "deprecated": true
       }
     },
     "/callbacks": {
@@ -92,7 +93,7 @@
           "Callbacks"
         ],
         "summary": "List Callbacks",
-        "description": "list all the callbacks currently registered by OPAL client.",
+        "description": "List all the callbacks currently registered by OPAL client.",
         "operationId": "list_callbacks_callbacks_get",
         "parameters": [
           {
@@ -137,7 +138,7 @@
           "Callbacks"
         ],
         "summary": "Register Callback",
-        "description": "register a new callback by OPAL client, to be called on OPA state\nupdates.",
+        "description": "Register a new callback by OPAL client, to be called on OPA state\nupdates.",
         "operationId": "register_callback_callbacks_post",
         "parameters": [
           {
@@ -190,7 +191,7 @@
           "Callbacks"
         ],
         "summary": "Get Callback By Key",
-        "description": "get a callback by its key (if such callback is indeed\nregistered).",
+        "description": "Get a callback by its key (if such callback is indeed\nregistered).",
         "operationId": "get_callback_by_key_callbacks__key__get",
         "parameters": [
           {
@@ -240,7 +241,7 @@
           "Callbacks"
         ],
         "summary": "Get Callback By Key",
-        "description": "unregisters a callback identified by its key (if such callback is\nindeed registered).",
+        "description": "Unregisters a callback identified by its key (if such callback is\nindeed registered).",
         "operationId": "get_callback_by_key_callbacks__key__delete",
         "parameters": [
           {
@@ -686,6 +687,83 @@
           },
           "required": true
         },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nginx_allowed": {
+      "post": {
+        "tags": [
+          "Authorization API"
+        ],
+        "summary": "Is Allowed Nginx",
+        "operationId": "is_allowed_nginx_nginx_allowed_post",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Permit-User-Key"
+            },
+            "name": "permit-user-key",
+            "in": "header"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Permit-Tenant-Id"
+            },
+            "name": "permit-tenant-id",
+            "in": "header"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Permit-Action"
+            },
+            "name": "permit-action",
+            "in": "header"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Permit-Resource-Type"
+            },
+            "name": "permit-resource-type",
+            "in": "header"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Authorization"
+            },
+            "name": "authorization",
+            "in": "header"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -1649,7 +1727,7 @@
           "url"
         ],
         "title": "CallbackEntry",
-        "description": "an entry in the callbacks register.\n\nthis schema is used by the callbacks api"
+        "description": "An entry in the callbacks register.\n\nthis schema is used by the callbacks api"
       },
       "HTTPValidationError": {
         "properties": {

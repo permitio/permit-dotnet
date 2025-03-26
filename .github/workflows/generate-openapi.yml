@@ -20,7 +20,7 @@ jobs:
           python-version: '3.11'
 
       - name: Run SDK generation script
-        run: generate_openapi.sh
+        run: sh ./generate_openapi.sh
         
       - name: Check for changes
         id: check_changes
