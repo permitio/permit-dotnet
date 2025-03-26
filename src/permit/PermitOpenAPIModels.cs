@@ -606,7 +606,7 @@ namespace PermitSDK.OpenAPI.Models
         public string Resource { get; set; } = default!;
 
         /// <summary>
-        /// resource instance id or key that the user is requesting access to
+        /// Either the unique id of the resource instance that the user is requesting access to, or the URL-friendly key of the &lt;resource_key:resource_instance_key&gt; (i.e: file:my_file)
         /// </summary>
         [Newtonsoft.Json.JsonProperty("resource_instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string? Resource_instance { get; set; } = default!;
@@ -616,6 +616,12 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("role", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Role { get; set; } = default!;
+
+        /// <summary>
+        /// element config id or key that the user is requesting access request from
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("element_config_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Element_config_id { get; set; } = default!;
 
     }
 
@@ -1173,17 +1179,23 @@ namespace PermitSDK.OpenAPI.Models
     /// An enumeration.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum BillingTier
+    public enum BillingTierType
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"free")]
         Free = 0,
 
+        [System.Runtime.Serialization.EnumMember(Value = @"startup")]
+        Startup = 1,
+
         [System.Runtime.Serialization.EnumMember(Value = @"pro")]
-        Pro = 1,
+        Pro = 2,
 
         [System.Runtime.Serialization.EnumMember(Value = @"enterprise")]
-        Enterprise = 2,
+        Enterprise = 3,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"internal")]
+        Internal = 4,
 
     }
 
@@ -1200,6 +1212,35 @@ namespace PermitSDK.OpenAPI.Models
     {
         [Newtonsoft.Json.JsonProperty("assignments_removed", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int? Assignments_removed { get; set; } = 0;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ConditionSet
+    {
+        /// <summary>
+        /// The key of the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Key { get; set; } = default!;
+
+        /// <summary>
+        /// The attribute of the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attribute", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Attribute { get; set; } = default!;
+
+        /// <summary>
+        /// The operator of the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("operator", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Operator { get; set; } = default!;
+
+        /// <summary>
+        /// The value of the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Value { get; set; } = default!;
 
     }
 
@@ -3312,6 +3353,9 @@ namespace PermitSDK.OpenAPI.Models
         [System.Runtime.Serialization.EnumMember(Value = @"CONCURRENT_OPERATION_DISALLOWED")]
         CONCURRENT_OPERATION_DISALLOWED = 18,
 
+        [System.Runtime.Serialization.EnumMember(Value = @"UNAUTHORIZED")]
+        UNAUTHORIZED = 19,
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -3396,6 +3440,13 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("condition_set_rules", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Condition_set_rules { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>();
+
+        /// <summary>
+        /// Sanitized Key-Value mapping of the permissions for each condition set.
+        /// <br/>(Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set &amp; resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("condition_set_rules_expand", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>? Condition_set_rules_expand { get; set; } = default!;
 
         /// <summary>
         /// Key-Value mapping of the relationships between resources.
@@ -3519,7 +3570,7 @@ namespace PermitSDK.OpenAPI.Models
     public partial class GroupAssignment
     {
         /// <summary>
-        /// The key of the resource instance that the group belongs to.
+        /// Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the &lt;resource_key:resource_instance_key&gt; (i.e: file:my_file)
         /// </summary>
         [Newtonsoft.Json.JsonProperty("group_instance_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Group_instance_key { get; set; } = default!;
@@ -3545,7 +3596,7 @@ namespace PermitSDK.OpenAPI.Models
         public string? Group_resource_type_key { get; set; } = "group";
 
         /// <summary>
-        /// The key of the resource instance that the group belongs to.
+        /// Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the &lt;resource_key:resource_instance_key&gt; (i.e: file:my_file)
         /// </summary>
         [Newtonsoft.Json.JsonProperty("group_instance_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Group_instance_key { get; set; } = default!;
@@ -3580,7 +3631,7 @@ namespace PermitSDK.OpenAPI.Models
         public string? Group_resource_type_key { get; set; } = "group";
 
         /// <summary>
-        /// The key of the resource instance that the group belongs to.
+        /// Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the &lt;resource_key:resource_instance_key&gt; (i.e: file:my_file)
         /// </summary>
         [Newtonsoft.Json.JsonProperty("group_instance_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Group_instance_key { get; set; } = default!;
@@ -4036,7 +4087,14 @@ namespace PermitSDK.OpenAPI.Models
         /// The URL to match against the request URL
         /// </summary>
         [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Uri Url { get; set; } = default!;
+        public string Url { get; set; } = default!;
+
+        /// <summary>
+        /// The URL type to match against the request URL can be, 'regex' or none
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("url_type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public MappingRuleUrl_type? Url_type { get; set; } = default!;
 
         /// <summary>
         /// The HTTP method to match against the request method
@@ -5721,6 +5779,23 @@ namespace PermitSDK.OpenAPI.Models
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PaginatedResult_RelationshipTupleDetailedRead_
+    {
+        /// <summary>
+        /// List of Relationship Tuple Detaileds
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<RelationshipTupleDetailedRead> Data { get; set; } = new System.Collections.ObjectModel.Collection<RelationshipTupleDetailedRead>();
+
+        [Newtonsoft.Json.JsonProperty("total_count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Total_count { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("page_count", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Page_count { get; set; } = 0;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PaginatedResult_RelationshipTupleRead_
     {
         /// <summary>
@@ -5728,6 +5803,23 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<RelationshipTupleRead> Data { get; set; } = new System.Collections.ObjectModel.Collection<RelationshipTupleRead>();
+
+        [Newtonsoft.Json.JsonProperty("total_count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Total_count { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("page_count", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Page_count { get; set; } = 0;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PaginatedResult_ResourceInstanceDetailedRead_
+    {
+        /// <summary>
+        /// List of Resource Instance Detaileds
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<ResourceInstanceDetailedRead> Data { get; set; } = new System.Collections.ObjectModel.Collection<ResourceInstanceDetailedRead>();
 
         [Newtonsoft.Json.JsonProperty("total_count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int Total_count { get; set; } = default!;
@@ -5985,6 +6077,220 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("resource_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Resource_id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PolicyGuardRuleCreate
+    {
+        /// <summary>
+        /// If True, the permission will be allowed for the role in the policy guard across all projectswithin the policy scope, and the permission will be locked from further editing.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("is_allowed", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool Is_allowed { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Resource_key { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("role_key", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Role_key { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the action.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("action_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Action_key { get; set; } = default!;
+
+        /// <summary>
+        /// The resource set that the permission will be applied to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_set", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ConditionSet? Resource_set { get; set; } = default!;
+
+        /// <summary>
+        /// The user set that the permission will be applied to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("user_set", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ConditionSet? User_set { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PolicyGuardRuleItem
+    {
+        /// <summary>
+        /// The key of the resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Resource_key { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("role_key", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Role_key { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the action.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("action_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Action_key { get; set; } = default!;
+
+        /// <summary>
+        /// The resource set that the permission will be applied to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_set", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ConditionSet? Resource_set { get; set; } = default!;
+
+        /// <summary>
+        /// The user set that the permission will be applied to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("user_set", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ConditionSet? User_set { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PolicyGuardRuleRead
+    {
+        /// <summary>
+        /// If True, the permission will be allowed for the role in the policy guard across all projectswithin the policy scope, and the permission will be locked from further editing.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("is_allowed", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool Is_allowed { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Resource_key { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("role_key", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Role_key { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the action.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("action_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Action_key { get; set; } = default!;
+
+        /// <summary>
+        /// The resource set that the permission will be applied to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_set", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ConditionSet? Resource_set { get; set; } = default!;
+
+        /// <summary>
+        /// The user set that the permission will be applied to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("user_set", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ConditionSet? User_set { get; set; } = default!;
+
+        /// <summary>
+        /// The unique identifier of the policy guard.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("scope_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Scope_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the organization that the ScopeConfig belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("organization_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Organization_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the ScopeConfig
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PolicyGuardScopeAssociate
+    {
+        /// <summary>
+        /// The unique identifier of the project of this policy scope.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("project_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Project_id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PolicyGuardScopeCreate
+    {
+        /// <summary>
+        /// list of projects that this policy guard is assigned to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("policy_guard_scope_details", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<PolicyGuardScopeDetailCreate>? Policy_guard_scope_details { get; set; } = default!;
+
+        /// <summary>
+        /// The unique key of the policy guard scope.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Key { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PolicyGuardScopeDetail
+    {
+        /// <summary>
+        /// Unique id of the project that the ScopeConfig belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("project_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Project_id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PolicyGuardScopeDetailCreate
+    {
+        /// <summary>
+        /// The unique identifier of the project of this policy scope.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("project_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Project_id { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PolicyGuardScopeRead
+    {
+        /// <summary>
+        /// The unique key of the policy guard scope.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Key { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the ScopeConfig
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the organization that the ScopeConfig belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("organization_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Organization_id { get; set; } = default!;
+
+        /// <summary>
+        /// list of projects that this policy guard is assigned to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("policy_guard_scope_details", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<PolicyGuardScopeDetail>? Policy_guard_scope_details { get; set; } = default!;
 
     }
 
@@ -6633,6 +6939,9 @@ namespace PermitSDK.OpenAPI.Models
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class RelationshipTupleDeleteBulkOperation
     {
+        /// <summary>
+        /// List of relationship tuples objects to delete
+        /// </summary>
         [Newtonsoft.Json.JsonProperty("idents", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<RelationshipTupleDelete> Idents { get; set; } = new System.Collections.ObjectModel.Collection<RelationshipTupleDelete>();
 
@@ -6641,6 +6950,119 @@ namespace PermitSDK.OpenAPI.Models
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class RelationshipTupleDeleteBulkOperationResult
     {
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class RelationshipTupleDetailedRead
+    {
+        /// <summary>
+        /// resource_key:resource_instance_key of the subject
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("subject", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Subject { get; set; } = default!;
+
+        /// <summary>
+        /// key of the assigned relation
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("relation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Relation { get; set; } = default!;
+
+        /// <summary>
+        /// resource_key:resource_instance_key of the object
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("object", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Object { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the relationship tuple
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Id { get; set; } = default!;
+
+        /// <summary>
+        /// The tenant the relationship tuple is associated with
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenant", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Tenant { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the subject
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("subject_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Subject_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the relation
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("relation_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Relation_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the object
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("object_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Object_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the tenant
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Tenant_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the organization that the relationship tuple belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("organization_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Organization_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the project that the relationship tuple belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("project_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Project_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the environment that the relationship tuple belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("environment_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Environment_id { get; set; } = default!;
+
+        /// <summary>
+        /// Date and time when the relationship tuple was created (ISO_8601 format).
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset Created_at { get; set; } = default!;
+
+        /// <summary>
+        /// Date and time when the relationship tuple was created (ISO_8601 format).
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("updated_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset Updated_at { get; set; } = default!;
+
+        /// <summary>
+        /// The subject details of the relationship tuple
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("subject_details", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ResourceInstanceBlockRead Subject_details { get; set; } = new ResourceInstanceBlockRead();
+
+        /// <summary>
+        /// The relation details of the relationship tuple
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("relation_details", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public StrippedRelationBlockRead Relation_details { get; set; } = new StrippedRelationBlockRead();
+
+        /// <summary>
+        /// The object details of the relationship tuple
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("object_details", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ResourceInstanceBlockRead Object_details { get; set; } = new ResourceInstanceBlockRead();
+
+        /// <summary>
+        /// The tenant details of the relationship tuple
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenant_details", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public TenantBlockRead Tenant_details { get; set; } = new TenantBlockRead();
 
     }
 
@@ -7449,6 +7871,9 @@ namespace PermitSDK.OpenAPI.Models
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ResourceInstanceDeleteBulkOperation
     {
+        /// <summary>
+        /// List of resource instance idents to delete. Either the unique id of the resource instance, or the URL-friendly key of the &lt;resource_key:resource_instance_key&gt; (i.e: file:my_file)
+        /// </summary>
         [Newtonsoft.Json.JsonProperty("idents", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<string> Idents { get; set; } = new System.Collections.ObjectModel.Collection<string>();
 
@@ -7457,6 +7882,89 @@ namespace PermitSDK.OpenAPI.Models
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ResourceInstanceDeleteBulkOperationResult
     {
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ResourceInstanceDetailedRead
+    {
+        /// <summary>
+        /// A unique identifier by which Permit will identify the resource instance for permission checks. You will later pass this identifier to the `permit.check()` API. A key can be anything: for example the resource db id, a url slug, a UUID or anything else as long as it's unique on your end. The resource instance key must be url-friendly.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Key { get; set; } = default!;
+
+        /// <summary>
+        /// the *key* of the tenant that this resource belongs to, used to enforce tenant boundaries in multi-tenant apps.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenant", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Tenant { get; set; } = default!;
+
+        /// <summary>
+        /// the *key* of the resource (type) of this resource instance. For example: if this resource instance is the annual budget document, the key of the resource might be `document`.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Resource { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the resource instance
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the organization that the resource instance belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("organization_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Organization_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the project that the resource instance belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("project_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Project_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the environment that the resource instance belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("environment_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Environment_id { get; set; } = default!;
+
+        /// <summary>
+        /// Date and time when the resource instance was created (ISO_8601 format).
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset Created_at { get; set; } = default!;
+
+        /// <summary>
+        /// Date and time when the resource instance was created (ISO_8601 format).
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("updated_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset Updated_at { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the resource
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Resource_id { get; set; } = default!;
+
+        /// <summary>
+        /// Unique id of the tenant
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Tenant_id { get; set; } = default!;
+
+        /// <summary>
+        /// Arbitrary resource attributes that will be used to enforce attribute-based access control policies.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object? Attributes { get; set; } = default!;
+
+        /// <summary>
+        /// The relationships of the resource instance.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("relationships", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<RelationshipTupleBlockRead> Relationships { get; set; } = new System.Collections.ObjectModel.Collection<RelationshipTupleBlockRead>();
 
     }
 
@@ -8881,6 +9389,36 @@ namespace PermitSDK.OpenAPI.Models
 
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class TaskResult_PolicyGuardScopeRead_
+    {
+        /// <summary>
+        /// The unique id of the task.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("task_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Task_id { get; set; } = default!;
+
+        /// <summary>
+        /// The status of the task.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public TaskStatus Status { get; set; } = default!;
+
+        /// <summary>
+        /// The result of the task when the task finished.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("result", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PolicyGuardScopeRead? Result { get; set; } = default!;
+
+        /// <summary>
+        /// The error details when the task failed.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("error", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ErrorDetails? Error { get; set; } = default!;
+
+    }
+
     /// <summary>
     /// An enumeration.
     /// </summary>
@@ -9005,6 +9543,9 @@ namespace PermitSDK.OpenAPI.Models
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class TenantDeleteBulkOperation
     {
+        /// <summary>
+        /// List of tenant idents to delete. Either the unique id or the key of the tenants.
+        /// </summary>
         [Newtonsoft.Json.JsonProperty("idents", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<string> Idents { get; set; } = new System.Collections.ObjectModel.Collection<string>();
 
@@ -9162,7 +9703,7 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("billing_tier", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public BillingTier? Billing_tier { get; set; } = PermitSDK.OpenAPI.Models.BillingTier.Free;
+        public BillingTierType? Billing_tier { get; set; } = PermitSDK.OpenAPI.Models.BillingTierType.Free;
 
     }
 
@@ -9742,6 +10283,24 @@ namespace PermitSDK.OpenAPI.Models
 
     }
 
+    /// <summary>
+    /// Text search for the org name or key or id
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Search
+    {
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum AVPEngineDecisionLogEngine
     {
@@ -10042,6 +10601,15 @@ namespace PermitSDK.OpenAPI.Models
 
         [System.Runtime.Serialization.EnumMember(Value = @"mailgun")]
         Mailgun = 0,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum MappingRuleUrl_type
+    {
+
+        [System.Runtime.Serialization.EnumMember(Value = @"regex")]
+        Regex = 0,
 
     }
 

@@ -2319,12 +2319,12 @@ namespace PermitSDK.OpenAPI
         /// Lists all the organizations that can be accessed by the
         /// <br/>authenticated actor (i.e: human team member or api key).
         /// </remarks>
-        /// <param name="search">Text search for the org name or key</param>
+        /// <param name="search">Text search for the org name or key or id</param>
         /// <param name="page">Page number of the results to fetch, starting at 1.</param>
         /// <param name="per_page">The number of results per page (max 100).</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual System.Collections.Generic.ICollection<OrganizationRead> List_organizations(string? search = null, int? page = null, int? per_page = null)
+        public virtual System.Collections.Generic.ICollection<OrganizationRead> List_organizations(Search? search = null, int? page = null, int? per_page = null)
         {
             return System.Threading.Tasks.Task.Run(async () => await List_organizationsAsync(search, page, per_page, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2337,12 +2337,12 @@ namespace PermitSDK.OpenAPI
         /// Lists all the organizations that can be accessed by the
         /// <br/>authenticated actor (i.e: human team member or api key).
         /// </remarks>
-        /// <param name="search">Text search for the org name or key</param>
+        /// <param name="search">Text search for the org name or key or id</param>
         /// <param name="page">Page number of the results to fetch, starting at 1.</param>
         /// <param name="per_page">The number of results per page (max 100).</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<OrganizationRead>> List_organizationsAsync(string? search = null, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<OrganizationRead>> List_organizationsAsync(Search? search = null, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2442,9 +2442,9 @@ namespace PermitSDK.OpenAPI
         /// </remarks>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual OrganizationReadWithAPIKey Create_organization(OrganizationCreate body)
+        public virtual OrganizationReadWithAPIKey Create_organization(OrganizationCreate body, string? page_full_url = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Create_organizationAsync(body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Create_organizationAsync(body, page_full_url, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -2456,7 +2456,7 @@ namespace PermitSDK.OpenAPI
         /// </remarks>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<OrganizationReadWithAPIKey> Create_organizationAsync(OrganizationCreate body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<OrganizationReadWithAPIKey> Create_organizationAsync(OrganizationCreate body, string? page_full_url = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -12858,8 +12858,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups/{group_instance_key}"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -12977,8 +12977,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups/{group_instance_key}"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -13099,8 +13099,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -13240,8 +13240,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -13373,8 +13373,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups/{group_instance_key}/users/{user_id}"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/users/{user_id}"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -13508,8 +13508,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups/{group_instance_key}/users/{user_id}"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/users/{user_id}"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -13634,8 +13634,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups/{group_instance_key}/roles"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/roles"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -13763,8 +13763,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups/{group_instance_key}/roles"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/roles"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -13888,8 +13888,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups/{group_instance_key}/assign_group"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/assign_group"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -14017,8 +14017,8 @@ namespace PermitSDK.OpenAPI
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/facts/{proj_id}/{env_id}/groups/{group_instance_key}/assign_group"
-                    urlBuilder_.Append("v2/facts/");
+                    // Operation Path: "v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}/assign_group"
+                    urlBuilder_.Append("v2/schema/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -16157,6 +16157,182 @@ namespace PermitSDK.OpenAPI
         }
 
         /// <summary>
+        /// List Role Assignments Detailed
+        /// </summary>
+        /// <remarks>
+        /// Lists the role assignments defined within an environment.
+        /// <br/>
+        /// <br/>- If the `user` filter is present, will only return the role assignments of that user (supports multiple).
+        /// <br/>- If the `tenant` filter is present, will only return the role assignments in that tenant (supports multiple).
+        /// <br/>- If the `role` filter is present, will only return role assignments that are granting that role (supports multiple).
+        /// <br/>- If the `resource` filter is present, will only return role assignments for resource instances of that resource type.
+        /// <br/>- If the `resource_instance` filter is present, will only return role assignments for that resource instance.
+        /// <br/>
+        /// <br/>Providing both `tenant` and `resource_instance` filters will only return role assignments if the resource instance is in that tenant.
+        /// <br/>If multiple tenants are received, the last tenant will be compared with the resource instance.
+        /// </remarks>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="user">optional user(s) filter, will only return role assignments granted to this user(s).</param>
+        /// <param name="role">optional role(s) filter, will only return role assignments granting this role(s).</param>
+        /// <param name="tenant">optional tenant(s) filter, will only return role assignments granted in that tenant(s).</param>
+        /// <param name="resource">optional resource **type** filter, will only return role assignments granted on that resource type.</param>
+        /// <param name="resource_instance">optional resource instance filter, will only return role assignments granted on that resource instance.</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual PaginatedResult_RoleAssignmentDetailedRead_ List_role_assignments_detailed(string proj_id, string env_id, System.Collections.Generic.IEnumerable<string>? user = null, System.Collections.Generic.IEnumerable<string>? role = null, System.Collections.Generic.IEnumerable<string>? tenant = null, string? resource = null, string? resource_instance = null, int? page = null, int? per_page = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await List_role_assignments_detailedAsync(proj_id, env_id, user, role, tenant, resource, resource_instance, page, per_page, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Role Assignments Detailed
+        /// </summary>
+        /// <remarks>
+        /// Lists the role assignments defined within an environment.
+        /// <br/>
+        /// <br/>- If the `user` filter is present, will only return the role assignments of that user (supports multiple).
+        /// <br/>- If the `tenant` filter is present, will only return the role assignments in that tenant (supports multiple).
+        /// <br/>- If the `role` filter is present, will only return role assignments that are granting that role (supports multiple).
+        /// <br/>- If the `resource` filter is present, will only return role assignments for resource instances of that resource type.
+        /// <br/>- If the `resource_instance` filter is present, will only return role assignments for that resource instance.
+        /// <br/>
+        /// <br/>Providing both `tenant` and `resource_instance` filters will only return role assignments if the resource instance is in that tenant.
+        /// <br/>If multiple tenants are received, the last tenant will be compared with the resource instance.
+        /// </remarks>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="user">optional user(s) filter, will only return role assignments granted to this user(s).</param>
+        /// <param name="role">optional role(s) filter, will only return role assignments granting this role(s).</param>
+        /// <param name="tenant">optional tenant(s) filter, will only return role assignments granted in that tenant(s).</param>
+        /// <param name="resource">optional resource **type** filter, will only return role assignments granted on that resource type.</param>
+        /// <param name="resource_instance">optional resource instance filter, will only return role assignments granted on that resource instance.</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PaginatedResult_RoleAssignmentDetailedRead_> List_role_assignments_detailedAsync(string proj_id, string env_id, System.Collections.Generic.IEnumerable<string>? user = null, System.Collections.Generic.IEnumerable<string>? role = null, System.Collections.Generic.IEnumerable<string>? tenant = null, string? resource = null, string? resource_instance = null, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/role_assignments/detailed"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/role_assignments/detailed");
+                    urlBuilder_.Append('?');
+                    if (user != null)
+                    {
+                        foreach (var item_ in user) { urlBuilder_.Append(System.Uri.EscapeDataString("user")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append('&'); }
+                    }
+                    if (role != null)
+                    {
+                        foreach (var item_ in role) { urlBuilder_.Append(System.Uri.EscapeDataString("role")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append('&'); }
+                    }
+                    if (tenant != null)
+                    {
+                        foreach (var item_ in tenant) { urlBuilder_.Append(System.Uri.EscapeDataString("tenant")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append('&'); }
+                    }
+                    if (resource != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("resource")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(resource, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (resource_instance != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("resource_instance")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(resource_instance, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (per_page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("per_page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(per_page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PaginatedResult_RoleAssignmentDetailedRead_>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// List Role Assignments
         /// </summary>
         /// <remarks>
@@ -17195,6 +17371,152 @@ namespace PermitSDK.OpenAPI
                         if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// List Resource Instances Detailed
+        /// </summary>
+        /// <remarks>
+        /// Lists all the resource instances defined within an environment.
+        /// </remarks>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="tenant">The tenant key or id to filter by</param>
+        /// <param name="resource">The resource key or id to filter by</param>
+        /// <param name="search">The resource instance key or id to filter by (supports multi-value like this url?search=key-1&amp;search=key-2)</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual PaginatedResult_ResourceInstanceDetailedRead_ List_resource_instances_detailed(string proj_id, string env_id, string? tenant = null, string? resource = null, System.Collections.Generic.IEnumerable<string>? search = null, int? page = null, int? per_page = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await List_resource_instances_detailedAsync(proj_id, env_id, tenant, resource, search, page, per_page, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Resource Instances Detailed
+        /// </summary>
+        /// <remarks>
+        /// Lists all the resource instances defined within an environment.
+        /// </remarks>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="tenant">The tenant key or id to filter by</param>
+        /// <param name="resource">The resource key or id to filter by</param>
+        /// <param name="search">The resource instance key or id to filter by (supports multi-value like this url?search=key-1&amp;search=key-2)</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PaginatedResult_ResourceInstanceDetailedRead_> List_resource_instances_detailedAsync(string proj_id, string env_id, string? tenant = null, string? resource = null, System.Collections.Generic.IEnumerable<string>? search = null, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/resource_instances/detailed"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/resource_instances/detailed");
+                    urlBuilder_.Append('?');
+                    if (tenant != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("tenant")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(tenant, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (resource != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("resource")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(resource, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (search != null)
+                    {
+                        foreach (var item_ in search) { urlBuilder_.Append(System.Uri.EscapeDataString("search")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append('&'); }
+                    }
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (per_page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("per_page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(per_page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PaginatedResult_ResourceInstanceDetailedRead_>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         if (status_ == 422)
@@ -20169,6 +20491,170 @@ namespace PermitSDK.OpenAPI
         }
 
         /// <summary>
+        /// List Relationship Tuples Detailed
+        /// </summary>
+        /// <remarks>
+        /// Lists the relationship tuples defined within an environment.
+        /// </remarks>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <param name="tenant">The tenant key or id to filter by</param>
+        /// <param name="subject">The subject to filter by, accepts either the resource instance id or resource_type:resource_instance</param>
+        /// <param name="relation">The relation id or key to filter by</param>
+        /// <param name="object">The object to filter by, accepts either the resource instance id or resource_type:resource_instance</param>
+        /// <param name="object_type">The object type to filter by, accepts resource type id or key</param>
+        /// <param name="subject_type">The subject type to filter by, accepts resource type id or key</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual PaginatedResult_RelationshipTupleDetailedRead_ List_relationship_tuples_detailed(string proj_id, string env_id, int? page = null, int? per_page = null, string? tenant = null, string? subject = null, string? relation = null, string? @object = null, string? object_type = null, string? subject_type = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await List_relationship_tuples_detailedAsync(proj_id, env_id, page, per_page, tenant, subject, relation, @object, object_type, subject_type, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Relationship Tuples Detailed
+        /// </summary>
+        /// <remarks>
+        /// Lists the relationship tuples defined within an environment.
+        /// </remarks>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <param name="tenant">The tenant key or id to filter by</param>
+        /// <param name="subject">The subject to filter by, accepts either the resource instance id or resource_type:resource_instance</param>
+        /// <param name="relation">The relation id or key to filter by</param>
+        /// <param name="object">The object to filter by, accepts either the resource instance id or resource_type:resource_instance</param>
+        /// <param name="object_type">The object type to filter by, accepts resource type id or key</param>
+        /// <param name="subject_type">The subject type to filter by, accepts resource type id or key</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PaginatedResult_RelationshipTupleDetailedRead_> List_relationship_tuples_detailedAsync(string proj_id, string env_id, int? page = null, int? per_page = null, string? tenant = null, string? subject = null, string? relation = null, string? @object = null, string? object_type = null, string? subject_type = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/relationship_tuples/detailed"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/relationship_tuples/detailed");
+                    urlBuilder_.Append('?');
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (per_page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("per_page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(per_page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (tenant != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("tenant")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(tenant, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (subject != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("subject")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(subject, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (relation != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("relation")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(relation, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (@object != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("object")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(@object, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (object_type != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("object_type")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(object_type, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (subject_type != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("subject_type")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(subject_type, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PaginatedResult_RelationshipTupleDetailedRead_>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
         /// List Relationship Tuples
         /// </summary>
         /// <remarks>
@@ -21523,6 +22009,1008 @@ namespace PermitSDK.OpenAPI
                                 throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             throw new PermitApiException<ApproveMessage>("The user already approved or the email requested doesn\'t match the email of the invite.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// List Access Requests
+        /// </summary>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="status">Optional status filter, will only return access requests with this status.</param>
+        /// <param name="role">Optional role filter, will only return access request granted with that role.</param>
+        /// <param name="resource">Optional resource filter, will only return access request granted in that resource.</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <param name="resource_instance_id">For ReBAC Elements, the resource instance ID or key to work on</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual PaginatedResult_AccessRequestRead_ List_access_requests(string tenant_id, string user_id, string elements_config_id, string proj_id, string env_id, RequestStatus? status = null, string? role = null, string? resource = null, int? page = null, int? per_page = null, string? resource_instance_id = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await List_access_requestsAsync(tenant_id, user_id, elements_config_id, proj_id, env_id, status, role, resource, page, per_page, resource_instance_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Access Requests
+        /// </summary>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="status">Optional status filter, will only return access requests with this status.</param>
+        /// <param name="role">Optional role filter, will only return access request granted with that role.</param>
+        /// <param name="resource">Optional resource filter, will only return access request granted in that resource.</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <param name="resource_instance_id">For ReBAC Elements, the resource instance ID or key to work on</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PaginatedResult_AccessRequestRead_> List_access_requestsAsync(string tenant_id, string user_id, string elements_config_id, string proj_id, string env_id, RequestStatus? status = null, string? role = null, string? resource = null, int? page = null, int? per_page = null, string? resource_instance_id = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (tenant_id == null)
+                throw new System.ArgumentNullException("tenant_id");
+
+            if (user_id == null)
+                throw new System.ArgumentNullException("user_id");
+
+            if (elements_config_id == null)
+                throw new System.ArgumentNullException("elements_config_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/access_requests/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(elements_config_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/user/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(user_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/tenant/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(tenant_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('?');
+                    if (status != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("status")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (role != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("role")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(role, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (resource != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("resource")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(resource, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (per_page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("per_page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(per_page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (resource_instance_id != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("resource_instance_id")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(resource_instance_id, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PaginatedResult_AccessRequestRead_>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Create Access Request
+        /// </summary>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual AccessRequestRead Create_access_request(string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, AccessRequestUserCreate body)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Create_access_requestAsync(tenant_id, user_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create Access Request
+        /// </summary>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Create_access_requestAsync(string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, AccessRequestUserCreate body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (tenant_id == null)
+                throw new System.ArgumentNullException("tenant_id");
+
+            if (user_id == null)
+                throw new System.ArgumentNullException("user_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            if (elements_config_id == null)
+                throw new System.ArgumentNullException("elements_config_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/access_requests/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(elements_config_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/user/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(user_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/tenant/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(tenant_id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AccessRequestRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get Access Request
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual AccessRequestRead Get_access_request(string access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Get_access_requestAsync(access_request_id, tenant_id, user_id, proj_id, env_id, elements_config_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get Access Request
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Get_access_requestAsync(string access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (access_request_id == null)
+                throw new System.ArgumentNullException("access_request_id");
+
+            if (tenant_id == null)
+                throw new System.ArgumentNullException("tenant_id");
+
+            if (user_id == null)
+                throw new System.ArgumentNullException("user_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            if (elements_config_id == null)
+                throw new System.ArgumentNullException("elements_config_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/access_requests/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(elements_config_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/user/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(user_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/tenant/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(tenant_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(access_request_id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AccessRequestRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Update Access Request Reviewer
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual AccessRequestRead Update_access_request_reviewer(string access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Update_access_request_reviewerAsync(access_request_id, tenant_id, user_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update Access Request Reviewer
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Update_access_request_reviewerAsync(string access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (access_request_id == null)
+                throw new System.ArgumentNullException("access_request_id");
+
+            if (tenant_id == null)
+                throw new System.ArgumentNullException("tenant_id");
+
+            if (user_id == null)
+                throw new System.ArgumentNullException("user_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            if (elements_config_id == null)
+                throw new System.ArgumentNullException("elements_config_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}/reviewer"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/access_requests/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(elements_config_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/user/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(user_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/tenant/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(tenant_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(access_request_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/reviewer");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AccessRequestRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Approve Access Request
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual AccessRequestApproved Approve_access_request(System.Guid access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Approve_access_requestAsync(access_request_id, tenant_id, user_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Approve Access Request
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AccessRequestApproved> Approve_access_requestAsync(System.Guid access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (access_request_id == null)
+                throw new System.ArgumentNullException("access_request_id");
+
+            if (tenant_id == null)
+                throw new System.ArgumentNullException("tenant_id");
+
+            if (user_id == null)
+                throw new System.ArgumentNullException("user_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            if (elements_config_id == null)
+                throw new System.ArgumentNullException("elements_config_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}/approve"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/access_requests/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(elements_config_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/user/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(user_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/tenant/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(tenant_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(access_request_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/approve");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AccessRequestApproved>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Deny Access Request
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual AccessRequestDenied Deny_access_request(string access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, AccessRequestReviewDeny body)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Deny_access_requestAsync(access_request_id, tenant_id, user_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Deny Access Request
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AccessRequestDenied> Deny_access_requestAsync(string access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, AccessRequestReviewDeny body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (access_request_id == null)
+                throw new System.ArgumentNullException("access_request_id");
+
+            if (tenant_id == null)
+                throw new System.ArgumentNullException("tenant_id");
+
+            if (user_id == null)
+                throw new System.ArgumentNullException("user_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            if (elements_config_id == null)
+                throw new System.ArgumentNullException("elements_config_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}/deny"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/access_requests/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(elements_config_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/user/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(user_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/tenant/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(tenant_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(access_request_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/deny");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AccessRequestDenied>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Cancel Access Request
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual AccessRequestCanceled Cancel_access_request(string access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Cancel_access_requestAsync(access_request_id, tenant_id, user_id, proj_id, env_id, elements_config_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Cancel Access Request
+        /// </summary>
+        /// <param name="access_request_id">Either the unique id of the access_request, or the URL-friendly key of the access_request (i.e: the "slug").</param>
+        /// <param name="tenant_id">Either the unique id of the tenant, or the URL-friendly key of the tenant (i.e: the "slug").</param>
+        /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AccessRequestCanceled> Cancel_access_requestAsync(string access_request_id, string tenant_id, string user_id, string proj_id, string env_id, string elements_config_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (access_request_id == null)
+                throw new System.ArgumentNullException("access_request_id");
+
+            if (tenant_id == null)
+                throw new System.ArgumentNullException("tenant_id");
+
+            if (user_id == null)
+                throw new System.ArgumentNullException("user_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            if (elements_config_id == null)
+                throw new System.ArgumentNullException("elements_config_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/facts/{proj_id}/{env_id}/access_requests/{elements_config_id}/user/{user_id}/tenant/{tenant_id}/{access_request_id}/cancel"
+                    urlBuilder_.Append("v2/facts/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/access_requests/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(elements_config_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/user/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(user_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/tenant/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(tenant_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(access_request_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/cancel");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AccessRequestCanceled>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         if (status_ == 422)
@@ -25272,9 +26760,9 @@ namespace PermitSDK.OpenAPI
         /// <param name="resource_instance_id">For ReBAC Elements, the resource instance ID or key to work on</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual PaginatedResult_AccessRequestRead_ List_access_requests(string elements_config_id, string proj_id, string env_id, RequestStatus? status = null, string? tenant = null, string? role = null, string? resource = null, int? page = null, int? per_page = null, string? resource_instance_id = null)
+        public virtual PaginatedResult_AccessRequestRead_ List_access_requests_v2_elements__proj_id___env_id__config__elements_config_id__access_requests_get(string elements_config_id, string proj_id, string env_id, RequestStatus? status = null, string? tenant = null, string? role = null, string? resource = null, int? page = null, int? per_page = null, string? resource_instance_id = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await List_access_requestsAsync(elements_config_id, proj_id, env_id, status, tenant, role, resource, page, per_page, resource_instance_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await List_access_requests_v2_elements__proj_id___env_id__config__elements_config_id__access_requests_getAsync(elements_config_id, proj_id, env_id, status, tenant, role, resource, page, per_page, resource_instance_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -25293,7 +26781,7 @@ namespace PermitSDK.OpenAPI
         /// <param name="resource_instance_id">For ReBAC Elements, the resource instance ID or key to work on</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PaginatedResult_AccessRequestRead_> List_access_requestsAsync(string elements_config_id, string proj_id, string env_id, RequestStatus? status = null, string? tenant = null, string? role = null, string? resource = null, int? page = null, int? per_page = null, string? resource_instance_id = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<PaginatedResult_AccessRequestRead_> List_access_requests_v2_elements__proj_id___env_id__config__elements_config_id__access_requests_getAsync(string elements_config_id, string proj_id, string env_id, RequestStatus? status = null, string? tenant = null, string? role = null, string? resource = null, int? page = null, int? per_page = null, string? resource_instance_id = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (elements_config_id == null)
                 throw new System.ArgumentNullException("elements_config_id");
@@ -25424,9 +26912,9 @@ namespace PermitSDK.OpenAPI
         /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AccessRequestRead Create_access_request(string elements_config_id, string proj_id, string env_id, AccessRequestUserCreate body)
+        public virtual AccessRequestRead Create_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests_post(string elements_config_id, string proj_id, string env_id, AccessRequestUserCreate body)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Create_access_requestAsync(elements_config_id, proj_id, env_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Create_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests_postAsync(elements_config_id, proj_id, env_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -25438,7 +26926,7 @@ namespace PermitSDK.OpenAPI
         /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Create_access_requestAsync(string elements_config_id, string proj_id, string env_id, AccessRequestUserCreate body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Create_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests_postAsync(string elements_config_id, string proj_id, string env_id, AccessRequestUserCreate body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (elements_config_id == null)
                 throw new System.ArgumentNullException("elements_config_id");
@@ -25549,9 +27037,9 @@ namespace PermitSDK.OpenAPI
         /// <param name="per_page">The number of results per page (max 100).</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AccessRequestRead Get_access_request(string elements_config_id, string access_request_id, string proj_id, string env_id, int? page = null, int? per_page = null)
+        public virtual AccessRequestRead Get_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__get(string elements_config_id, string access_request_id, string proj_id, string env_id, int? page = null, int? per_page = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Get_access_requestAsync(elements_config_id, access_request_id, proj_id, env_id, page, per_page, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Get_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__getAsync(elements_config_id, access_request_id, proj_id, env_id, page, per_page, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -25566,7 +27054,7 @@ namespace PermitSDK.OpenAPI
         /// <param name="per_page">The number of results per page (max 100).</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Get_access_requestAsync(string elements_config_id, string access_request_id, string proj_id, string env_id, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Get_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__getAsync(string elements_config_id, string access_request_id, string proj_id, string env_id, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (elements_config_id == null)
                 throw new System.ArgumentNullException("elements_config_id");
@@ -25682,9 +27170,9 @@ namespace PermitSDK.OpenAPI
         /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AccessRequestRead Update_access_request_reviewer(string access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body)
+        public virtual AccessRequestRead Update_access_request_reviewer_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__reviewer_patch(string access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Update_access_request_reviewerAsync(access_request_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Update_access_request_reviewer_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__reviewer_patchAsync(access_request_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -25697,7 +27185,7 @@ namespace PermitSDK.OpenAPI
         /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Update_access_request_reviewerAsync(string access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AccessRequestRead> Update_access_request_reviewer_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__reviewer_patchAsync(string access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (access_request_id == null)
                 throw new System.ArgumentNullException("access_request_id");
@@ -25811,9 +27299,9 @@ namespace PermitSDK.OpenAPI
         /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AccessRequestApproved Approve_access_request(System.Guid access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body)
+        public virtual AccessRequestApproved Approve_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__approve_put(System.Guid access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Approve_access_requestAsync(access_request_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Approve_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__approve_putAsync(access_request_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -25826,7 +27314,7 @@ namespace PermitSDK.OpenAPI
         /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccessRequestApproved> Approve_access_requestAsync(System.Guid access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AccessRequestApproved> Approve_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__approve_putAsync(System.Guid access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReview body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (access_request_id == null)
                 throw new System.ArgumentNullException("access_request_id");
@@ -25940,9 +27428,9 @@ namespace PermitSDK.OpenAPI
         /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AccessRequestDenied Deny_access_request(string access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReviewDeny body)
+        public virtual AccessRequestDenied Deny_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__deny_put(string access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReviewDeny body)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Deny_access_requestAsync(access_request_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Deny_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__deny_putAsync(access_request_id, proj_id, env_id, elements_config_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -25955,7 +27443,7 @@ namespace PermitSDK.OpenAPI
         /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccessRequestDenied> Deny_access_requestAsync(string access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReviewDeny body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AccessRequestDenied> Deny_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__deny_putAsync(string access_request_id, string proj_id, string env_id, string elements_config_id, AccessRequestReviewDeny body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (access_request_id == null)
                 throw new System.ArgumentNullException("access_request_id");
@@ -26069,9 +27557,9 @@ namespace PermitSDK.OpenAPI
         /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AccessRequestCanceled Cancel_access_request(string access_request_id, string proj_id, string env_id, string elements_config_id)
+        public virtual AccessRequestCanceled Cancel_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__cancel_put(string access_request_id, string proj_id, string env_id, string elements_config_id)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Cancel_access_requestAsync(access_request_id, proj_id, env_id, elements_config_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Cancel_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__cancel_putAsync(access_request_id, proj_id, env_id, elements_config_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -26084,7 +27572,7 @@ namespace PermitSDK.OpenAPI
         /// <param name="elements_config_id">Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the "slug").</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AccessRequestCanceled> Cancel_access_requestAsync(string access_request_id, string proj_id, string env_id, string elements_config_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AccessRequestCanceled> Cancel_access_request_v2_elements__proj_id___env_id__config__elements_config_id__access_requests__access_request_id__cancel_putAsync(string access_request_id, string proj_id, string env_id, string elements_config_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (access_request_id == null)
                 throw new System.ArgumentNullException("access_request_id");
@@ -28550,6 +30038,1014 @@ namespace PermitSDK.OpenAPI
                                 throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// List Policy Guard Scopes
+        /// </summary>
+        /// <remarks>
+        /// List all guarding policies scopes.
+        /// </remarks>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual System.Collections.Generic.ICollection<PolicyGuardScopeRead> List_policy_guard_scopes(int? page = null, int? per_page = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await List_policy_guard_scopesAsync(page, per_page, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Policy Guard Scopes
+        /// </summary>
+        /// <remarks>
+        /// List all guarding policies scopes.
+        /// </remarks>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PolicyGuardScopeRead>> List_policy_guard_scopesAsync(int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes"
+                    urlBuilder_.Append("v2/policy_guards/scopes");
+                    urlBuilder_.Append('?');
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (per_page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("per_page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(per_page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<PolicyGuardScopeRead>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Create Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// Create a new Policy guard scope.
+        /// </remarks>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual PolicyGuardScopeRead Create_policy_guard_scope(PolicyGuardScopeCreate body)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Create_policy_guard_scopeAsync(body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// Create a new Policy guard scope.
+        /// </remarks>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PolicyGuardScopeRead> Create_policy_guard_scopeAsync(PolicyGuardScopeCreate body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes"
+                    urlBuilder_.Append("v2/policy_guards/scopes");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PolicyGuardScopeRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// Get a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual PolicyGuardScopeRead Get_policy_guard_scope(string policy_guard_scope_id)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Get_policy_guard_scopeAsync(policy_guard_scope_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// Get a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PolicyGuardScopeRead> Get_policy_guard_scopeAsync(string policy_guard_scope_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (policy_guard_scope_id == null)
+                throw new System.ArgumentNullException("policy_guard_scope_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes/{policy_guard_scope_id}"
+                    urlBuilder_.Append("v2/policy_guards/scopes/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(policy_guard_scope_id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PolicyGuardScopeRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// Delete a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual void Delete_policy_guard_scope(string policy_guard_scope_id)
+        {
+            System.Threading.Tasks.Task.Run(async () => await Delete_policy_guard_scopeAsync(policy_guard_scope_id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// Delete a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task Delete_policy_guard_scopeAsync(string policy_guard_scope_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (policy_guard_scope_id == null)
+                throw new System.ArgumentNullException("policy_guard_scope_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes/{policy_guard_scope_id}"
+                    urlBuilder_.Append("v2/policy_guards/scopes/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(policy_guard_scope_id, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Associate Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// associate a project to a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <param name="wait">Time in seconds to wait for the task to complete. Default is 0, means no wait.</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual TaskResult_PolicyGuardScopeRead_ Associate_policy_guard_scope(string policy_guard_scope_id, PolicyGuardScopeAssociate body, double? wait = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Associate_policy_guard_scopeAsync(policy_guard_scope_id, body, wait, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Associate Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// associate a project to a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <param name="wait">Time in seconds to wait for the task to complete. Default is 0, means no wait.</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<TaskResult_PolicyGuardScopeRead_> Associate_policy_guard_scopeAsync(string policy_guard_scope_id, PolicyGuardScopeAssociate body, double? wait = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (policy_guard_scope_id == null)
+                throw new System.ArgumentNullException("policy_guard_scope_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes/{policy_guard_scope_id}/associate"
+                    urlBuilder_.Append("v2/policy_guards/scopes/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(policy_guard_scope_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/associate");
+                    urlBuilder_.Append('?');
+                    if (wait != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("wait")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(wait, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<TaskResult_PolicyGuardScopeRead_>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Disassociate Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// Disassociate a project from a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual void Disassociate_policy_guard_scope(string policy_guard_scope_id, PolicyGuardScopeAssociate body)
+        {
+            System.Threading.Tasks.Task.Run(async () => await Disassociate_policy_guard_scopeAsync(policy_guard_scope_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Disassociate Policy Guard Scope
+        /// </summary>
+        /// <remarks>
+        /// Disassociate a project from a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task Disassociate_policy_guard_scopeAsync(string policy_guard_scope_id, PolicyGuardScopeAssociate body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (policy_guard_scope_id == null)
+                throw new System.ArgumentNullException("policy_guard_scope_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes/{policy_guard_scope_id}/disassociate"
+                    urlBuilder_.Append("v2/policy_guards/scopes/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(policy_guard_scope_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/disassociate");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// List Policy Guard Rules
+        /// </summary>
+        /// <remarks>
+        /// List all rules for a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual System.Collections.Generic.ICollection<PolicyGuardRuleRead> List_policy_guard_rules(string policy_guard_scope_id, int? page = null, int? per_page = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await List_policy_guard_rulesAsync(policy_guard_scope_id, page, per_page, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Policy Guard Rules
+        /// </summary>
+        /// <remarks>
+        /// List all rules for a Policy guard scope.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="per_page">The number of results per page (max 100).</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<PolicyGuardRuleRead>> List_policy_guard_rulesAsync(string policy_guard_scope_id, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (policy_guard_scope_id == null)
+                throw new System.ArgumentNullException("policy_guard_scope_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes/{policy_guard_scope_id}/rules"
+                    urlBuilder_.Append("v2/policy_guards/scopes/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(policy_guard_scope_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/rules");
+                    urlBuilder_.Append('?');
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (per_page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("per_page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(per_page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<PolicyGuardRuleRead>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Create Policy Guard Rule
+        /// </summary>
+        /// <remarks>
+        /// Create a policy guard rule.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <param name="wait">Time in seconds to wait for the task to complete. Default is 0, means no wait.</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual TaskResult_PolicyGuardScopeRead_ Create_policy_guard_rule(string policy_guard_scope_id, PolicyGuardRuleCreate body, double? wait = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Create_policy_guard_ruleAsync(policy_guard_scope_id, body, wait, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create Policy Guard Rule
+        /// </summary>
+        /// <remarks>
+        /// Create a policy guard rule.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <param name="wait">Time in seconds to wait for the task to complete. Default is 0, means no wait.</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<TaskResult_PolicyGuardScopeRead_> Create_policy_guard_ruleAsync(string policy_guard_scope_id, PolicyGuardRuleCreate body, double? wait = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (policy_guard_scope_id == null)
+                throw new System.ArgumentNullException("policy_guard_scope_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes/{policy_guard_scope_id}/rules"
+                    urlBuilder_.Append("v2/policy_guards/scopes/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(policy_guard_scope_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/rules");
+                    urlBuilder_.Append('?');
+                    if (wait != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("wait")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(wait, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<TaskResult_PolicyGuardScopeRead_>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Delete Policy Guard Rule
+        /// </summary>
+        /// <remarks>
+        /// Remove a policy guard rule.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual void Delete_policy_guard_rule(string policy_guard_scope_id, PolicyGuardRuleItem body)
+        {
+            System.Threading.Tasks.Task.Run(async () => await Delete_policy_guard_ruleAsync(policy_guard_scope_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Delete Policy Guard Rule
+        /// </summary>
+        /// <remarks>
+        /// Remove a policy guard rule.
+        /// </remarks>
+        /// <param name="policy_guard_scope_id">Either the unique id of the policy_guard_scope, or the URL-friendly key of the policy_guard_scope (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task Delete_policy_guard_ruleAsync(string policy_guard_scope_id, PolicyGuardRuleItem body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (policy_guard_scope_id == null)
+                throw new System.ArgumentNullException("policy_guard_scope_id");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/policy_guards/scopes/{policy_guard_scope_id}/rules"
+                    urlBuilder_.Append("v2/policy_guards/scopes/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(policy_guard_scope_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/rules");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            return;
                         }
                         else
                         if (status_ == 422)

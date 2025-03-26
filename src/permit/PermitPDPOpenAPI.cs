@@ -247,6 +247,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        [System.Obsolete]
         public virtual PolicyStoreDetails Get_policy_store_details_policy_store_config_get(string? authorization = null)
         {
             return System.Threading.Tasks.Task.Run(async () => await Get_policy_store_details_policy_store_config_getAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
@@ -258,6 +259,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        [System.Obsolete]
         public virtual async System.Threading.Tasks.Task<PolicyStoreDetails> Get_policy_store_details_policy_store_config_getAsync(string? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
@@ -343,7 +345,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// List Callbacks
         /// </summary>
         /// <remarks>
-        /// list all the callbacks currently registered by OPAL client.
+        /// List all the callbacks currently registered by OPAL client.
         /// </remarks>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
@@ -357,7 +359,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// List Callbacks
         /// </summary>
         /// <remarks>
-        /// list all the callbacks currently registered by OPAL client.
+        /// List all the callbacks currently registered by OPAL client.
         /// </remarks>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
@@ -446,7 +448,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// Register Callback
         /// </summary>
         /// <remarks>
-        /// register a new callback by OPAL client, to be called on OPA state
+        /// Register a new callback by OPAL client, to be called on OPA state
         /// <br/>updates.
         /// </remarks>
         /// <returns>Successful Response</returns>
@@ -461,7 +463,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// Register Callback
         /// </summary>
         /// <remarks>
-        /// register a new callback by OPAL client, to be called on OPA state
+        /// Register a new callback by OPAL client, to be called on OPA state
         /// <br/>updates.
         /// </remarks>
         /// <returns>Successful Response</returns>
@@ -558,7 +560,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// Get Callback By Key
         /// </summary>
         /// <remarks>
-        /// get a callback by its key (if such callback is indeed
+        /// Get a callback by its key (if such callback is indeed
         /// <br/>registered).
         /// </remarks>
         /// <returns>Successful Response</returns>
@@ -573,7 +575,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// Get Callback By Key
         /// </summary>
         /// <remarks>
-        /// get a callback by its key (if such callback is indeed
+        /// Get a callback by its key (if such callback is indeed
         /// <br/>registered).
         /// </remarks>
         /// <returns>Successful Response</returns>
@@ -667,7 +669,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// Get Callback By Key
         /// </summary>
         /// <remarks>
-        /// unregisters a callback identified by its key (if such callback is
+        /// Unregisters a callback identified by its key (if such callback is
         /// <br/>indeed registered).
         /// </remarks>
         /// <returns>Successful Response</returns>
@@ -682,7 +684,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// Get Callback By Key
         /// </summary>
         /// <remarks>
-        /// unregisters a callback identified by its key (if such callback is
+        /// Unregisters a callback identified by its key (if such callback is
         /// <br/>indeed registered).
         /// </remarks>
         /// <returns>Successful Response</returns>
@@ -1449,6 +1451,116 @@ namespace PermitSDK.PDP.OpenAPI
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
                     // Operation Path: "allowed"
                     urlBuilder_.Append("allowed");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AuthorizationResult>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Is Allowed Nginx
+        /// </summary>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual AuthorizationResult Is_allowed_nginx_nginx_allowed_post(string? permit_user_key = null, string? permit_tenant_id = null, string? permit_action = null, string? permit_resource_type = null, object? authorization = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_nginx_nginx_allowed_postAsync(permit_user_key, permit_tenant_id, permit_action, permit_resource_type, authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Is Allowed Nginx
+        /// </summary>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AuthorizationResult> Is_allowed_nginx_nginx_allowed_postAsync(string? permit_user_key = null, string? permit_tenant_id = null, string? permit_action = null, string? permit_resource_type = null, object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (permit_user_key != null)
+                        request_.Headers.TryAddWithoutValidation("permit-user-key", ConvertToString(permit_user_key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (permit_tenant_id != null)
+                        request_.Headers.TryAddWithoutValidation("permit-tenant-id", ConvertToString(permit_tenant_id, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (permit_action != null)
+                        request_.Headers.TryAddWithoutValidation("permit-action", ConvertToString(permit_action, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (permit_resource_type != null)
+                        request_.Headers.TryAddWithoutValidation("permit-resource-type", ConvertToString(permit_resource_type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (authorization != null)
+                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "nginx_allowed"
+                    urlBuilder_.Append("nginx_allowed");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -3287,7 +3399,7 @@ namespace PermitSDK.PDP.OpenAPI
     }
 
     /// <summary>
-    /// an entry in the callbacks register.
+    /// An entry in the callbacks register.
     /// <br/>
     /// <br/>this schema is used by the callbacks api
     /// </summary>
