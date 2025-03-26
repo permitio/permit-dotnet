@@ -23,7 +23,6 @@ dotnet add package Permit
 ```
 
 2. Import the necessary namespaces:
-
 ```csharp
 using Permit;
 using Permit.Models;
