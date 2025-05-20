@@ -75,713 +75,6 @@ namespace PermitSDK.OpenAPI
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <summary>
-        /// Get All Data Optimized
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual FullData Get_all_data_optimized(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null)
-        {
-            return System.Threading.Tasks.Task.Run(async () => await Get_all_data_optimizedAsync(org_id, proj_id, env_id, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get All Data Optimized
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FullData> Get_all_data_optimizedAsync(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (org_id == null)
-                throw new System.ArgumentNullException("org_id");
-
-            if (proj_id == null)
-                throw new System.ArgumentNullException("proj_id");
-
-            if (env_id == null)
-                throw new System.ArgumentNullException("env_id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-
-                    if (x_Shard_ID != null)
-                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/optimized"
-                    urlBuilder_.Append("v2/internal/opal_data/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/optimized");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ >= 200 && status_ < 300)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<FullData>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 422)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Get All Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual FullData Get_all_data(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null)
-        {
-            return System.Threading.Tasks.Task.Run(async () => await Get_all_dataAsync(org_id, proj_id, env_id, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get All Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FullData> Get_all_dataAsync(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (org_id == null)
-                throw new System.ArgumentNullException("org_id");
-
-            if (proj_id == null)
-                throw new System.ArgumentNullException("proj_id");
-
-            if (env_id == null)
-                throw new System.ArgumentNullException("env_id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-
-                    if (x_Shard_ID != null)
-                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}"
-                    urlBuilder_.Append("v2/internal/opal_data/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ >= 200 && status_ < 300)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<FullData>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 422)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Get All Users Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual System.Collections.Generic.IDictionary<string, UserData> Get_all_users_data(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null)
-        {
-            return System.Threading.Tasks.Task.Run(async () => await Get_all_users_dataAsync(org_id, proj_id, env_id, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get All Users Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, UserData>> Get_all_users_dataAsync(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (org_id == null)
-                throw new System.ArgumentNullException("org_id");
-
-            if (proj_id == null)
-                throw new System.ArgumentNullException("proj_id");
-
-            if (env_id == null)
-                throw new System.ArgumentNullException("env_id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-
-                    if (x_Shard_ID != null)
-                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/users"
-                    urlBuilder_.Append("v2/internal/opal_data/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/users");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ >= 200 && status_ < 300)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IDictionary<string, UserData>>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 422)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Get All Role Assignments Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>> Get_all_role_assignments_data(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null)
-        {
-            return System.Threading.Tasks.Task.Run(async () => await Get_all_role_assignments_dataAsync(org_id, proj_id, env_id, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get All Role Assignments Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Get_all_role_assignments_dataAsync(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (org_id == null)
-                throw new System.ArgumentNullException("org_id");
-
-            if (proj_id == null)
-                throw new System.ArgumentNullException("proj_id");
-
-            if (env_id == null)
-                throw new System.ArgumentNullException("env_id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-
-                    if (x_Shard_ID != null)
-                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/role_assignments"
-                    urlBuilder_.Append("v2/internal/opal_data/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/role_assignments");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ >= 200 && status_ < 300)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 422)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Get All Resource Instances Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual System.Collections.Generic.IDictionary<string, ResourceInstanceAttributeData> Get_all_resource_instances_data(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null)
-        {
-            return System.Threading.Tasks.Task.Run(async () => await Get_all_resource_instances_dataAsync(org_id, proj_id, env_id, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get All Resource Instances Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, ResourceInstanceAttributeData>> Get_all_resource_instances_dataAsync(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (org_id == null)
-                throw new System.ArgumentNullException("org_id");
-
-            if (proj_id == null)
-                throw new System.ArgumentNullException("proj_id");
-
-            if (env_id == null)
-                throw new System.ArgumentNullException("env_id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-
-                    if (x_Shard_ID != null)
-                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/resource_instances"
-                    urlBuilder_.Append("v2/internal/opal_data/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/resource_instances");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ >= 200 && status_ < 300)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IDictionary<string, ResourceInstanceAttributeData>>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 422)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Get All Relationships Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Get_all_relationships_data(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null)
-        {
-            return System.Threading.Tasks.Task.Run(async () => await Get_all_relationships_dataAsync(org_id, proj_id, env_id, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Get All Relationships Data
-        /// </summary>
-        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
-        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
-        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
-        /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>> Get_all_relationships_dataAsync(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            if (org_id == null)
-                throw new System.ArgumentNullException("org_id");
-
-            if (proj_id == null)
-                throw new System.ArgumentNullException("proj_id");
-
-            if (env_id == null)
-                throw new System.ArgumentNullException("env_id");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-
-                    if (x_Shard_ID != null)
-                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/relationships"
-                    urlBuilder_.Append("v2/internal/opal_data/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append('/');
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
-                    urlBuilder_.Append("/relationships");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ >= 200 && status_ < 300)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 422)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
         /// Get the authenticated account member
         /// </summary>
         /// <remarks>
@@ -31379,6 +30672,860 @@ namespace PermitSDK.OpenAPI
                         if (status_ == 204)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Run the audit log replay
+        /// </summary>
+        /// <remarks>
+        /// Run the audit log replay with the given parameters. This will replay PDP requests based on audit logs.
+        /// </remarks>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual AuditLogReplayResponse Run_audit_log_replay(AuditLogReplayRequest body)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Run_audit_log_replayAsync(body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Run the audit log replay
+        /// </summary>
+        /// <remarks>
+        /// Run the audit log replay with the given parameters. This will replay PDP requests based on audit logs.
+        /// </remarks>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<AuditLogReplayResponse> Run_audit_log_replayAsync(AuditLogReplayRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/audit-log-replay"
+                    urlBuilder_.Append("v2/audit-log-replay");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 202)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AuditLogReplayResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get All Data Optimized
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual Permit_backend__schemas__schema_opal_data__FullData Get_all_data_optimized(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Get_all_data_optimizedAsync(org_id, proj_id, env_id, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get All Data Optimized
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<Permit_backend__schemas__schema_opal_data__FullData> Get_all_data_optimizedAsync(System.Guid org_id, string proj_id, string env_id, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (org_id == null)
+                throw new System.ArgumentNullException("org_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (x_Shard_ID != null)
+                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/optimized"
+                    urlBuilder_.Append("v2/internal/opal_data/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/optimized");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<Permit_backend__schemas__schema_opal_data__FullData>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get All Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual object Get_all_data(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Get_all_dataAsync(org_id, proj_id, env_id, timeout, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get All Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<object> Get_all_dataAsync(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (org_id == null)
+                throw new System.ArgumentNullException("org_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (x_Shard_ID != null)
+                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}"
+                    urlBuilder_.Append("v2/internal/opal_data/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('?');
+                    if (timeout != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("timeout")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(timeout, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get All Users Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual object Get_all_users_data(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Get_all_users_dataAsync(org_id, proj_id, env_id, timeout, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get All Users Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<object> Get_all_users_dataAsync(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (org_id == null)
+                throw new System.ArgumentNullException("org_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (x_Shard_ID != null)
+                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/users"
+                    urlBuilder_.Append("v2/internal/opal_data/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/users");
+                    urlBuilder_.Append('?');
+                    if (timeout != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("timeout")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(timeout, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get All Role Assignments Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>> Get_all_role_assignments_data(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Get_all_role_assignments_dataAsync(org_id, proj_id, env_id, timeout, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get All Role Assignments Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Get_all_role_assignments_dataAsync(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (org_id == null)
+                throw new System.ArgumentNullException("org_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (x_Shard_ID != null)
+                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/role_assignments"
+                    urlBuilder_.Append("v2/internal/opal_data/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/role_assignments");
+                    urlBuilder_.Append('?');
+                    if (timeout != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("timeout")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(timeout, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get All Resource Instances Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual object Get_all_resource_instances_data(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Get_all_resource_instances_dataAsync(org_id, proj_id, env_id, timeout, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get All Resource Instances Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<object> Get_all_resource_instances_dataAsync(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (org_id == null)
+                throw new System.ArgumentNullException("org_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (x_Shard_ID != null)
+                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/resource_instances"
+                    urlBuilder_.Append("v2/internal/opal_data/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/resource_instances");
+                    urlBuilder_.Append('?');
+                    if (timeout != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("timeout")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(timeout, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<HTTPValidationError>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new PermitApiException<HTTPValidationError>("Validation Error", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get All Relationships Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Get_all_relationships_data(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await Get_all_relationships_dataAsync(org_id, proj_id, env_id, timeout, x_Shard_ID, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get All Relationships Data
+        /// </summary>
+        /// <param name="org_id">Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the "slug").</param>
+        /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
+        /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
+        /// <param name="timeout">Timeout for the data generation in the new data generation mode</param>
+        /// <returns>Successful Response</returns>
+        /// <exception cref="PermitApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>> Get_all_relationships_dataAsync(System.Guid org_id, string proj_id, string env_id, double? timeout = null, int? x_Shard_ID = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (org_id == null)
+                throw new System.ArgumentNullException("org_id");
+
+            if (proj_id == null)
+                throw new System.ArgumentNullException("proj_id");
+
+            if (env_id == null)
+                throw new System.ArgumentNullException("env_id");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (x_Shard_ID != null)
+                        request_.Headers.TryAddWithoutValidation("X-Shard-ID", ConvertToString(x_Shard_ID, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/relationships"
+                    urlBuilder_.Append("v2/internal/opal_data/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(org_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(proj_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append('/');
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/relationships");
+                    urlBuilder_.Append('?');
+                    if (timeout != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("timeout")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(timeout, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
                         }
                         else
                         if (status_ == 422)

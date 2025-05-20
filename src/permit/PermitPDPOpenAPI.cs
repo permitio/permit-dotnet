@@ -773,9 +773,9 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AuthorizedUsersResult Authorized_users_authorized_users_post(AuthorizedUsersAuthorizationQuery body, object? authorization = null)
+        public virtual AuthorizedUsersResult Authorized_users_authorized_users_post(string authorization, AuthorizedUsersAuthorizationQuery body)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Authorized_users_authorized_users_postAsync(body, authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Authorized_users_authorized_users_postAsync(authorization, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -784,7 +784,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AuthorizedUsersResult> Authorized_users_authorized_users_postAsync(AuthorizedUsersAuthorizationQuery body, object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AuthorizedUsersResult> Authorized_users_authorized_users_postAsync(string authorization, AuthorizedUsersAuthorizationQuery body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -796,8 +796,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, JsonSerializerSettings);
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
@@ -877,9 +878,9 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AuthorizationResult Is_allowed_url_allowed_url_post(UrlAuthorizationQuery body, object? authorization = null, string? x_permit_sdk_language = null)
+        public virtual AuthorizationResult Is_allowed_url_allowed_url_post(string authorization, UrlAuthorizationQuery body, string? x_permit_sdk_language = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_url_allowed_url_postAsync(body, authorization, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_url_allowed_url_postAsync(authorization, body, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -888,7 +889,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AuthorizationResult> Is_allowed_url_allowed_url_postAsync(UrlAuthorizationQuery body, object? authorization = null, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AuthorizationResult> Is_allowed_url_allowed_url_postAsync(string authorization, UrlAuthorizationQuery body, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -900,8 +901,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
 
                     if (x_permit_sdk_language != null)
                         request_.Headers.TryAddWithoutValidation("x-permit-sdk-language", ConvertToString(x_permit_sdk_language, System.Globalization.CultureInfo.InvariantCulture));
@@ -984,9 +986,9 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual System.Collections.Generic.IDictionary<string, _UserPermissionsResult> Get_User_Permissions_user_permissions_post(UserPermissionsQuery body, object? authorization = null, string? x_permit_sdk_language = null)
+        public virtual System.Collections.Generic.IDictionary<string, _UserPermissionsResult> Get_User_Permissions_user_permissions_post(string authorization, UserPermissionsQuery body, string? x_permit_sdk_language = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Get_User_Permissions_user_permissions_postAsync(body, authorization, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Get_User_Permissions_user_permissions_postAsync(authorization, body, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -995,7 +997,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, _UserPermissionsResult>> Get_User_Permissions_user_permissions_postAsync(UserPermissionsQuery body, object? authorization = null, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.IDictionary<string, _UserPermissionsResult>> Get_User_Permissions_user_permissions_postAsync(string authorization, UserPermissionsQuery body, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -1007,8 +1009,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
 
                     if (x_permit_sdk_language != null)
                         request_.Headers.TryAddWithoutValidation("x-permit-sdk-language", ConvertToString(x_permit_sdk_language, System.Globalization.CultureInfo.InvariantCulture));
@@ -1091,9 +1094,9 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual System.Collections.Generic.ICollection<_TenantDetails> Get_User_Tenants_user_tenants_post(UserTenantsQuery body, object? authorization = null, string? x_permit_sdk_language = null)
+        public virtual System.Collections.Generic.ICollection<_TenantDetails> Get_User_Tenants_user_tenants_post(string authorization, UserTenantsQuery body, string? x_permit_sdk_language = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Get_User_Tenants_user_tenants_postAsync(body, authorization, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Get_User_Tenants_user_tenants_postAsync(authorization, body, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1102,7 +1105,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<_TenantDetails>> Get_User_Tenants_user_tenants_postAsync(UserTenantsQuery body, object? authorization = null, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<_TenantDetails>> Get_User_Tenants_user_tenants_postAsync(string authorization, UserTenantsQuery body, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -1114,8 +1117,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
 
                     if (x_permit_sdk_language != null)
                         request_.Headers.TryAddWithoutValidation("x-permit-sdk-language", ConvertToString(x_permit_sdk_language, System.Globalization.CultureInfo.InvariantCulture));
@@ -1198,9 +1202,9 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AllTenantsAuthorizationResult Is_allowed_all_tenants_allowed_all_tenants_post(AuthorizationQuery body, object? authorization = null, string? x_permit_sdk_language = null)
+        public virtual AllTenantsAuthorizationResult Is_allowed_all_tenants_allowed_all_tenants_post(string authorization, AuthorizationQuery body, string? x_permit_sdk_language = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_all_tenants_allowed_all_tenants_postAsync(body, authorization, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_all_tenants_allowed_all_tenants_postAsync(authorization, body, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1209,7 +1213,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AllTenantsAuthorizationResult> Is_allowed_all_tenants_allowed_all_tenants_postAsync(AuthorizationQuery body, object? authorization = null, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AllTenantsAuthorizationResult> Is_allowed_all_tenants_allowed_all_tenants_postAsync(string authorization, AuthorizationQuery body, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -1221,8 +1225,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
 
                     if (x_permit_sdk_language != null)
                         request_.Headers.TryAddWithoutValidation("x-permit-sdk-language", ConvertToString(x_permit_sdk_language, System.Globalization.CultureInfo.InvariantCulture));
@@ -1305,9 +1310,9 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual BulkAuthorizationResult Is_allowed_bulk_allowed_bulk_post(System.Collections.Generic.IEnumerable<AuthorizationQuery> body, object? authorization = null, string? x_permit_sdk_language = null)
+        public virtual BulkAuthorizationResult Is_allowed_bulk_allowed_bulk_post(string authorization, System.Collections.Generic.IEnumerable<AuthorizationQuery> body, string? x_permit_sdk_language = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_bulk_allowed_bulk_postAsync(body, authorization, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_bulk_allowed_bulk_postAsync(authorization, body, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1316,7 +1321,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<BulkAuthorizationResult> Is_allowed_bulk_allowed_bulk_postAsync(System.Collections.Generic.IEnumerable<AuthorizationQuery> body, object? authorization = null, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<BulkAuthorizationResult> Is_allowed_bulk_allowed_bulk_postAsync(string authorization, System.Collections.Generic.IEnumerable<AuthorizationQuery> body, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -1328,8 +1333,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
 
                     if (x_permit_sdk_language != null)
                         request_.Headers.TryAddWithoutValidation("x-permit-sdk-language", ConvertToString(x_permit_sdk_language, System.Globalization.CultureInfo.InvariantCulture));
@@ -1412,9 +1418,9 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AuthorizationResult Is_allowed_allowed_post(Query body, object? authorization = null, string? x_permit_sdk_language = null)
+        public virtual AuthorizationResult Is_allowed_allowed_post(string authorization, Query body, string? x_permit_sdk_language = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_allowed_postAsync(body, authorization, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_allowed_postAsync(authorization, body, x_permit_sdk_language, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1423,7 +1429,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AuthorizationResult> Is_allowed_allowed_postAsync(Query body, object? authorization = null, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AuthorizationResult> Is_allowed_allowed_postAsync(string authorization, Query body, string? x_permit_sdk_language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -1435,8 +1441,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
 
                     if (x_permit_sdk_language != null)
                         request_.Headers.TryAddWithoutValidation("x-permit-sdk-language", ConvertToString(x_permit_sdk_language, System.Globalization.CultureInfo.InvariantCulture));
@@ -1519,9 +1526,9 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual AuthorizationResult Is_allowed_nginx_nginx_allowed_post(string? permit_user_key = null, string? permit_tenant_id = null, string? permit_action = null, string? permit_resource_type = null, object? authorization = null)
+        public virtual AuthorizationResult Is_allowed_nginx_nginx_allowed_post(string authorization, string? permit_user_key = null, string? permit_tenant_id = null, string? permit_action = null, string? permit_resource_type = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_nginx_nginx_allowed_postAsync(permit_user_key, permit_tenant_id, permit_action, permit_resource_type, authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Is_allowed_nginx_nginx_allowed_postAsync(authorization, permit_user_key, permit_tenant_id, permit_action, permit_resource_type, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1530,7 +1537,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<AuthorizationResult> Is_allowed_nginx_nginx_allowed_postAsync(string? permit_user_key = null, string? permit_tenant_id = null, string? permit_action = null, string? permit_resource_type = null, object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<AuthorizationResult> Is_allowed_nginx_nginx_allowed_postAsync(string authorization, string? permit_user_key = null, string? permit_tenant_id = null, string? permit_action = null, string? permit_resource_type = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1538,6 +1545,10 @@ namespace PermitSDK.PDP.OpenAPI
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
 
                     if (permit_user_key != null)
                         request_.Headers.TryAddWithoutValidation("permit-user-key", ConvertToString(permit_user_key, System.Globalization.CultureInfo.InvariantCulture));
@@ -1550,9 +1561,6 @@ namespace PermitSDK.PDP.OpenAPI
 
                     if (permit_resource_type != null)
                         request_.Headers.TryAddWithoutValidation("permit-resource-type", ConvertToString(permit_resource_type, System.Globalization.CultureInfo.InvariantCulture));
-
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -1738,13 +1746,13 @@ namespace PermitSDK.PDP.OpenAPI
         /// <param name="tenant">optional tenant filter, will only return role assignments granted in that tenant.</param>
         /// <param name="resource">optional resource **type** filter, will only return role assignments granted on that resource type.</param>
         /// <param name="resource_instance">optional resource instance filter, will only return role assignments granted on that resource instance.</param>
-        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="page">The page number (starts from 1).</param>
         /// <param name="per_page">The number of results per page (max 100).</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual System.Collections.Generic.ICollection<RoleAssignment> List_role_assignments_local_role_assignments_get(string? user = null, string? role = null, string? tenant = null, string? resource = null, string? resource_instance = null, int? page = null, int? per_page = null, object? authorization = null)
+        public virtual System.Collections.Generic.ICollection<RoleAssignment> List_role_assignments_local_role_assignments_get(string authorization, string? user = null, string? role = null, string? tenant = null, string? resource = null, string? resource_instance = null, int? page = null, int? per_page = null)
         {
-            return System.Threading.Tasks.Task.Run(async () => await List_role_assignments_local_role_assignments_getAsync(user, role, tenant, resource, resource_instance, page, per_page, authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await List_role_assignments_local_role_assignments_getAsync(authorization, user, role, tenant, resource, resource_instance, page, per_page, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -1761,11 +1769,11 @@ namespace PermitSDK.PDP.OpenAPI
         /// <param name="tenant">optional tenant filter, will only return role assignments granted in that tenant.</param>
         /// <param name="resource">optional resource **type** filter, will only return role assignments granted on that resource type.</param>
         /// <param name="resource_instance">optional resource instance filter, will only return role assignments granted on that resource instance.</param>
-        /// <param name="page">Page number of the results to fetch, starting at 1.</param>
+        /// <param name="page">The page number (starts from 1).</param>
         /// <param name="per_page">The number of results per page (max 100).</param>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RoleAssignment>> List_role_assignments_local_role_assignments_getAsync(string? user = null, string? role = null, string? tenant = null, string? resource = null, string? resource_instance = null, int? page = null, int? per_page = null, object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<RoleAssignment>> List_role_assignments_local_role_assignments_getAsync(string authorization, string? user = null, string? role = null, string? tenant = null, string? resource = null, string? resource_instance = null, int? page = null, int? per_page = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1774,8 +1782,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -1881,7 +1890,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Ready_opa_healthcheck_healthchecks_opa_ready_get(object? authorization = null)
+        public virtual object Ready_opa_healthcheck_healthchecks_opa_ready_get(string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Ready_opa_healthcheck_healthchecks_opa_ready_getAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -1892,7 +1901,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Ready_opa_healthcheck_healthchecks_opa_ready_getAsync(object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Ready_opa_healthcheck_healthchecks_opa_ready_getAsync(string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1901,8 +1910,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -1978,7 +1988,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Health_opa_healthcheck_healthchecks_opa_healthy_get(object? authorization = null)
+        public virtual object Health_opa_healthcheck_healthchecks_opa_healthy_get(string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Health_opa_healthcheck_healthchecks_opa_healthy_getAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -1989,7 +1999,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Health_opa_healthcheck_healthchecks_opa_healthy_getAsync(object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Health_opa_healthcheck_healthchecks_opa_healthy_getAsync(string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1998,8 +2008,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2075,7 +2086,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object System_opa_healthcheck_healthchecks_opa_system_get(object? authorization = null)
+        public virtual object System_opa_healthcheck_healthchecks_opa_system_get(string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await System_opa_healthcheck_healthchecks_opa_system_getAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2086,7 +2097,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> System_opa_healthcheck_healthchecks_opa_system_getAsync(object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> System_opa_healthcheck_healthchecks_opa_system_getAsync(string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2095,8 +2106,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
@@ -2172,7 +2184,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Create_user_facts_users_post(object? authorization = null)
+        public virtual object Create_user_facts_users_post(string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Create_user_facts_users_postAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2183,7 +2195,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Create_user_facts_users_postAsync(object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Create_user_facts_users_postAsync(string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2192,8 +2204,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2270,7 +2283,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Create_tenant_facts_tenants_post(object? authorization = null)
+        public virtual object Create_tenant_facts_tenants_post(string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Create_tenant_facts_tenants_postAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2281,7 +2294,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Create_tenant_facts_tenants_postAsync(object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Create_tenant_facts_tenants_postAsync(string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2290,8 +2303,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2368,7 +2382,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Sync_user_facts_users__user_id__put(string user_id, object? authorization = null)
+        public virtual object Sync_user_facts_users__user_id__put(string user_id, string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Sync_user_facts_users__user_id__putAsync(user_id, authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2379,7 +2393,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Sync_user_facts_users__user_id__putAsync(string user_id, object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Sync_user_facts_users__user_id__putAsync(string user_id, string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (user_id == null)
                 throw new System.ArgumentNullException("user_id");
@@ -2391,8 +2405,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2470,7 +2485,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Update_user_facts_users__user_id__patch(string user_id, object? authorization = null)
+        public virtual object Update_user_facts_users__user_id__patch(string user_id, string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Update_user_facts_users__user_id__patchAsync(user_id, authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2481,7 +2496,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Update_user_facts_users__user_id__patchAsync(string user_id, object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Update_user_facts_users__user_id__patchAsync(string user_id, string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (user_id == null)
                 throw new System.ArgumentNullException("user_id");
@@ -2493,8 +2508,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("PATCH");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2572,7 +2588,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Assign_user_role_facts_users__user_id__roles_post(string user_id, object? authorization = null)
+        public virtual object Assign_user_role_facts_users__user_id__roles_post(string user_id, string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Assign_user_role_facts_users__user_id__roles_postAsync(user_id, authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2583,7 +2599,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Assign_user_role_facts_users__user_id__roles_postAsync(string user_id, object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Assign_user_role_facts_users__user_id__roles_postAsync(string user_id, string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (user_id == null)
                 throw new System.ArgumentNullException("user_id");
@@ -2595,8 +2611,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2675,7 +2692,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Create_role_assignment_facts_role_assignments_post(object? authorization = null)
+        public virtual object Create_role_assignment_facts_role_assignments_post(string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Create_role_assignment_facts_role_assignments_postAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2686,7 +2703,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Create_role_assignment_facts_role_assignments_postAsync(object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Create_role_assignment_facts_role_assignments_postAsync(string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2695,8 +2712,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2773,7 +2791,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Create_resource_instance_facts_resource_instances_post(object? authorization = null)
+        public virtual object Create_resource_instance_facts_resource_instances_post(string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Create_resource_instance_facts_resource_instances_postAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2784,7 +2802,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Create_resource_instance_facts_resource_instances_postAsync(object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Create_resource_instance_facts_resource_instances_postAsync(string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2793,8 +2811,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2871,7 +2890,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Update_resource_instance_facts_resource_instances__instance_id__patch(string instance_id, object? authorization = null)
+        public virtual object Update_resource_instance_facts_resource_instances__instance_id__patch(string instance_id, string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Update_resource_instance_facts_resource_instances__instance_id__patchAsync(instance_id, authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2882,7 +2901,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Update_resource_instance_facts_resource_instances__instance_id__patchAsync(string instance_id, object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Update_resource_instance_facts_resource_instances__instance_id__patchAsync(string instance_id, string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (instance_id == null)
                 throw new System.ArgumentNullException("instance_id");
@@ -2894,8 +2913,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("PATCH");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2973,7 +2993,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual object Create_relationship_tuple_facts_relationship_tuples_post(object? authorization = null)
+        public virtual object Create_relationship_tuple_facts_relationship_tuples_post(string authorization)
         {
             return System.Threading.Tasks.Task.Run(async () => await Create_relationship_tuple_facts_relationship_tuples_postAsync(authorization, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
@@ -2984,7 +3004,7 @@ namespace PermitSDK.PDP.OpenAPI
         /// </summary>
         /// <returns>Successful Response</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> Create_relationship_tuple_facts_relationship_tuples_postAsync(object? authorization = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<object> Create_relationship_tuple_facts_relationship_tuples_postAsync(string authorization, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -2993,8 +3013,9 @@ namespace PermitSDK.PDP.OpenAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
 
-                    if (authorization != null)
-                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -4199,8 +4220,8 @@ namespace PermitSDK.PDP.OpenAPI
         [Newtonsoft.Json.JsonProperty("resource", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public _ResourceDetails? Resource { get; set; } = default!;
 
-        [Newtonsoft.Json.JsonProperty("permissions", Required = Newtonsoft.Json.Required.Always)]
-        public System.Collections.Generic.ICollection<string> Permissions { get; set; } = new System.Collections.ObjectModel.Collection<string>();
+        [Newtonsoft.Json.JsonProperty("permissions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<string>? Permissions { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("roles", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<string>? Roles { get; set; } = default!;
