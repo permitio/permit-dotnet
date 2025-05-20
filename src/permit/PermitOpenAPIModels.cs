@@ -1143,6 +1143,76 @@ namespace PermitSDK.OpenAPI.Models
     }
 
     /// <summary>
+    /// Request model for audit log replay
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AuditLogReplayRequest
+    {
+        /// <summary>
+        /// URL of the PDP to test against
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("pdp_url", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Pdp_url { get; set; } = default!;
+
+        /// <summary>
+        /// Start time for the query (in seconds since epoch). Defaults to 24 hours ago.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("start_time", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Start_time { get; set; } = default!;
+
+        /// <summary>
+        /// End time for the query (in seconds since epoch). Defaults to current time.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("end_time", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? End_time { get; set; } = default!;
+
+        /// <summary>
+        /// Concurrency limit for processing documents (max: 5)
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("concurrency_limit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Concurrency_limit { get; set; } = 10;
+
+        /// <summary>
+        /// Graceful shutdown time in seconds
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("graceful_shutdown_s", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Graceful_shutdown_s { get; set; } = 60;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// Response model for audit log replay
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AuditLogReplayResponse
+    {
+        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Message { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("document_count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Document_count { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
     /// An enumeration.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -1196,6 +1266,9 @@ namespace PermitSDK.OpenAPI.Models
 
         [System.Runtime.Serialization.EnumMember(Value = @"internal")]
         Internal = 4,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"trial")]
+        Trial = 5,
 
     }
 
@@ -1295,36 +1368,6 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("parent_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Parent_id? Parent_id { get; set; } = default!;
-
-    }
-
-    /// <summary>
-    /// This is the data of a specific condition set in the system
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ConditionSetData
-    {
-        /// <summary>
-        /// The type of the condition set.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ConditionSetType Type { get; set; } = default!;
-
-        /// <summary>
-        /// The key of the condition set.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Key { get; set; } = default!;
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
 
     }
 
@@ -1686,38 +1729,6 @@ namespace PermitSDK.OpenAPI.Models
 
     }
 
-    /// <summary>
-    /// This is the data of a specific derived role in the system
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DerivedRole
-    {
-        [Newtonsoft.Json.JsonProperty("conditions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? Conditions { get; set; } = default!;
-
-        /// <summary>
-        /// Settings for the derived role.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("settings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Permit_backend__schemas__schema_opal_data__DerivationSettings Settings { get; set; } = new Permit_backend__schemas__schema_opal_data__DerivationSettings();
-
-        /// <summary>
-        /// List of rules for the derived role.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("rules", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<DerivedRoleRule> Rules { get; set; } = new System.Collections.ObjectModel.Collection<DerivedRoleRule>();
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class DerivedRoleBlockEdit
     {
@@ -1755,47 +1766,6 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("users_with_role", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<DerivedRoleRuleRead>? Users_with_role { get; set; } = default!;
-
-    }
-
-    /// <summary>
-    /// This is the data of a specific derived role rule in the system
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DerivedRoleRule
-    {
-        /// <summary>
-        /// The relation between the resource and the related resource.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("relation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Relation { get; set; } = default!;
-
-        /// <summary>
-        /// The related resource type key.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("related_resource", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Related_resource { get; set; } = default!;
-
-        /// <summary>
-        /// The related role key.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("related_role", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Related_role { get; set; } = default!;
-
-        /// <summary>
-        /// Settings for the derived role rule.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("settings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Permit_backend__schemas__schema_opal_data__DerivationSettings Settings { get; set; } = new Permit_backend__schemas__schema_opal_data__DerivationSettings();
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
 
     }
 
@@ -3402,112 +3372,6 @@ namespace PermitSDK.OpenAPI.Models
 
     }
 
-    /// <summary>
-    /// This is the data structure that is used by the PDP in a manged Permit environment.
-    /// <br/>The code Permit generates uses this data structure to enforce the policy and make decisions.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FullData
-    {
-        [Newtonsoft.Json.JsonProperty("use_debugger", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool? Use_debugger { get; set; } = true;
-
-        /// <summary>
-        /// Key-Value mapping of the users in the system.
-        /// <br/>The key is the user key and the value contains some details about the user.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("users", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, UserData> Users { get; set; } = new System.Collections.Generic.Dictionary<string, UserData>();
-
-        /// <summary>
-        /// Key-Value mapping of the tenants in the system.
-        /// <br/>The key is the tenant key and the value contains some details about the tenant.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("tenants", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, TenantData> Tenants { get; set; } = new System.Collections.Generic.Dictionary<string, TenantData>();
-
-        /// <summary>
-        /// Key-Value mapping of the roles in the system.
-        /// <br/>The key is the role key and the value contains some details about the role.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("roles", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.Obsolete]
-        public System.Collections.Generic.IDictionary<string, RoleData> Roles { get; set; } = new System.Collections.Generic.Dictionary<string, RoleData>();
-
-        /// <summary>
-        /// Key-Value mapping of the permissions for each condition set.
-        /// <br/>The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set &amp; resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("condition_set_rules", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Condition_set_rules { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>();
-
-        /// <summary>
-        /// Sanitized Key-Value mapping of the permissions for each condition set.
-        /// <br/>(Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set &amp; resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("condition_set_rules_expand", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>? Condition_set_rules_expand { get; set; } = default!;
-
-        /// <summary>
-        /// Key-Value mapping of the relationships between resources.
-        /// <br/>The key is the resource instance key and the value is Key-Value mapping of relation key to a Key-Value mapping of resource ( type ) to list of instances keys.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("relationships", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Relationships { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>();
-
-        /// <summary>
-        /// Key-Value mapping of the resource types in the system.
-        /// <br/>The key is the resource type key and the value contains some details about the resource type.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("resource_types", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, ResourceTypeData> Resource_types { get; set; } = new System.Collections.Generic.Dictionary<string, ResourceTypeData>();
-
-        /// <summary>
-        /// Key-Value mapping of the condition sets in the system.
-        /// <br/>The key is the formatted condition set key and the value contains some details about the condition set.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("condition_sets", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, ConditionSetData> Condition_sets { get; set; } = new System.Collections.Generic.Dictionary<string, ConditionSetData>();
-
-        /// <summary>
-        /// Key-Value mapping of the role assignments for the users.
-        /// <br/>The key is the user key and the value is Key-Value mapping of resource instance key or tenant key to list of role keys assigned to the user in that resource instance.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("role_assignments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>> Role_assignments { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>();
-
-        /// <summary>
-        /// Key-Value mapping of the permissions for each role.
-        /// <br/>The key is the resource key and the value is Key-Value mapping of role key to details on the role permissions.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("role_permissions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, RoleData>> Role_permissions { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, RoleData>>();
-
-        /// <summary>
-        /// Key-Value mapping of groups of mapping rules in the system.
-        /// <br/>The key is the mapping rule group and the value is a list of mapping rules objects.We currently have only one group named 'all' which contains all the mapping rules.A mapping rule object contains, action, http_method, resource and url - all strings.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("mapping_rules", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<System.Collections.Generic.IDictionary<string, Anonymous4>>>? Mapping_rules { get; set; } = default!;
-
-        /// <summary>
-        /// Key-Value mapping of the resource instances in the system.
-        /// <br/>The key is the resource instance key and the value contains some details about the resource instance.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("resource_instances", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, ResourceInstanceAttributeData>? Resource_instances { get; set; } = default!;
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GroupAddRole
     {
@@ -4126,6 +3990,61 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("priority", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public int? Priority { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class MappingRuleUpdate
+    {
+        /// <summary>
+        /// The URL to match against the request URL
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Url { get; set; } = default!;
+
+        /// <summary>
+        /// The URL type to match against the request URL can be, 'regex' or none
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("url_type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public MappingRuleUpdateUrl_type? Url_type { get; set; } = default!;
+
+        /// <summary>
+        /// The HTTP method to match against the request method
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("http_method", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public Methods Http_method { get; set; } = default!;
+
+        /// <summary>
+        /// The resource to match against the request resource
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Resource { get; set; } = default!;
+
+        /// <summary>
+        /// The headers to match against the request headers
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("headers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, string>? Headers { get; set; } = default!;
+
+        /// <summary>
+        /// The action to match against the request action
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("action", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Action { get; set; } = default!;
+
+        /// <summary>
+        /// The priority of the mapping rule. The higher the priority, the higher the precedence
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("priority", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Priority { get; set; } = default!;
+
+        /// <summary>
+        /// If true, this mapping rule will be deleted during update.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("should_delete", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Should_delete { get; set; } = false;
 
     }
 
@@ -6686,10 +6605,10 @@ namespace PermitSDK.OpenAPI.Models
         public string? Name { get; set; } = default!;
 
         /// <summary>
-        /// Proxy config mapping rules will include the rules that will be used to map the request to the backend service by a URL and a http method.
+        /// Proxy config mapping rules, with optional should_delete flag to indicate deletion.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("mapping_rules", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<MappingRule>? Mapping_rules { get; set; } = default!;
+        public System.Collections.Generic.ICollection<MappingRuleUpdate>? Mapping_rules { get; set; } = default!;
 
         /// <summary>
         /// Proxy config auth mechanism will define the authentication mechanism that will be used to authenticate the request.
@@ -7766,36 +7685,6 @@ namespace PermitSDK.OpenAPI.Models
 
     }
 
-    /// <summary>
-    /// This is the data of a specific resource instance in the system
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResourceInstanceAttributeData
-    {
-        /// <summary>
-        /// The tenant key that this resource instance belongs to.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("tenant", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string? Tenant { get; set; } = default!;
-
-        /// <summary>
-        /// Key-Value mapping of the attributes of the resource instance.
-        /// <br/>The key is the attribute key and the value is the attribute value.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public object? Attributes { get; set; } = default!;
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ResourceInstanceBlockRead
     {
@@ -8437,36 +8326,6 @@ namespace PermitSDK.OpenAPI.Models
 
     }
 
-    /// <summary>
-    /// This is the data of a specific resource type in the system
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResourceTypeData
-    {
-        /// <summary>
-        /// List of actions that can be performed on the resource.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("actions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.ICollection<string> Actions { get; set; } = new System.Collections.ObjectModel.Collection<string>();
-
-        /// <summary>
-        /// Key-Value mapping of the derived roles for the resource type.
-        /// <br/>The key is the derived role key and the value is the details and conditions for the role derivation.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("derived_roles", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, DerivedRole> Derived_roles { get; set; } = new System.Collections.Generic.Dictionary<string, DerivedRole>();
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ResourceTypeObj
     {
@@ -9016,37 +8875,6 @@ namespace PermitSDK.OpenAPI.Models
 
     }
 
-    /// <summary>
-    /// This is the data of a specific role in the system
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RoleData
-    {
-        /// <summary>
-        /// Key-Value mapping of the resources and actions that the role can perform.
-        /// <br/>The key is the resource key and the value is a list of actions that the role can perform on that resource.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("grants", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>> Grants { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.ICollection<string>>();
-
-        /// <summary>
-        /// Key-Value mapping of the attributes of the role.
-        /// <br/>The key is the attribute key and the value is the attribute value.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public object? Attributes { get; set; } = default!;
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class RoleList
     {
@@ -9512,34 +9340,6 @@ namespace PermitSDK.OpenAPI.Models
 
     }
 
-    /// <summary>
-    /// This is the data of a specific tenant in the system
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TenantData
-    {
-        [Newtonsoft.Json.JsonProperty("roleAssignments", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.Obsolete]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>? RoleAssignments { get; set; } = default!;
-
-        /// <summary>
-        /// Key-Value mapping of the attributes of the tenant.
-        /// <br/>The key is the attribute key and the value is the attribute value.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public object Attributes { get; set; } = new object();
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class TenantDeleteBulkOperation
     {
@@ -9687,23 +9487,23 @@ namespace PermitSDK.OpenAPI.Models
     public partial class UsageLimits
     {
         /// <summary>
-        /// Monthly active users limit. Default for free-tier is 1000.
+        /// Monthly active users limit. Default for trial is 5000.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("mau", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Mau { get; set; } = 1000;
+        public int? Mau { get; set; } = 5000;
 
         /// <summary>
-        /// Number of tenants limit. Default for free-tier is 20.
+        /// Number of tenants limit. Default for trial is 50.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("tenants", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public int? Tenants { get; set; } = 20;
+        public int? Tenants { get; set; } = 50;
 
         /// <summary>
-        /// Billing tier. Default is free.
+        /// Billing tier. Default is trial.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("billing_tier", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public BillingTierType? Billing_tier { get; set; } = PermitSDK.OpenAPI.Models.BillingTierType.Free;
+        public BillingTierType? Billing_tier { get; set; } = PermitSDK.OpenAPI.Models.BillingTierType.Trial;
 
     }
 
@@ -9759,38 +9559,6 @@ namespace PermitSDK.OpenAPI.Models
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class UserCreateBulkOperationResult
     {
-
-    }
-
-    /// <summary>
-    /// This is the data of a specific user in the system
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UserData
-    {
-        /// <summary>
-        /// Key-Value mapping of the roles assigned to the user.
-        /// <br/>The key is the tenant key and the value is a list of role keys assigned to the user in that tenant.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("roleAssignments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.Obsolete]
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>> RoleAssignments { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.ICollection<string>>();
-
-        /// <summary>
-        /// Key-Value mapping of the attributes of the user.
-        /// <br/>The key is the attribute key and the value is the attribute value.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public object Attributes { get; set; } = new object();
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
 
     }
 
@@ -10247,6 +10015,389 @@ namespace PermitSDK.OpenAPI.Models
     }
 
     /// <summary>
+    /// This is the data of a specific condition set in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__ConditionSetData
+    {
+        /// <summary>
+        /// The type of the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ConditionSetType Type { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Key { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// Settings for the derived role
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__DerivationSettings
+    {
+        /// <summary>
+        /// If True, the derived role is superseded by a direct role.meaning role derivation is not considered if the user has a direct role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("superseded_by_direct_role", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Superseded_by_direct_role { get; set; } = false;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific derived role in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__DerivedRole
+    {
+        [Newtonsoft.Json.JsonProperty("conditions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Conditions { get; set; } = default!;
+
+        /// <summary>
+        /// Settings for the derived role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("settings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Data_generator_lib__schemas__schema_opal_data__DerivationSettings Settings { get; set; } = new Data_generator_lib__schemas__schema_opal_data__DerivationSettings();
+
+        /// <summary>
+        /// List of rules for the derived role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("rules", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<Data_generator_lib__schemas__schema_opal_data__DerivedRoleRule> Rules { get; set; } = new System.Collections.ObjectModel.Collection<Data_generator_lib__schemas__schema_opal_data__DerivedRoleRule>();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific derived role rule in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__DerivedRoleRule
+    {
+        /// <summary>
+        /// The relation between the resource and the related resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("relation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Relation { get; set; } = default!;
+
+        /// <summary>
+        /// The related resource type key.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("related_resource", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Related_resource { get; set; } = default!;
+
+        /// <summary>
+        /// The related role key.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("related_role", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Related_role { get; set; } = default!;
+
+        /// <summary>
+        /// Settings for the derived role rule.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("settings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Data_generator_lib__schemas__schema_opal_data__DerivationSettings Settings { get; set; } = new Data_generator_lib__schemas__schema_opal_data__DerivationSettings();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data structure that is used by the PDP in a manged Permit environment.
+    /// <br/>The code Permit generates uses this data structure to enforce the policy and make decisions.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__FullData
+    {
+        [Newtonsoft.Json.JsonProperty("use_debugger", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Use_debugger { get; set; } = true;
+
+        /// <summary>
+        /// Key-Value mapping of the users in the system.
+        /// <br/>The key is the user key and the value contains some details about the user.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("users", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__UserData> Users { get; set; } = new System.Collections.Generic.Dictionary<string, Data_generator_lib__schemas__schema_opal_data__UserData>();
+
+        /// <summary>
+        /// Key-Value mapping of the tenants in the system.
+        /// <br/>The key is the tenant key and the value contains some details about the tenant.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenants", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__TenantData> Tenants { get; set; } = new System.Collections.Generic.Dictionary<string, Data_generator_lib__schemas__schema_opal_data__TenantData>();
+
+        /// <summary>
+        /// Key-Value mapping of the roles in the system.
+        /// <br/>The key is the role key and the value contains some details about the role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("roles", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.Obsolete]
+        public System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__RoleData> Roles { get; set; } = new System.Collections.Generic.Dictionary<string, Data_generator_lib__schemas__schema_opal_data__RoleData>();
+
+        /// <summary>
+        /// Key-Value mapping of the permissions for each condition set.
+        /// <br/>The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set &amp; resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("condition_set_rules", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Condition_set_rules { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>();
+
+        /// <summary>
+        /// Sanitized Key-Value mapping of the permissions for each condition set.
+        /// <br/>(Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set &amp; resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("condition_set_rules_expand", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>? Condition_set_rules_expand { get; set; } = default!;
+
+        /// <summary>
+        /// Key-Value mapping of the relationships between resources.
+        /// <br/>The key is the resource instance key and the value is Key-Value mapping of relation key to a Key-Value mapping of resource ( type ) to list of instances keys.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("relationships", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Relationships { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>();
+
+        /// <summary>
+        /// Key-Value mapping of the resource types in the system.
+        /// <br/>The key is the resource type key and the value contains some details about the resource type.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_types", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__ResourceTypeData> Resource_types { get; set; } = new System.Collections.Generic.Dictionary<string, Data_generator_lib__schemas__schema_opal_data__ResourceTypeData>();
+
+        /// <summary>
+        /// Key-Value mapping of the condition sets in the system.
+        /// <br/>The key is the formatted condition set key and the value contains some details about the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("condition_sets", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__ConditionSetData> Condition_sets { get; set; } = new System.Collections.Generic.Dictionary<string, Data_generator_lib__schemas__schema_opal_data__ConditionSetData>();
+
+        /// <summary>
+        /// Key-Value mapping of the role assignments for the users.
+        /// <br/>The key is the user key and the value is Key-Value mapping of resource instance key or tenant key to list of role keys assigned to the user in that resource instance.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("role_assignments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>> Role_assignments { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>();
+
+        /// <summary>
+        /// Key-Value mapping of the permissions for each role.
+        /// <br/>The key is the resource key and the value is Key-Value mapping of role key to details on the role permissions.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("role_permissions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__RoleData>> Role_permissions { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__RoleData>>();
+
+        /// <summary>
+        /// Key-Value mapping of groups of mapping rules in the system.
+        /// <br/>The key is the mapping rule group and the value is a list of mapping rules objects.We currently have only one group named 'all' which contains all the mapping rules.A mapping rule object contains, action, http_method, resource and url - all strings.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("mapping_rules", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<System.Collections.Generic.IDictionary<string, Anonymous4>>>? Mapping_rules { get; set; } = default!;
+
+        /// <summary>
+        /// Key-Value mapping of the resource instances in the system.
+        /// <br/>The key is the resource instance key and the value contains some details about the resource instance.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instances", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData>? Resource_instances { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific resource instance in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData
+    {
+        /// <summary>
+        /// The tenant key that this resource instance belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenant", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Tenant { get; set; } = default!;
+
+        /// <summary>
+        /// Key-Value mapping of the attributes of the resource instance.
+        /// <br/>The key is the attribute key and the value is the attribute value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object? Attributes { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific resource type in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__ResourceTypeData
+    {
+        /// <summary>
+        /// List of actions that can be performed on the resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("actions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<string> Actions { get; set; } = new System.Collections.ObjectModel.Collection<string>();
+
+        /// <summary>
+        /// Key-Value mapping of the derived roles for the resource type.
+        /// <br/>The key is the derived role key and the value is the details and conditions for the role derivation.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("derived_roles", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Data_generator_lib__schemas__schema_opal_data__DerivedRole> Derived_roles { get; set; } = new System.Collections.Generic.Dictionary<string, Data_generator_lib__schemas__schema_opal_data__DerivedRole>();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific role in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__RoleData
+    {
+        /// <summary>
+        /// Key-Value mapping of the resources and actions that the role can perform.
+        /// <br/>The key is the resource key and the value is a list of actions that the role can perform on that resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("grants", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>> Grants { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.ICollection<string>>();
+
+        /// <summary>
+        /// Key-Value mapping of the attributes of the role.
+        /// <br/>The key is the attribute key and the value is the attribute value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object? Attributes { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific tenant in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__TenantData
+    {
+        [Newtonsoft.Json.JsonProperty("roleAssignments", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.Obsolete]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>? RoleAssignments { get; set; } = default!;
+
+        /// <summary>
+        /// Key-Value mapping of the attributes of the tenant.
+        /// <br/>The key is the attribute key and the value is the attribute value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object Attributes { get; set; } = new object();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific user in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Data_generator_lib__schemas__schema_opal_data__UserData
+    {
+        /// <summary>
+        /// Key-Value mapping of the roles assigned to the user.
+        /// <br/>The key is the tenant key and the value is a list of role keys assigned to the user in that tenant.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("roleAssignments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.Obsolete]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>> RoleAssignments { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.ICollection<string>>();
+
+        /// <summary>
+        /// Key-Value mapping of the attributes of the user.
+        /// <br/>The key is the attribute key and the value is the attribute value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object Attributes { get; set; } = new object();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
     /// Settings for a derived role or a derived role rule
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -10261,6 +10412,36 @@ namespace PermitSDK.OpenAPI.Models
     }
 
     /// <summary>
+    /// This is the data of a specific condition set in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__ConditionSetData
+    {
+        /// <summary>
+        /// The type of the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ConditionSetType Type { get; set; } = default!;
+
+        /// <summary>
+        /// The key of the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Key { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
     /// Settings for the derived role
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -10271,6 +10452,336 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("superseded_by_direct_role", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? Superseded_by_direct_role { get; set; } = false;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific derived role in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__DerivedRole
+    {
+        [Newtonsoft.Json.JsonProperty("conditions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Conditions { get; set; } = default!;
+
+        /// <summary>
+        /// Settings for the derived role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("settings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Permit_backend__schemas__schema_opal_data__DerivationSettings Settings { get; set; } = new Permit_backend__schemas__schema_opal_data__DerivationSettings();
+
+        /// <summary>
+        /// List of rules for the derived role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("rules", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<Permit_backend__schemas__schema_opal_data__DerivedRoleRule> Rules { get; set; } = new System.Collections.ObjectModel.Collection<Permit_backend__schemas__schema_opal_data__DerivedRoleRule>();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific derived role rule in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__DerivedRoleRule
+    {
+        /// <summary>
+        /// The relation between the resource and the related resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("relation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Relation { get; set; } = default!;
+
+        /// <summary>
+        /// The related resource type key.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("related_resource", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Related_resource { get; set; } = default!;
+
+        /// <summary>
+        /// The related role key.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("related_role", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Related_role { get; set; } = default!;
+
+        /// <summary>
+        /// Settings for the derived role rule.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("settings", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Permit_backend__schemas__schema_opal_data__DerivationSettings Settings { get; set; } = new Permit_backend__schemas__schema_opal_data__DerivationSettings();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data structure that is used by the PDP in a manged Permit environment.
+    /// <br/>The code Permit generates uses this data structure to enforce the policy and make decisions.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__FullData
+    {
+        [Newtonsoft.Json.JsonProperty("use_debugger", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Use_debugger { get; set; } = true;
+
+        /// <summary>
+        /// Key-Value mapping of the users in the system.
+        /// <br/>The key is the user key and the value contains some details about the user.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("users", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__UserData> Users { get; set; } = new System.Collections.Generic.Dictionary<string, Permit_backend__schemas__schema_opal_data__UserData>();
+
+        /// <summary>
+        /// Key-Value mapping of the tenants in the system.
+        /// <br/>The key is the tenant key and the value contains some details about the tenant.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenants", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__TenantData> Tenants { get; set; } = new System.Collections.Generic.Dictionary<string, Permit_backend__schemas__schema_opal_data__TenantData>();
+
+        /// <summary>
+        /// Key-Value mapping of the roles in the system.
+        /// <br/>The key is the role key and the value contains some details about the role.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("roles", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.Obsolete]
+        public System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__RoleData> Roles { get; set; } = new System.Collections.Generic.Dictionary<string, Permit_backend__schemas__schema_opal_data__RoleData>();
+
+        /// <summary>
+        /// Key-Value mapping of the permissions for each condition set.
+        /// <br/>The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set &amp; resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("condition_set_rules", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Condition_set_rules { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>();
+
+        /// <summary>
+        /// Sanitized Key-Value mapping of the permissions for each condition set.
+        /// <br/>(Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set &amp; resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("condition_set_rules_expand", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>? Condition_set_rules_expand { get; set; } = default!;
+
+        /// <summary>
+        /// Key-Value mapping of the relationships between resources.
+        /// <br/>The key is the resource instance key and the value is Key-Value mapping of relation key to a Key-Value mapping of resource ( type ) to list of instances keys.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("relationships", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>> Relationships { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>>();
+
+        /// <summary>
+        /// Key-Value mapping of the resource types in the system.
+        /// <br/>The key is the resource type key and the value contains some details about the resource type.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_types", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__ResourceTypeData> Resource_types { get; set; } = new System.Collections.Generic.Dictionary<string, Permit_backend__schemas__schema_opal_data__ResourceTypeData>();
+
+        /// <summary>
+        /// Key-Value mapping of the condition sets in the system.
+        /// <br/>The key is the formatted condition set key and the value contains some details about the condition set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("condition_sets", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__ConditionSetData> Condition_sets { get; set; } = new System.Collections.Generic.Dictionary<string, Permit_backend__schemas__schema_opal_data__ConditionSetData>();
+
+        /// <summary>
+        /// Key-Value mapping of the role assignments for the users.
+        /// <br/>The key is the user key and the value is Key-Value mapping of resource instance key or tenant key to list of role keys assigned to the user in that resource instance.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("role_assignments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>> Role_assignments { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>>();
+
+        /// <summary>
+        /// Key-Value mapping of the permissions for each role.
+        /// <br/>The key is the resource key and the value is Key-Value mapping of role key to details on the role permissions.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("role_permissions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__RoleData>> Role_permissions { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__RoleData>>();
+
+        /// <summary>
+        /// Key-Value mapping of groups of mapping rules in the system.
+        /// <br/>The key is the mapping rule group and the value is a list of mapping rules objects.We currently have only one group named 'all' which contains all the mapping rules.A mapping rule object contains, action, http_method, resource and url - all strings.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("mapping_rules", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<System.Collections.Generic.IDictionary<string, Anonymous5>>>? Mapping_rules { get; set; } = default!;
+
+        /// <summary>
+        /// Key-Value mapping of the resource instances in the system.
+        /// <br/>The key is the resource instance key and the value contains some details about the resource instance.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instances", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData>? Resource_instances { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific resource instance in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData
+    {
+        /// <summary>
+        /// The tenant key that this resource instance belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("tenant", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Tenant { get; set; } = default!;
+
+        /// <summary>
+        /// Key-Value mapping of the attributes of the resource instance.
+        /// <br/>The key is the attribute key and the value is the attribute value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object? Attributes { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific resource type in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__ResourceTypeData
+    {
+        /// <summary>
+        /// List of actions that can be performed on the resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("actions", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<string> Actions { get; set; } = new System.Collections.ObjectModel.Collection<string>();
+
+        /// <summary>
+        /// Key-Value mapping of the derived roles for the resource type.
+        /// <br/>The key is the derived role key and the value is the details and conditions for the role derivation.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("derived_roles", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, Permit_backend__schemas__schema_opal_data__DerivedRole> Derived_roles { get; set; } = new System.Collections.Generic.Dictionary<string, Permit_backend__schemas__schema_opal_data__DerivedRole>();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific role in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__RoleData
+    {
+        /// <summary>
+        /// Key-Value mapping of the resources and actions that the role can perform.
+        /// <br/>The key is the resource key and the value is a list of actions that the role can perform on that resource.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("grants", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>> Grants { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.ICollection<string>>();
+
+        /// <summary>
+        /// Key-Value mapping of the attributes of the role.
+        /// <br/>The key is the attribute key and the value is the attribute value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object? Attributes { get; set; } = default!;
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific tenant in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__TenantData
+    {
+        [Newtonsoft.Json.JsonProperty("roleAssignments", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.Obsolete]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>>? RoleAssignments { get; set; } = default!;
+
+        /// <summary>
+        /// Key-Value mapping of the attributes of the tenant.
+        /// <br/>The key is the attribute key and the value is the attribute value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object Attributes { get; set; } = new object();
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    /// <summary>
+    /// This is the data of a specific user in the system
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Permit_backend__schemas__schema_opal_data__UserData
+    {
+        /// <summary>
+        /// Key-Value mapping of the roles assigned to the user.
+        /// <br/>The key is the tenant key and the value is a list of role keys assigned to the user in that tenant.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("roleAssignments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.Obsolete]
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.ICollection<string>> RoleAssignments { get; set; } = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.ICollection<string>>();
+
+        /// <summary>
+        /// Key-Value mapping of the attributes of the user.
+        /// <br/>The key is the attribute key and the value is the attribute value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("attributes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object Attributes { get; set; } = new object();
 
         private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
 
@@ -10572,21 +11083,6 @@ namespace PermitSDK.OpenAPI.Models
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class Anonymous4
-    {
-
-        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
-
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum MailgunEmailConfigurationCreateEmail_provider_type
     {
 
@@ -10606,6 +11102,15 @@ namespace PermitSDK.OpenAPI.Models
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum MappingRuleUrl_type
+    {
+
+        [System.Runtime.Serialization.EnumMember(Value = @"regex")]
+        Regex = 0,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum MappingRuleUpdateUrl_type
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"regex")]
@@ -10751,6 +11256,36 @@ namespace PermitSDK.OpenAPI.Models
 
         [System.Runtime.Serialization.EnumMember(Value = @"elements")]
         Elements = 0,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Anonymous4
+    {
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class Anonymous5
+    {
+
+        private System.Collections.Generic.IDictionary<string, object>? _additionalProperties;
+
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
 
     }
 

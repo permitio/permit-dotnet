@@ -6,547 +6,6 @@
     "version": "2.0.0"
   },
   "paths": {
-    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/optimized": {
-      "get": {
-        "tags": [
-          "OPAL Data ( EAP )"
-        ],
-        "summary": "Get All Data Optimized",
-        "operationId": "get_all_data_optimized",
-        "parameters": [
-          {
-            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Org Id",
-              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
-            },
-            "example": "my_organization",
-            "name": "org_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Proj Id",
-              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
-            },
-            "example": "my_project",
-            "name": "proj_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Env Id",
-              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
-            },
-            "example": "my_environment",
-            "name": "env_id",
-            "in": "path"
-          },
-          {
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0.0,
-              "title": "X-Shard-Id"
-            },
-            "name": "X-Shard-ID",
-            "in": "header"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FullData"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}": {
-      "get": {
-        "tags": [
-          "OPAL Data ( EAP )"
-        ],
-        "summary": "Get All Data",
-        "operationId": "get_all_data",
-        "parameters": [
-          {
-            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Org Id",
-              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
-            },
-            "example": "my_organization",
-            "name": "org_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Proj Id",
-              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
-            },
-            "example": "my_project",
-            "name": "proj_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Env Id",
-              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
-            },
-            "example": "my_environment",
-            "name": "env_id",
-            "in": "path"
-          },
-          {
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0.0,
-              "title": "X-Shard-Id"
-            },
-            "name": "X-Shard-ID",
-            "in": "header"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FullData"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/users": {
-      "get": {
-        "tags": [
-          "OPAL Data ( EAP )"
-        ],
-        "summary": "Get All Users Data",
-        "operationId": "get_all_users_data",
-        "parameters": [
-          {
-            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Org Id",
-              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
-            },
-            "example": "my_organization",
-            "name": "org_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Proj Id",
-              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
-            },
-            "example": "my_project",
-            "name": "proj_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Env Id",
-              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
-            },
-            "example": "my_environment",
-            "name": "env_id",
-            "in": "path"
-          },
-          {
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0.0,
-              "title": "X-Shard-Id"
-            },
-            "name": "X-Shard-ID",
-            "in": "header"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/UserData"
-                  },
-                  "type": "object",
-                  "title": "Response Get All Users Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Users Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/role_assignments": {
-      "get": {
-        "tags": [
-          "OPAL Data ( EAP )"
-        ],
-        "summary": "Get All Role Assignments Data",
-        "operationId": "get_all_role_assignments_data",
-        "parameters": [
-          {
-            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Org Id",
-              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
-            },
-            "example": "my_organization",
-            "name": "org_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Proj Id",
-              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
-            },
-            "example": "my_project",
-            "name": "proj_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Env Id",
-              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
-            },
-            "example": "my_environment",
-            "name": "env_id",
-            "in": "path"
-          },
-          {
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0.0,
-              "title": "X-Shard-Id"
-            },
-            "name": "X-Shard-ID",
-            "in": "header"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "additionalProperties": {
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    },
-                    "type": "object"
-                  },
-                  "type": "object",
-                  "title": "Response Get All Role Assignments Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Role Assignments Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/resource_instances": {
-      "get": {
-        "tags": [
-          "OPAL Data ( EAP )"
-        ],
-        "summary": "Get All Resource Instances Data",
-        "operationId": "get_all_resource_instances_data",
-        "parameters": [
-          {
-            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Org Id",
-              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
-            },
-            "example": "my_organization",
-            "name": "org_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Proj Id",
-              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
-            },
-            "example": "my_project",
-            "name": "proj_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Env Id",
-              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
-            },
-            "example": "my_environment",
-            "name": "env_id",
-            "in": "path"
-          },
-          {
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0.0,
-              "title": "X-Shard-Id"
-            },
-            "name": "X-Shard-ID",
-            "in": "header"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "$ref": "#/components/schemas/ResourceInstanceAttributeData"
-                  },
-                  "type": "object",
-                  "title": "Response Get All Resource Instances Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Resource Instances Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/relationships": {
-      "get": {
-        "tags": [
-          "OPAL Data ( EAP )"
-        ],
-        "summary": "Get All Relationships Data",
-        "operationId": "get_all_relationships_data",
-        "parameters": [
-          {
-            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Org Id",
-              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
-            },
-            "example": "my_organization",
-            "name": "org_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Proj Id",
-              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
-            },
-            "example": "my_project",
-            "name": "proj_id",
-            "in": "path"
-          },
-          {
-            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Env Id",
-              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
-            },
-            "example": "my_environment",
-            "name": "env_id",
-            "in": "path"
-          },
-          {
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0.0,
-              "title": "X-Shard-Id"
-            },
-            "name": "X-Shard-ID",
-            "in": "header"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "additionalProperties": {
-                      "additionalProperties": {
-                        "items": {
-                          "type": "string"
-                        },
-                        "type": "array"
-                      },
-                      "type": "object"
-                    },
-                    "type": "object"
-                  },
-                  "type": "object",
-                  "title": "Response Get All Relationships Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Relationships Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
     "/v2/members/me": {
       "get": {
         "tags": [
@@ -15743,7 +15202,7 @@
             "schema": {
               "items": {
                 "type": "string",
-                "maxLength": 45
+                "maxLength": 500
               },
               "type": "array",
               "title": "Users",
@@ -15880,7 +15339,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "id": "3765164ebb8e4c1bbbacf8ae4f263c38",
+                  "id": "43c3194796a44360ae48bf3600263fce",
                   "title": "The request was invalid",
                   "error_code": "PAGINATION_SIZE_OVERREACHED",
                   "message": "We are sorry for the inconvenience, Max number of results for this API is 10000. To obtain additional results readjust the query's time window, or apply additional filters.. Please check the request and try again.\nIf the issue keeps happening, contact our support on Slack for further guidance."
@@ -20972,6 +20431,656 @@
           }
         ]
       }
+    },
+    "/v2/audit-log-replay": {
+      "post": {
+        "tags": [
+          "Audit Log Replay"
+        ],
+        "summary": "Run the audit log replay",
+        "description": "Run the audit log replay with the given parameters. This will replay PDP requests based on audit logs.",
+        "operationId": "run_audit_log_replay",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuditLogReplayRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLogReplayResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/optimized": {
+      "get": {
+        "tags": [
+          "OPAL Data ( EAP )"
+        ],
+        "summary": "Get All Data Optimized",
+        "operationId": "get_all_data_optimized",
+        "parameters": [
+          {
+            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id",
+              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+            },
+            "example": "my_organization",
+            "name": "org_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0.0,
+              "title": "X-Shard-Id"
+            },
+            "name": "X-Shard-ID",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__FullData"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}": {
+      "get": {
+        "tags": [
+          "OPAL Data ( EAP )"
+        ],
+        "summary": "Get All Data",
+        "operationId": "get_all_data",
+        "parameters": [
+          {
+            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id",
+              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+            },
+            "example": "my_organization",
+            "name": "org_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "Timeout for the data generation in the new data generation mode",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 1800.0,
+              "exclusiveMinimum": 0.0,
+              "title": "Timeout",
+              "description": "Timeout for the data generation in the new data generation mode",
+              "default": 600.0
+            },
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0.0,
+              "title": "X-Shard-Id"
+            },
+            "name": "X-Shard-ID",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get All Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/users": {
+      "get": {
+        "tags": [
+          "OPAL Data ( EAP )"
+        ],
+        "summary": "Get All Users Data",
+        "operationId": "get_all_users_data",
+        "parameters": [
+          {
+            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id",
+              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+            },
+            "example": "my_organization",
+            "name": "org_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "Timeout for the data generation in the new data generation mode",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 1800.0,
+              "exclusiveMinimum": 0.0,
+              "title": "Timeout",
+              "description": "Timeout for the data generation in the new data generation mode",
+              "default": 600.0
+            },
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0.0,
+              "title": "X-Shard-Id"
+            },
+            "name": "X-Shard-ID",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get All Users Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Users Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/role_assignments": {
+      "get": {
+        "tags": [
+          "OPAL Data ( EAP )"
+        ],
+        "summary": "Get All Role Assignments Data",
+        "operationId": "get_all_role_assignments_data",
+        "parameters": [
+          {
+            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id",
+              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+            },
+            "example": "my_organization",
+            "name": "org_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "Timeout for the data generation in the new data generation mode",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 1800.0,
+              "exclusiveMinimum": 0.0,
+              "title": "Timeout",
+              "description": "Timeout for the data generation in the new data generation mode",
+              "default": 600.0
+            },
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0.0,
+              "title": "X-Shard-Id"
+            },
+            "name": "X-Shard-ID",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "additionalProperties": {
+                      "items": {
+                        "type": "string"
+                      },
+                      "type": "array"
+                    },
+                    "type": "object"
+                  },
+                  "type": "object",
+                  "title": "Response Get All Role Assignments Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Role Assignments Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/resource_instances": {
+      "get": {
+        "tags": [
+          "OPAL Data ( EAP )"
+        ],
+        "summary": "Get All Resource Instances Data",
+        "operationId": "get_all_resource_instances_data",
+        "parameters": [
+          {
+            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id",
+              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+            },
+            "example": "my_organization",
+            "name": "org_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "Timeout for the data generation in the new data generation mode",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 1800.0,
+              "exclusiveMinimum": 0.0,
+              "title": "Timeout",
+              "description": "Timeout for the data generation in the new data generation mode",
+              "default": 600.0
+            },
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0.0,
+              "title": "X-Shard-Id"
+            },
+            "name": "X-Shard-ID",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get All Resource Instances Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Resource Instances Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/internal/opal_data/{org_id}/{proj_id}/{env_id}/relationships": {
+      "get": {
+        "tags": [
+          "OPAL Data ( EAP )"
+        ],
+        "summary": "Get All Relationships Data",
+        "operationId": "get_all_relationships_data",
+        "parameters": [
+          {
+            "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Org Id",
+              "description": "Either the unique id of the organization, or the URL-friendly key of the organization (i.e: the \"slug\")."
+            },
+            "example": "my_organization",
+            "name": "org_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "Timeout for the data generation in the new data generation mode",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 1800.0,
+              "exclusiveMinimum": 0.0,
+              "title": "Timeout",
+              "description": "Timeout for the data generation in the new data generation mode",
+              "default": 600.0
+            },
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0.0,
+              "title": "X-Shard-Id"
+            },
+            "name": "X-Shard-ID",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "additionalProperties": {
+                      "additionalProperties": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "type": "object"
+                    },
+                    "type": "object"
+                  },
+                  "type": "object",
+                  "title": "Response Get All Relationships Data V2 Internal Opal Data  Org Id   Proj Id   Env Id  Relationships Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -22598,6 +22707,67 @@
         "type": "object",
         "title": "AuditLogObjectsModel"
       },
+      "AuditLogReplayRequest": {
+        "properties": {
+          "pdp_url": {
+            "type": "string",
+            "title": "Pdp Url",
+            "description": "URL of the PDP to test against",
+            "example": "http://mydomain.com:7766"
+          },
+          "start_time": {
+            "type": "integer",
+            "title": "Start Time",
+            "description": "Start time for the query (in seconds since epoch). Defaults to 24 hours ago.",
+            "example": 1616432400
+          },
+          "end_time": {
+            "type": "integer",
+            "title": "End Time",
+            "description": "End time for the query (in seconds since epoch). Defaults to current time.",
+            "example": 1616518800
+          },
+          "concurrency_limit": {
+            "type": "integer",
+            "title": "Concurrency Limit",
+            "description": "Concurrency limit for processing documents (max: 5)",
+            "default": 10,
+            "example": 10
+          },
+          "graceful_shutdown_s": {
+            "type": "integer",
+            "title": "Graceful Shutdown S",
+            "description": "Graceful shutdown time in seconds",
+            "default": 60,
+            "example": 60
+          }
+        },
+        "type": "object",
+        "required": [
+          "pdp_url"
+        ],
+        "title": "AuditLogReplayRequest",
+        "description": "Request model for audit log replay"
+      },
+      "AuditLogReplayResponse": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "document_count": {
+            "type": "integer",
+            "title": "Document Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "document_count"
+        ],
+        "title": "AuditLogReplayResponse",
+        "description": "Response model for audit log replay"
+      },
       "AuditLogSortKey": {
         "type": "string",
         "enum": [
@@ -22624,7 +22794,8 @@
           "startup",
           "pro",
           "enterprise",
-          "internal"
+          "internal",
+          "trial"
         ],
         "title": "BillingTierType",
         "description": "An enumeration."
@@ -22782,30 +22953,6 @@
             ]
           }
         }
-      },
-      "ConditionSetData": {
-        "properties": {
-          "type": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/ConditionSetType"
-              }
-            ],
-            "description": "The type of the condition set."
-          },
-          "key": {
-            "type": "string",
-            "title": "Key",
-            "description": "The key of the condition set."
-          }
-        },
-        "type": "object",
-        "required": [
-          "type",
-          "key"
-        ],
-        "title": "ConditionSetData",
-        "description": "This is the data of a specific condition set in the system"
       },
       "ConditionSetRead": {
         "properties": {
@@ -23278,38 +23425,6 @@
         "title": "DataSourceEntryWithPollingInterval",
         "description": "Data source configuration - where client's should retrieve data from and how they should store it"
       },
-      "DerivedRole": {
-        "properties": {
-          "conditions": {
-            "type": "string",
-            "title": "Conditions"
-          },
-          "settings": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings"
-              }
-            ],
-            "title": "Settings",
-            "description": "Settings for the derived role."
-          },
-          "rules": {
-            "items": {
-              "$ref": "#/components/schemas/DerivedRoleRule"
-            },
-            "type": "array",
-            "title": "Rules",
-            "description": "List of rules for the derived role."
-          }
-        },
-        "type": "object",
-        "required": [
-          "settings",
-          "rules"
-        ],
-        "title": "DerivedRole",
-        "description": "This is the data of a specific derived role in the system"
-      },
       "DerivedRoleBlockEdit": {
         "properties": {
           "when": {
@@ -23384,55 +23499,18 @@
         ],
         "title": "DerivedRoleBlockRead",
         "example": {
-          "id": "9f57c3c3-5997-429f-9413-0ead9c029dce",
+          "id": "1b2226de-02d7-4a40-a860-db4172d8438a",
           "users_with_role": [
             {
               "role": "Admin",
               "on_resource": "organization",
               "linked_by_relation": "owner",
-              "role_id": "9fbb232e-7f3b-4f68-946c-62b677b347e0",
-              "resource_id": "9ea6b127-2676-4b7e-a7f8-564e407874a8",
-              "relation_id": "53972cff-8ce6-4d36-bbde-cd76101e2e99"
+              "role_id": "268f81cd-539d-4263-9958-8afadd726214",
+              "resource_id": "cdcebae6-d9c9-47c3-9902-77e9f1d9e825",
+              "relation_id": "e6680abf-8a9c-41f1-9fa7-3bff1901bce0"
             }
           ]
         }
-      },
-      "DerivedRoleRule": {
-        "properties": {
-          "relation": {
-            "type": "string",
-            "title": "Relation",
-            "description": "The relation between the resource and the related resource."
-          },
-          "related_resource": {
-            "type": "string",
-            "title": "Related Resource",
-            "description": "The related resource type key."
-          },
-          "related_role": {
-            "type": "string",
-            "title": "Related Role",
-            "description": "The related role key."
-          },
-          "settings": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings"
-              }
-            ],
-            "title": "Settings",
-            "description": "Settings for the derived role rule."
-          }
-        },
-        "type": "object",
-        "required": [
-          "relation",
-          "related_resource",
-          "related_role",
-          "settings"
-        ],
-        "title": "DerivedRoleRule",
-        "description": "This is the data of a specific derived role rule in the system"
       },
       "DerivedRoleRuleCreate": {
         "properties": {
@@ -23585,9 +23663,9 @@
           "role": "Admin",
           "on_resource": "organization",
           "linked_by_relation": "owner",
-          "role_id": "9fbb232e-7f3b-4f68-946c-62b677b347e0",
-          "resource_id": "9ea6b127-2676-4b7e-a7f8-564e407874a8",
-          "relation_id": "53972cff-8ce6-4d36-bbde-cd76101e2e99"
+          "role_id": "268f81cd-539d-4263-9958-8afadd726214",
+          "resource_id": "cdcebae6-d9c9-47c3-9902-77e9f1d9e825",
+          "relation_id": "e6680abf-8a9c-41f1-9fa7-3bff1901bce0"
         }
       },
       "DetailedAuditLogModel": {
@@ -25333,364 +25411,6 @@
         ],
         "title": "FailedInvite"
       },
-      "FullData": {
-        "properties": {
-          "use_debugger": {
-            "type": "boolean",
-            "title": "Use Debugger",
-            "default": true
-          },
-          "users": {
-            "additionalProperties": {
-              "$ref": "#/components/schemas/UserData"
-            },
-            "type": "object",
-            "title": "Users",
-            "description": "Key-Value mapping of the users in the system.\nThe key is the user key and the value contains some details about the user."
-          },
-          "tenants": {
-            "additionalProperties": {
-              "$ref": "#/components/schemas/TenantData"
-            },
-            "type": "object",
-            "title": "Tenants",
-            "description": "Key-Value mapping of the tenants in the system.\nThe key is the tenant key and the value contains some details about the tenant."
-          },
-          "roles": {
-            "additionalProperties": {
-              "$ref": "#/components/schemas/RoleData"
-            },
-            "type": "object",
-            "title": "Roles",
-            "description": "Key-Value mapping of the roles in the system.\nThe key is the role key and the value contains some details about the role.",
-            "deprecated": true
-          },
-          "condition_set_rules": {
-            "additionalProperties": {
-              "additionalProperties": {
-                "additionalProperties": {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                },
-                "type": "object"
-              },
-              "type": "object"
-            },
-            "type": "object",
-            "title": "Condition Set Rules",
-            "description": "Key-Value mapping of the permissions for each condition set.\nThe key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set"
-          },
-          "condition_set_rules_expand": {
-            "additionalProperties": {
-              "additionalProperties": {
-                "additionalProperties": {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                },
-                "type": "object"
-              },
-              "type": "object"
-            },
-            "type": "object",
-            "title": "Condition Set Rules Expand",
-            "description": "Sanitized Key-Value mapping of the permissions for each condition set.\n(Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set",
-            "default": {}
-          },
-          "relationships": {
-            "additionalProperties": {
-              "additionalProperties": {
-                "additionalProperties": {
-                  "items": {
-                    "type": "string"
-                  },
-                  "type": "array"
-                },
-                "type": "object"
-              },
-              "type": "object"
-            },
-            "type": "object",
-            "title": "Relationships",
-            "description": "Key-Value mapping of the relationships between resources.\nThe key is the resource instance key and the value is Key-Value mapping of relation key to a Key-Value mapping of resource ( type ) to list of instances keys."
-          },
-          "resource_types": {
-            "additionalProperties": {
-              "$ref": "#/components/schemas/ResourceTypeData"
-            },
-            "type": "object",
-            "title": "Resource Types",
-            "description": "Key-Value mapping of the resource types in the system.\nThe key is the resource type key and the value contains some details about the resource type."
-          },
-          "condition_sets": {
-            "additionalProperties": {
-              "$ref": "#/components/schemas/ConditionSetData"
-            },
-            "type": "object",
-            "title": "Condition Sets",
-            "description": "Key-Value mapping of the condition sets in the system.\nThe key is the formatted condition set key and the value contains some details about the condition set."
-          },
-          "role_assignments": {
-            "additionalProperties": {
-              "additionalProperties": {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              },
-              "type": "object"
-            },
-            "type": "object",
-            "title": "Role Assignments",
-            "description": "Key-Value mapping of the role assignments for the users.\nThe key is the user key and the value is Key-Value mapping of resource instance key or tenant key to list of role keys assigned to the user in that resource instance."
-          },
-          "role_permissions": {
-            "additionalProperties": {
-              "additionalProperties": {
-                "$ref": "#/components/schemas/RoleData"
-              },
-              "type": "object"
-            },
-            "type": "object",
-            "title": "Role Permissions",
-            "description": "Key-Value mapping of the permissions for each role.\nThe key is the resource key and the value is Key-Value mapping of role key to details on the role permissions."
-          },
-          "mapping_rules": {
-            "additionalProperties": {
-              "items": {
-                "additionalProperties": {
-                  "anyOf": [
-                    {
-                      "type": "string"
-                    },
-                    {
-                      "type": "integer"
-                    }
-                  ]
-                },
-                "type": "object"
-              },
-              "type": "array"
-            },
-            "type": "object",
-            "title": "Mapping Rules",
-            "description": "Key-Value mapping of groups of mapping rules in the system.\nThe key is the mapping rule group and the value is a list of mapping rules objects.We currently have only one group named 'all' which contains all the mapping rules.A mapping rule object contains, action, http_method, resource and url - all strings.",
-            "default": {}
-          },
-          "resource_instances": {
-            "additionalProperties": {
-              "$ref": "#/components/schemas/ResourceInstanceAttributeData"
-            },
-            "type": "object",
-            "title": "Resource Instances",
-            "description": "Key-Value mapping of the resource instances in the system.\nThe key is the resource instance key and the value contains some details about the resource instance.",
-            "default": {}
-          }
-        },
-        "type": "object",
-        "required": [
-          "users",
-          "tenants",
-          "roles",
-          "condition_set_rules",
-          "relationships",
-          "resource_types",
-          "condition_sets",
-          "role_assignments",
-          "role_permissions"
-        ],
-        "title": "FullData",
-        "description": "This is the data structure that is used by the PDP in a manged Permit environment.\nThe code Permit generates uses this data structure to enforce the policy and make decisions.",
-        "example": {
-          "use_debugger": true,
-          "mapping_rules": {
-            "all": [
-              {
-                "action": "read",
-                "http_method": "get",
-                "resource": "document",
-                "url": "https://example.com/{var}/resources/{var2}"
-              }
-            ]
-          },
-          "users": {
-            "user1": {
-              "roleAssignments": {
-                "default": [
-                  "viewer"
-                ]
-              },
-              "attributes": {
-                "email": "user1@permit.io",
-                "key": "user1"
-              }
-            }
-          },
-          "tenants": {
-            "default": {
-              "attributes": {
-                "attr1": "value1"
-              }
-            }
-          },
-          "role_permissions": {
-            "community": {
-              "admin": {
-                "grants": {}
-              },
-              "viewer": {
-                "grants": {}
-              }
-            },
-            "document": {
-              "editor": {
-                "grants": {
-                  "document": [
-                    "update",
-                    "read"
-                  ]
-                }
-              },
-              "viewer": {
-                "grants": {
-                  "document": [
-                    "read"
-                  ]
-                }
-              }
-            }
-          },
-          "roles": {
-            "viewer": {
-              "grants": {
-                "document": [
-                  "read"
-                ]
-              }
-            }
-          },
-          "condition_sets": {
-            "resourceset_big_5ffiles": {
-              "type": "resourceset",
-              "key": "big_files"
-            },
-            "userset_permit_57users": {
-              "type": "userset",
-              "key": "permit_users"
-            }
-          },
-          "condition_set_rules": {
-            "permit_users": {
-              "big_files": {
-                "document": [
-                  "read",
-                  "update"
-                ]
-              }
-            }
-          },
-          "resource_instances": {
-            "community:community-0": {
-              "attributes": {}
-            },
-            "document:document-0": {
-              "attributes": {}
-            },
-            "document:document-1": {
-              "attributes": {}
-            }
-          },
-          "relationships": {
-            "document:document-0": {
-              "relation:community": {
-                "community": [
-                  "community-0"
-                ]
-              }
-            },
-            "document:document-1": {
-              "relation:community": {
-                "community": [
-                  "community-0"
-                ]
-              }
-            }
-          },
-          "resource_types": {
-            "__tenant": {
-              "actions": [],
-              "derived_roles": {}
-            },
-            "__user": {
-              "actions": [],
-              "derived_roles": {}
-            },
-            "community": {
-              "actions": [],
-              "derived_roles": {}
-            },
-            "document": {
-              "actions": [
-                "read",
-                "update"
-              ],
-              "derived_roles": {
-                "editor": {
-                  "rules": [
-                    {
-                      "related_resource": "community",
-                      "related_role": "admin",
-                      "relation": "community",
-                      "settings": {
-                        "superseded_by_direct_role": false
-                      }
-                    }
-                  ],
-                  "settings": {
-                    "superseded_by_direct_role": false
-                  }
-                },
-                "viewer": {
-                  "rules": [
-                    {
-                      "related_resource": "community",
-                      "related_role": "admin",
-                      "relation": "community",
-                      "settings": {
-                        "superseded_by_direct_role": false
-                      }
-                    },
-                    {
-                      "related_resource": "community",
-                      "related_role": "viewer",
-                      "relation": "community",
-                      "settings": {
-                        "superseded_by_direct_role": false
-                      }
-                    }
-                  ],
-                  "settings": {
-                    "superseded_by_direct_role": false
-                  }
-                }
-              }
-            }
-          },
-          "role_assignments": {
-            "user:user1": {
-              "__tenant:default": [
-                "viewer"
-              ],
-              "document:document-1": [
-                "editor"
-              ]
-            }
-          }
-        }
-      },
       "GroupAddRole": {
         "properties": {
           "role": {
@@ -26420,6 +26140,70 @@
           "resource"
         ],
         "title": "MappingRule"
+      },
+      "MappingRuleUpdate": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "title": "Url",
+            "description": "The URL to match against the request URL"
+          },
+          "url_type": {
+            "type": "string",
+            "enum": [
+              "regex"
+            ],
+            "title": "Url Type",
+            "description": "The URL type to match against the request URL can be, 'regex' or none"
+          },
+          "http_method": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Methods"
+              }
+            ],
+            "description": "The HTTP method to match against the request method"
+          },
+          "resource": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9\\-_]+$",
+            "title": "Resource",
+            "description": "The resource to match against the request resource"
+          },
+          "headers": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Headers",
+            "description": "The headers to match against the request headers",
+            "default": {}
+          },
+          "action": {
+            "type": "string",
+            "title": "Action",
+            "description": "The action to match against the request action"
+          },
+          "priority": {
+            "type": "integer",
+            "title": "Priority",
+            "description": "The priority of the mapping rule. The higher the priority, the higher the precedence"
+          },
+          "should_delete": {
+            "type": "boolean",
+            "title": "Should Delete",
+            "description": "If true, this mapping rule will be deleted during update.",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "url",
+          "http_method",
+          "resource"
+        ],
+        "title": "MappingRuleUpdate"
       },
       "MemberAccessLevel": {
         "type": "string",
@@ -28086,9 +27870,9 @@
             "title": "Usage Limits",
             "description": "Usage limits for this organization",
             "default": {
-              "mau": 1000,
-              "tenants": 20,
-              "billing_tier": "free"
+              "mau": 5000,
+              "tenants": 50,
+              "billing_tier": "trial"
             }
           },
           "created_at": {
@@ -28153,9 +27937,9 @@
             "title": "Usage Limits",
             "description": "Usage limits for this organization",
             "default": {
-              "mau": 1000,
-              "tenants": 20,
-              "billing_tier": "free"
+              "mau": 5000,
+              "tenants": 50,
+              "billing_tier": "trial"
             }
           },
           "created_at": {
@@ -28256,9 +28040,9 @@
             "title": "Usage Limits",
             "description": "Usage limits for this organization",
             "default": {
-              "mau": 1000,
-              "tenants": 20,
-              "billing_tier": "free"
+              "mau": 5000,
+              "tenants": 50,
+              "billing_tier": "trial"
             }
           },
           "created_at": {
@@ -30065,11 +29849,11 @@
           },
           "mapping_rules": {
             "items": {
-              "$ref": "#/components/schemas/MappingRule"
+              "$ref": "#/components/schemas/MappingRuleUpdate"
             },
             "type": "array",
             "title": "Mapping Rules",
-            "description": "Proxy config mapping rules will include the rules that will be used to map the request to the backend service by a URL and a http method.",
+            "description": "Proxy config mapping rules, with optional should_delete flag to indicate deletion.",
             "default": []
           },
           "auth_mechanism": {
@@ -30094,7 +29878,18 @@
               "action": "create",
               "headers": {
                 "required_header": "strict"
-              }
+              },
+              "should_delete": true
+            },
+            {
+              "url": "https://api.stripe.com/v1/invoices",
+              "http_method": "get",
+              "resource": "invoices",
+              "action": "read",
+              "headers": {
+                "required_header": "strict"
+              },
+              "should_delete": false
             }
           ]
         }
@@ -30132,7 +29927,7 @@
         ],
         "title": "RelationBlockRead",
         "example": {
-          "resource_id": "3765e0c9-9509-4330-8f25-380629d8df08",
+          "resource_id": "58d8091b-1b85-47c5-9359-f217021061ca",
           "relation_name": "parent",
           "resource": "parent-resource"
         }
@@ -31639,24 +31434,6 @@
           }
         }
       },
-      "ResourceInstanceAttributeData": {
-        "properties": {
-          "tenant": {
-            "type": "string",
-            "title": "Tenant",
-            "description": "The tenant key that this resource instance belongs to."
-          },
-          "attributes": {
-            "type": "object",
-            "title": "Attributes",
-            "description": "Key-Value mapping of the attributes of the resource instance.\nThe key is the attribute key and the value is the attribute value.",
-            "default": {}
-          }
-        },
-        "type": "object",
-        "title": "ResourceInstanceAttributeData",
-        "description": "This is the data of a specific resource instance in the system"
-      },
       "ResourceInstanceBlockRead": {
         "properties": {
           "key": {
@@ -32245,15 +32022,15 @@
               ],
               "resource": "repo",
               "granted_to": {
-                "id": "9f57c3c3-5997-429f-9413-0ead9c029dce",
+                "id": "1b2226de-02d7-4a40-a860-db4172d8438a",
                 "users_with_role": [
                   {
                     "role": "Admin",
                     "on_resource": "organization",
                     "linked_by_relation": "owner",
-                    "role_id": "9fbb232e-7f3b-4f68-946c-62b677b347e0",
-                    "resource_id": "9ea6b127-2676-4b7e-a7f8-564e407874a8",
-                    "relation_id": "53972cff-8ce6-4d36-bbde-cd76101e2e99"
+                    "role_id": "268f81cd-539d-4263-9958-8afadd726214",
+                    "resource_id": "cdcebae6-d9c9-47c3-9902-77e9f1d9e825",
+                    "relation_id": "e6680abf-8a9c-41f1-9fa7-3bff1901bce0"
                   }
                 ]
               },
@@ -32267,7 +32044,7 @@
           },
           "relations": {
             "parent": {
-              "resource_id": "3765e0c9-9509-4330-8f25-380629d8df08",
+              "resource_id": "58d8091b-1b85-47c5-9359-f217021061ca",
               "relation_name": "parent",
               "resource": "parent-resource"
             }
@@ -32611,15 +32388,15 @@
           ],
           "resource": "repo",
           "granted_to": {
-            "id": "9f57c3c3-5997-429f-9413-0ead9c029dce",
+            "id": "1b2226de-02d7-4a40-a860-db4172d8438a",
             "users_with_role": [
               {
                 "role": "Admin",
                 "on_resource": "organization",
                 "linked_by_relation": "owner",
-                "role_id": "9fbb232e-7f3b-4f68-946c-62b677b347e0",
-                "resource_id": "9ea6b127-2676-4b7e-a7f8-564e407874a8",
-                "relation_id": "53972cff-8ce6-4d36-bbde-cd76101e2e99"
+                "role_id": "268f81cd-539d-4263-9958-8afadd726214",
+                "resource_id": "cdcebae6-d9c9-47c3-9902-77e9f1d9e825",
+                "relation_id": "e6680abf-8a9c-41f1-9fa7-3bff1901bce0"
               }
             ]
           },
@@ -32684,33 +32461,6 @@
             "push"
           ]
         }
-      },
-      "ResourceTypeData": {
-        "properties": {
-          "actions": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Actions",
-            "description": "List of actions that can be performed on the resource."
-          },
-          "derived_roles": {
-            "additionalProperties": {
-              "$ref": "#/components/schemas/DerivedRole"
-            },
-            "type": "object",
-            "title": "Derived Roles",
-            "description": "Key-Value mapping of the derived roles for the resource type.\nThe key is the derived role key and the value is the details and conditions for the role derivation."
-          }
-        },
-        "type": "object",
-        "required": [
-          "actions",
-          "derived_roles"
-        ],
-        "title": "ResourceTypeData",
-        "description": "This is the data of a specific resource type in the system"
       },
       "ResourceTypeObj": {
         "properties": {
@@ -33482,33 +33232,6 @@
         ],
         "title": "RoleCreateBulkOperationResult"
       },
-      "RoleData": {
-        "properties": {
-          "grants": {
-            "additionalProperties": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "type": "object",
-            "title": "Grants",
-            "description": "Key-Value mapping of the resources and actions that the role can perform.\nThe key is the resource key and the value is a list of actions that the role can perform on that resource."
-          },
-          "attributes": {
-            "type": "object",
-            "title": "Attributes",
-            "description": "Key-Value mapping of the attributes of the role.\nThe key is the attribute key and the value is the attribute value.",
-            "default": {}
-          }
-        },
-        "type": "object",
-        "required": [
-          "grants"
-        ],
-        "title": "RoleData",
-        "description": "This is the data of a specific role in the system"
-      },
       "RoleList": {
         "properties": {
           "roles": {
@@ -34223,32 +33946,6 @@
         "type": "object",
         "title": "TenantCreateBulkOperationResult"
       },
-      "TenantData": {
-        "properties": {
-          "roleAssignments": {
-            "additionalProperties": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "type": "object",
-            "title": "Roleassignments",
-            "deprecated": true
-          },
-          "attributes": {
-            "type": "object",
-            "title": "Attributes",
-            "description": "Key-Value mapping of the attributes of the tenant.\nThe key is the attribute key and the value is the attribute value."
-          }
-        },
-        "type": "object",
-        "required": [
-          "attributes"
-        ],
-        "title": "TenantData",
-        "description": "This is the data of a specific tenant in the system"
-      },
       "TenantDeleteBulkOperation": {
         "properties": {
           "idents": {
@@ -34454,14 +34151,14 @@
           "mau": {
             "type": "integer",
             "title": "Mau",
-            "description": "Monthly active users limit. Default for free-tier is 1000.",
-            "default": 1000
+            "description": "Monthly active users limit. Default for trial is 5000.",
+            "default": 5000
           },
           "tenants": {
             "type": "integer",
             "title": "Tenants",
-            "description": "Number of tenants limit. Default for free-tier is 20.",
-            "default": 20
+            "description": "Number of tenants limit. Default for trial is 50.",
+            "default": 50
           },
           "billing_tier": {
             "allOf": [
@@ -34469,8 +34166,8 @@
                 "$ref": "#/components/schemas/BillingTierType"
               }
             ],
-            "description": "Billing tier. Default is free.",
-            "default": "free"
+            "description": "Billing tier. Default is trial.",
+            "default": "trial"
           }
         },
         "additionalProperties": false,
@@ -34569,34 +34266,6 @@
         "additionalProperties": false,
         "type": "object",
         "title": "UserCreateBulkOperationResult"
-      },
-      "UserData": {
-        "properties": {
-          "roleAssignments": {
-            "additionalProperties": {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            },
-            "type": "object",
-            "title": "Roleassignments",
-            "description": "Key-Value mapping of the roles assigned to the user.\nThe key is the tenant key and the value is a list of role keys assigned to the user in that tenant.",
-            "deprecated": true
-          },
-          "attributes": {
-            "type": "object",
-            "title": "Attributes",
-            "description": "Key-Value mapping of the attributes of the user.\nThe key is the attribute key and the value is the attribute value."
-          }
-        },
-        "type": "object",
-        "required": [
-          "roleAssignments",
-          "attributes"
-        ],
-        "title": "UserData",
-        "description": "This is the data of a specific user in the system"
       },
       "UserDeleteBulkOperation": {
         "properties": {
@@ -35198,6 +34867,596 @@
         "type": "object",
         "title": "WebhookUpdate"
       },
+      "data_generator_lib__schemas__schema_opal_data__ConditionSetData": {
+        "properties": {
+          "type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ConditionSetType"
+              }
+            ],
+            "description": "The type of the condition set."
+          },
+          "key": {
+            "type": "string",
+            "title": "Key",
+            "description": "The key of the condition set."
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "key"
+        ],
+        "title": "ConditionSetData",
+        "description": "This is the data of a specific condition set in the system"
+      },
+      "data_generator_lib__schemas__schema_opal_data__DerivationSettings": {
+        "properties": {
+          "superseded_by_direct_role": {
+            "type": "boolean",
+            "title": "Superseded By Direct Role",
+            "description": "If True, the derived role is superseded by a direct role.meaning role derivation is not considered if the user has a direct role.",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "DerivationSettings",
+        "description": "Settings for the derived role"
+      },
+      "data_generator_lib__schemas__schema_opal_data__DerivedRole": {
+        "properties": {
+          "conditions": {
+            "type": "string",
+            "title": "Conditions"
+          },
+          "settings": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivationSettings"
+              }
+            ],
+            "title": "Settings",
+            "description": "Settings for the derived role."
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivedRoleRule"
+            },
+            "type": "array",
+            "title": "Rules",
+            "description": "List of rules for the derived role."
+          }
+        },
+        "type": "object",
+        "required": [
+          "settings",
+          "rules"
+        ],
+        "title": "DerivedRole",
+        "description": "This is the data of a specific derived role in the system"
+      },
+      "data_generator_lib__schemas__schema_opal_data__DerivedRoleRule": {
+        "properties": {
+          "relation": {
+            "type": "string",
+            "title": "Relation",
+            "description": "The relation between the resource and the related resource."
+          },
+          "related_resource": {
+            "type": "string",
+            "title": "Related Resource",
+            "description": "The related resource type key."
+          },
+          "related_role": {
+            "type": "string",
+            "title": "Related Role",
+            "description": "The related role key."
+          },
+          "settings": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivationSettings"
+              }
+            ],
+            "title": "Settings",
+            "description": "Settings for the derived role rule."
+          }
+        },
+        "type": "object",
+        "required": [
+          "relation",
+          "related_resource",
+          "related_role",
+          "settings"
+        ],
+        "title": "DerivedRoleRule",
+        "description": "This is the data of a specific derived role rule in the system"
+      },
+      "data_generator_lib__schemas__schema_opal_data__FullData": {
+        "properties": {
+          "use_debugger": {
+            "type": "boolean",
+            "title": "Use Debugger",
+            "default": true
+          },
+          "users": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__UserData"
+            },
+            "type": "object",
+            "title": "Users",
+            "description": "Key-Value mapping of the users in the system.\nThe key is the user key and the value contains some details about the user."
+          },
+          "tenants": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__TenantData"
+            },
+            "type": "object",
+            "title": "Tenants",
+            "description": "Key-Value mapping of the tenants in the system.\nThe key is the tenant key and the value contains some details about the tenant."
+          },
+          "roles": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__RoleData"
+            },
+            "type": "object",
+            "title": "Roles",
+            "description": "Key-Value mapping of the roles in the system.\nThe key is the role key and the value contains some details about the role.",
+            "deprecated": true
+          },
+          "condition_set_rules": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Condition Set Rules",
+            "description": "Key-Value mapping of the permissions for each condition set.\nThe key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set"
+          },
+          "condition_set_rules_expand": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Condition Set Rules Expand",
+            "description": "Sanitized Key-Value mapping of the permissions for each condition set.\n(Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set",
+            "default": {}
+          },
+          "relationships": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Relationships",
+            "description": "Key-Value mapping of the relationships between resources.\nThe key is the resource instance key and the value is Key-Value mapping of relation key to a Key-Value mapping of resource ( type ) to list of instances keys."
+          },
+          "resource_types": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__ResourceTypeData"
+            },
+            "type": "object",
+            "title": "Resource Types",
+            "description": "Key-Value mapping of the resource types in the system.\nThe key is the resource type key and the value contains some details about the resource type."
+          },
+          "condition_sets": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__ConditionSetData"
+            },
+            "type": "object",
+            "title": "Condition Sets",
+            "description": "Key-Value mapping of the condition sets in the system.\nThe key is the formatted condition set key and the value contains some details about the condition set."
+          },
+          "role_assignments": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Role Assignments",
+            "description": "Key-Value mapping of the role assignments for the users.\nThe key is the user key and the value is Key-Value mapping of resource instance key or tenant key to list of role keys assigned to the user in that resource instance."
+          },
+          "role_permissions": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__RoleData"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Role Permissions",
+            "description": "Key-Value mapping of the permissions for each role.\nThe key is the resource key and the value is Key-Value mapping of role key to details on the role permissions."
+          },
+          "mapping_rules": {
+            "additionalProperties": {
+              "items": {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Mapping Rules",
+            "description": "Key-Value mapping of groups of mapping rules in the system.\nThe key is the mapping rule group and the value is a list of mapping rules objects.We currently have only one group named 'all' which contains all the mapping rules.A mapping rule object contains, action, http_method, resource and url - all strings.",
+            "default": {}
+          },
+          "resource_instances": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData"
+            },
+            "type": "object",
+            "title": "Resource Instances",
+            "description": "Key-Value mapping of the resource instances in the system.\nThe key is the resource instance key and the value contains some details about the resource instance.",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "users",
+          "tenants",
+          "roles",
+          "condition_set_rules",
+          "relationships",
+          "resource_types",
+          "condition_sets",
+          "role_assignments",
+          "role_permissions"
+        ],
+        "title": "FullData",
+        "description": "This is the data structure that is used by the PDP in a manged Permit environment.\nThe code Permit generates uses this data structure to enforce the policy and make decisions.",
+        "example": {
+          "use_debugger": true,
+          "mapping_rules": {
+            "all": [
+              {
+                "action": "read",
+                "http_method": "get",
+                "resource": "document",
+                "url": "https://example.com/{var}/resources/{var2}"
+              }
+            ]
+          },
+          "users": {
+            "user1": {
+              "roleAssignments": {
+                "default": [
+                  "viewer"
+                ]
+              },
+              "attributes": {
+                "email": "user1@permit.io",
+                "key": "user1"
+              }
+            }
+          },
+          "tenants": {
+            "default": {
+              "attributes": {
+                "attr1": "value1"
+              }
+            }
+          },
+          "role_permissions": {
+            "community": {
+              "admin": {
+                "grants": {}
+              },
+              "viewer": {
+                "grants": {}
+              }
+            },
+            "document": {
+              "editor": {
+                "grants": {
+                  "document": [
+                    "update",
+                    "read"
+                  ]
+                }
+              },
+              "viewer": {
+                "grants": {
+                  "document": [
+                    "read"
+                  ]
+                }
+              }
+            }
+          },
+          "roles": {
+            "viewer": {
+              "grants": {
+                "document": [
+                  "read"
+                ]
+              }
+            }
+          },
+          "condition_sets": {
+            "resourceset_big_5ffiles": {
+              "type": "resourceset",
+              "key": "big_files"
+            },
+            "userset_permit_57users": {
+              "type": "userset",
+              "key": "permit_users"
+            }
+          },
+          "condition_set_rules": {
+            "permit_users": {
+              "big_files": {
+                "document": [
+                  "read",
+                  "update"
+                ]
+              }
+            }
+          },
+          "resource_instances": {
+            "community:community-0": {
+              "attributes": {}
+            },
+            "document:document-0": {
+              "attributes": {}
+            },
+            "document:document-1": {
+              "attributes": {}
+            }
+          },
+          "relationships": {
+            "document:document-0": {
+              "relation:community": {
+                "community": [
+                  "community-0"
+                ]
+              }
+            },
+            "document:document-1": {
+              "relation:community": {
+                "community": [
+                  "community-0"
+                ]
+              }
+            }
+          },
+          "resource_types": {
+            "__tenant": {
+              "actions": [],
+              "derived_roles": {}
+            },
+            "__user": {
+              "actions": [],
+              "derived_roles": {}
+            },
+            "community": {
+              "actions": [],
+              "derived_roles": {}
+            },
+            "document": {
+              "actions": [
+                "read",
+                "update"
+              ],
+              "derived_roles": {
+                "editor": {
+                  "rules": [
+                    {
+                      "related_resource": "community",
+                      "related_role": "admin",
+                      "relation": "community",
+                      "settings": {
+                        "superseded_by_direct_role": false
+                      }
+                    }
+                  ],
+                  "settings": {
+                    "superseded_by_direct_role": false
+                  }
+                },
+                "viewer": {
+                  "rules": [
+                    {
+                      "related_resource": "community",
+                      "related_role": "admin",
+                      "relation": "community",
+                      "settings": {
+                        "superseded_by_direct_role": false
+                      }
+                    },
+                    {
+                      "related_resource": "community",
+                      "related_role": "viewer",
+                      "relation": "community",
+                      "settings": {
+                        "superseded_by_direct_role": false
+                      }
+                    }
+                  ],
+                  "settings": {
+                    "superseded_by_direct_role": false
+                  }
+                }
+              }
+            }
+          },
+          "role_assignments": {
+            "user:user1": {
+              "__tenant:default": [
+                "viewer"
+              ],
+              "document:document-1": [
+                "editor"
+              ]
+            }
+          }
+        }
+      },
+      "data_generator_lib__schemas__schema_opal_data__ResourceInstanceAttributeData": {
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "title": "Tenant",
+            "description": "The tenant key that this resource instance belongs to."
+          },
+          "attributes": {
+            "type": "object",
+            "title": "Attributes",
+            "description": "Key-Value mapping of the attributes of the resource instance.\nThe key is the attribute key and the value is the attribute value.",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "title": "ResourceInstanceAttributeData",
+        "description": "This is the data of a specific resource instance in the system"
+      },
+      "data_generator_lib__schemas__schema_opal_data__ResourceTypeData": {
+        "properties": {
+          "actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Actions",
+            "description": "List of actions that can be performed on the resource."
+          },
+          "derived_roles": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/data_generator_lib__schemas__schema_opal_data__DerivedRole"
+            },
+            "type": "object",
+            "title": "Derived Roles",
+            "description": "Key-Value mapping of the derived roles for the resource type.\nThe key is the derived role key and the value is the details and conditions for the role derivation."
+          }
+        },
+        "type": "object",
+        "required": [
+          "actions",
+          "derived_roles"
+        ],
+        "title": "ResourceTypeData",
+        "description": "This is the data of a specific resource type in the system"
+      },
+      "data_generator_lib__schemas__schema_opal_data__RoleData": {
+        "properties": {
+          "grants": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Grants",
+            "description": "Key-Value mapping of the resources and actions that the role can perform.\nThe key is the resource key and the value is a list of actions that the role can perform on that resource."
+          },
+          "attributes": {
+            "type": "object",
+            "title": "Attributes",
+            "description": "Key-Value mapping of the attributes of the role.\nThe key is the attribute key and the value is the attribute value.",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "grants"
+        ],
+        "title": "RoleData",
+        "description": "This is the data of a specific role in the system"
+      },
+      "data_generator_lib__schemas__schema_opal_data__TenantData": {
+        "properties": {
+          "roleAssignments": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Roleassignments",
+            "deprecated": true
+          },
+          "attributes": {
+            "type": "object",
+            "title": "Attributes",
+            "description": "Key-Value mapping of the attributes of the tenant.\nThe key is the attribute key and the value is the attribute value."
+          }
+        },
+        "type": "object",
+        "required": [
+          "attributes"
+        ],
+        "title": "TenantData",
+        "description": "This is the data of a specific tenant in the system"
+      },
+      "data_generator_lib__schemas__schema_opal_data__UserData": {
+        "properties": {
+          "roleAssignments": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Roleassignments",
+            "description": "Key-Value mapping of the roles assigned to the user.\nThe key is the tenant key and the value is a list of role keys assigned to the user in that tenant.",
+            "deprecated": true
+          },
+          "attributes": {
+            "type": "object",
+            "title": "Attributes",
+            "description": "Key-Value mapping of the attributes of the user.\nThe key is the attribute key and the value is the attribute value."
+          }
+        },
+        "type": "object",
+        "required": [
+          "roleAssignments",
+          "attributes"
+        ],
+        "title": "UserData",
+        "description": "This is the data of a specific user in the system"
+      },
       "permit_backend__schemas__schema_derived_role_rule__DerivationSettings": {
         "properties": {
           "no_direct_roles_on_object": {
@@ -35212,6 +35471,30 @@
         "title": "DerivationSettings",
         "description": "Settings for a derived role or a derived role rule"
       },
+      "permit_backend__schemas__schema_opal_data__ConditionSetData": {
+        "properties": {
+          "type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ConditionSetType"
+              }
+            ],
+            "description": "The type of the condition set."
+          },
+          "key": {
+            "type": "string",
+            "title": "Key",
+            "description": "The key of the condition set."
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "key"
+        ],
+        "title": "ConditionSetData",
+        "description": "This is the data of a specific condition set in the system"
+      },
       "permit_backend__schemas__schema_opal_data__DerivationSettings": {
         "properties": {
           "superseded_by_direct_role": {
@@ -35224,6 +35507,559 @@
         "type": "object",
         "title": "DerivationSettings",
         "description": "Settings for the derived role"
+      },
+      "permit_backend__schemas__schema_opal_data__DerivedRole": {
+        "properties": {
+          "conditions": {
+            "type": "string",
+            "title": "Conditions"
+          },
+          "settings": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings"
+              }
+            ],
+            "title": "Settings",
+            "description": "Settings for the derived role."
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__DerivedRoleRule"
+            },
+            "type": "array",
+            "title": "Rules",
+            "description": "List of rules for the derived role."
+          }
+        },
+        "type": "object",
+        "required": [
+          "settings",
+          "rules"
+        ],
+        "title": "DerivedRole",
+        "description": "This is the data of a specific derived role in the system"
+      },
+      "permit_backend__schemas__schema_opal_data__DerivedRoleRule": {
+        "properties": {
+          "relation": {
+            "type": "string",
+            "title": "Relation",
+            "description": "The relation between the resource and the related resource."
+          },
+          "related_resource": {
+            "type": "string",
+            "title": "Related Resource",
+            "description": "The related resource type key."
+          },
+          "related_role": {
+            "type": "string",
+            "title": "Related Role",
+            "description": "The related role key."
+          },
+          "settings": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__DerivationSettings"
+              }
+            ],
+            "title": "Settings",
+            "description": "Settings for the derived role rule."
+          }
+        },
+        "type": "object",
+        "required": [
+          "relation",
+          "related_resource",
+          "related_role",
+          "settings"
+        ],
+        "title": "DerivedRoleRule",
+        "description": "This is the data of a specific derived role rule in the system"
+      },
+      "permit_backend__schemas__schema_opal_data__FullData": {
+        "properties": {
+          "use_debugger": {
+            "type": "boolean",
+            "title": "Use Debugger",
+            "default": true
+          },
+          "users": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__UserData"
+            },
+            "type": "object",
+            "title": "Users",
+            "description": "Key-Value mapping of the users in the system.\nThe key is the user key and the value contains some details about the user."
+          },
+          "tenants": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__TenantData"
+            },
+            "type": "object",
+            "title": "Tenants",
+            "description": "Key-Value mapping of the tenants in the system.\nThe key is the tenant key and the value contains some details about the tenant."
+          },
+          "roles": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__RoleData"
+            },
+            "type": "object",
+            "title": "Roles",
+            "description": "Key-Value mapping of the roles in the system.\nThe key is the role key and the value contains some details about the role.",
+            "deprecated": true
+          },
+          "condition_set_rules": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Condition Set Rules",
+            "description": "Key-Value mapping of the permissions for each condition set.\nThe key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set"
+          },
+          "condition_set_rules_expand": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Condition Set Rules Expand",
+            "description": "Sanitized Key-Value mapping of the permissions for each condition set.\n(Equal to condition_set_rules but user_set_key and resource_set_key are sanitized)The key is the user-set key and the value is Key-Value mapping of resource-set key to the permissions for that user-set & resource-set.The key is the resource key and the value is list of actions that the user-set can perform on that resource-set",
+            "default": {}
+          },
+          "relationships": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "additionalProperties": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Relationships",
+            "description": "Key-Value mapping of the relationships between resources.\nThe key is the resource instance key and the value is Key-Value mapping of relation key to a Key-Value mapping of resource ( type ) to list of instances keys."
+          },
+          "resource_types": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__ResourceTypeData"
+            },
+            "type": "object",
+            "title": "Resource Types",
+            "description": "Key-Value mapping of the resource types in the system.\nThe key is the resource type key and the value contains some details about the resource type."
+          },
+          "condition_sets": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__ConditionSetData"
+            },
+            "type": "object",
+            "title": "Condition Sets",
+            "description": "Key-Value mapping of the condition sets in the system.\nThe key is the formatted condition set key and the value contains some details about the condition set."
+          },
+          "role_assignments": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Role Assignments",
+            "description": "Key-Value mapping of the role assignments for the users.\nThe key is the user key and the value is Key-Value mapping of resource instance key or tenant key to list of role keys assigned to the user in that resource instance."
+          },
+          "role_permissions": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__RoleData"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Role Permissions",
+            "description": "Key-Value mapping of the permissions for each role.\nThe key is the resource key and the value is Key-Value mapping of role key to details on the role permissions."
+          },
+          "mapping_rules": {
+            "additionalProperties": {
+              "items": {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Mapping Rules",
+            "description": "Key-Value mapping of groups of mapping rules in the system.\nThe key is the mapping rule group and the value is a list of mapping rules objects.We currently have only one group named 'all' which contains all the mapping rules.A mapping rule object contains, action, http_method, resource and url - all strings.",
+            "default": {}
+          },
+          "resource_instances": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData"
+            },
+            "type": "object",
+            "title": "Resource Instances",
+            "description": "Key-Value mapping of the resource instances in the system.\nThe key is the resource instance key and the value contains some details about the resource instance.",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "users",
+          "tenants",
+          "roles",
+          "condition_set_rules",
+          "relationships",
+          "resource_types",
+          "condition_sets",
+          "role_assignments",
+          "role_permissions"
+        ],
+        "title": "FullData",
+        "description": "This is the data structure that is used by the PDP in a manged Permit environment.\nThe code Permit generates uses this data structure to enforce the policy and make decisions.",
+        "example": {
+          "use_debugger": true,
+          "mapping_rules": {
+            "all": [
+              {
+                "action": "read",
+                "http_method": "get",
+                "resource": "document",
+                "url": "https://example.com/{var}/resources/{var2}"
+              }
+            ]
+          },
+          "users": {
+            "user1": {
+              "roleAssignments": {
+                "default": [
+                  "viewer"
+                ]
+              },
+              "attributes": {
+                "email": "user1@permit.io",
+                "key": "user1"
+              }
+            }
+          },
+          "tenants": {
+            "default": {
+              "attributes": {
+                "attr1": "value1"
+              }
+            }
+          },
+          "role_permissions": {
+            "community": {
+              "admin": {
+                "grants": {}
+              },
+              "viewer": {
+                "grants": {}
+              }
+            },
+            "document": {
+              "editor": {
+                "grants": {
+                  "document": [
+                    "update",
+                    "read"
+                  ]
+                }
+              },
+              "viewer": {
+                "grants": {
+                  "document": [
+                    "read"
+                  ]
+                }
+              }
+            }
+          },
+          "roles": {
+            "viewer": {
+              "grants": {
+                "document": [
+                  "read"
+                ]
+              }
+            }
+          },
+          "condition_sets": {
+            "resourceset_big_5ffiles": {
+              "type": "resourceset",
+              "key": "big_files"
+            },
+            "userset_permit_57users": {
+              "type": "userset",
+              "key": "permit_users"
+            }
+          },
+          "condition_set_rules": {
+            "permit_users": {
+              "big_files": {
+                "document": [
+                  "read",
+                  "update"
+                ]
+              }
+            }
+          },
+          "resource_instances": {
+            "community:community-0": {
+              "attributes": {}
+            },
+            "document:document-0": {
+              "attributes": {}
+            },
+            "document:document-1": {
+              "attributes": {}
+            }
+          },
+          "relationships": {
+            "document:document-0": {
+              "relation:community": {
+                "community": [
+                  "community-0"
+                ]
+              }
+            },
+            "document:document-1": {
+              "relation:community": {
+                "community": [
+                  "community-0"
+                ]
+              }
+            }
+          },
+          "resource_types": {
+            "__tenant": {
+              "actions": [],
+              "derived_roles": {}
+            },
+            "__user": {
+              "actions": [],
+              "derived_roles": {}
+            },
+            "community": {
+              "actions": [],
+              "derived_roles": {}
+            },
+            "document": {
+              "actions": [
+                "read",
+                "update"
+              ],
+              "derived_roles": {
+                "editor": {
+                  "rules": [
+                    {
+                      "related_resource": "community",
+                      "related_role": "admin",
+                      "relation": "community",
+                      "settings": {
+                        "superseded_by_direct_role": false
+                      }
+                    }
+                  ],
+                  "settings": {
+                    "superseded_by_direct_role": false
+                  }
+                },
+                "viewer": {
+                  "rules": [
+                    {
+                      "related_resource": "community",
+                      "related_role": "admin",
+                      "relation": "community",
+                      "settings": {
+                        "superseded_by_direct_role": false
+                      }
+                    },
+                    {
+                      "related_resource": "community",
+                      "related_role": "viewer",
+                      "relation": "community",
+                      "settings": {
+                        "superseded_by_direct_role": false
+                      }
+                    }
+                  ],
+                  "settings": {
+                    "superseded_by_direct_role": false
+                  }
+                }
+              }
+            }
+          },
+          "role_assignments": {
+            "user:user1": {
+              "__tenant:default": [
+                "viewer"
+              ],
+              "document:document-1": [
+                "editor"
+              ]
+            }
+          }
+        }
+      },
+      "permit_backend__schemas__schema_opal_data__ResourceInstanceAttributeData": {
+        "properties": {
+          "tenant": {
+            "type": "string",
+            "title": "Tenant",
+            "description": "The tenant key that this resource instance belongs to."
+          },
+          "attributes": {
+            "type": "object",
+            "title": "Attributes",
+            "description": "Key-Value mapping of the attributes of the resource instance.\nThe key is the attribute key and the value is the attribute value.",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "title": "ResourceInstanceAttributeData",
+        "description": "This is the data of a specific resource instance in the system"
+      },
+      "permit_backend__schemas__schema_opal_data__ResourceTypeData": {
+        "properties": {
+          "actions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Actions",
+            "description": "List of actions that can be performed on the resource."
+          },
+          "derived_roles": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/permit_backend__schemas__schema_opal_data__DerivedRole"
+            },
+            "type": "object",
+            "title": "Derived Roles",
+            "description": "Key-Value mapping of the derived roles for the resource type.\nThe key is the derived role key and the value is the details and conditions for the role derivation."
+          }
+        },
+        "type": "object",
+        "required": [
+          "actions",
+          "derived_roles"
+        ],
+        "title": "ResourceTypeData",
+        "description": "This is the data of a specific resource type in the system"
+      },
+      "permit_backend__schemas__schema_opal_data__RoleData": {
+        "properties": {
+          "grants": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Grants",
+            "description": "Key-Value mapping of the resources and actions that the role can perform.\nThe key is the resource key and the value is a list of actions that the role can perform on that resource."
+          },
+          "attributes": {
+            "type": "object",
+            "title": "Attributes",
+            "description": "Key-Value mapping of the attributes of the role.\nThe key is the attribute key and the value is the attribute value.",
+            "default": {}
+          }
+        },
+        "type": "object",
+        "required": [
+          "grants"
+        ],
+        "title": "RoleData",
+        "description": "This is the data of a specific role in the system"
+      },
+      "permit_backend__schemas__schema_opal_data__TenantData": {
+        "properties": {
+          "roleAssignments": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Roleassignments",
+            "deprecated": true
+          },
+          "attributes": {
+            "type": "object",
+            "title": "Attributes",
+            "description": "Key-Value mapping of the attributes of the tenant.\nThe key is the attribute key and the value is the attribute value."
+          }
+        },
+        "type": "object",
+        "required": [
+          "attributes"
+        ],
+        "title": "TenantData",
+        "description": "This is the data of a specific tenant in the system"
+      },
+      "permit_backend__schemas__schema_opal_data__UserData": {
+        "properties": {
+          "roleAssignments": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "type": "object",
+            "title": "Roleassignments",
+            "description": "Key-Value mapping of the roles assigned to the user.\nThe key is the tenant key and the value is a list of role keys assigned to the user in that tenant.",
+            "deprecated": true
+          },
+          "attributes": {
+            "type": "object",
+            "title": "Attributes",
+            "description": "Key-Value mapping of the attributes of the user.\nThe key is the attribute key and the value is the attribute value."
+          }
+        },
+        "type": "object",
+        "required": [
+          "roleAssignments",
+          "attributes"
+        ],
+        "title": "UserData",
+        "description": "This is the data of a specific user in the system"
       }
     },
     "securitySchemes": {

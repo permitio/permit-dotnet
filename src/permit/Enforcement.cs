@@ -85,7 +85,7 @@ namespace PermitSDK
             {
                 { "user", user },
                 { "action", action },
-                { "resource", normalizedResource }
+                { "resource", normalizedResource },
             };
             if (context != null)
                 parameters.Add("context", context);
@@ -135,9 +135,15 @@ namespace PermitSDK
                     if (this.Config.RaiseErrors)
                     {
                         var responseContent = await response
-                        .Content.ReadAsStringAsync()
-                        .ConfigureAwait(false);
-                        throw new PermitApiException($"Got {response.StatusCode} status code while performing permit.check", (int)response.StatusCode, responseContent, null, null);
+                            .Content.ReadAsStringAsync()
+                            .ConfigureAwait(false);
+                        throw new PermitApiException(
+                            $"Got {response.StatusCode} status code while performing permit.check",
+                            (int)response.StatusCode,
+                            responseContent,
+                            null,
+                            null
+                        );
                     }
                     return false;
                 }
@@ -189,7 +195,7 @@ namespace PermitSDK
                 { "user", user },
                 { "action", action },
                 { "resource", normalizedResource },
-                { "context", context }
+                { "context", context },
             };
             return parameters;
         }
@@ -223,7 +229,13 @@ namespace PermitSDK
             var decisions = await BulkCheck(checks, context);
             if (checks.Count != decisions.Count)
             {
-                throw new InvalidOperationException(string.Format("Got {0} decision for {1} check queries", decisions.Count, checks.Count));
+                throw new InvalidOperationException(
+                    string.Format(
+                        "Got {0} decision for {1} check queries",
+                        decisions.Count,
+                        checks.Count
+                    )
+                );
             }
             for (int i = 0; i < checks.Count; i++)
             {
@@ -280,13 +292,22 @@ namespace PermitSDK
                 }
                 else
                 {
-                    this.logger.LogError("Got {0} status code while performing bulk check", response.StatusCode);
+                    this.logger.LogError(
+                        "Got {0} status code while performing bulk check",
+                        response.StatusCode
+                    );
                     if (this.Config.RaiseErrors)
                     {
                         var responseContent = await response
                             .Content.ReadAsStringAsync()
                             .ConfigureAwait(false);
-                        throw new PermitApiException($"Got {response.StatusCode} status code while performing bulk check", (int)response.StatusCode, responseContent, null, null);
+                        throw new PermitApiException(
+                            $"Got {response.StatusCode} status code while performing bulk check",
+                            (int)response.StatusCode,
+                            responseContent,
+                            null,
+                            null
+                        );
                     }
                     return new List<bool>();
                 }
@@ -319,7 +340,9 @@ namespace PermitSDK
             try
             {
                 return await _permit_pdp_client.Get_User_Permissions_user_permissions_postAsync(
-                    input
+                    "Bearer " + this.Config.Token,
+                    input,
+                    null
                 );
             }
             catch (PermitApiException e)
@@ -343,7 +366,7 @@ namespace PermitSDK
             string[] resourceTypes = null
         )
         {
-            var userKey = new PermitSDK.PDP.OpenAPI.User() { Key = user, };
+            var userKey = new PermitSDK.PDP.OpenAPI.User() { Key = user };
             return await GetUserPermissions(userKey, tenants, resources, resourceTypes);
         }
     }
