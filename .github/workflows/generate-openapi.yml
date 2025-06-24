@@ -48,41 +48,18 @@ jobs:
             echo "changes=true" >> $GITHUB_OUTPUT
           else
             echo "changes=false" >> $GITHUB_OUTPUT
-          fi
-          
-      - name: Set branch name
-        if: steps.check_changes.outputs.changes == 'true'
-        id: branch_name
-        run: echo "branch_name=feat/sdk-update-$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
-
-      - name: Commit changes
-        if: steps.check_changes.outputs.changes == 'true'
-        env:
-          BRANCH_NAME: ${{ steps.branch_name.outputs.branch_name }}
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git checkout -b $BRANCH_NAME
-          git add .
-          git commit -m "Update SDK from OpenAPI specs"
-
-      - name: Push changes to a new branch
-        if: steps.check_changes.outputs.changes == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: ${{ steps.branch_name.outputs.branch_name }}
-        run: |
-          git push origin $BRANCH_NAME
-
+          fi          
       - name: Create a pull request
         if: steps.check_changes.outputs.changes == 'true'
         id: create_pr
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.branch_name.outputs.branch_name }}
+          branch: "feat/sdk-update"
+          branch-suffix: timestamp
           title: "OpenAPI SDK Update"
           body: "This PR updates the SDK based on the latest OpenAPI specifications."
+          commit-message: "Update SDK from OpenAPI specs"
 
       - name: Output PR URL
         if: steps.create_pr.outputs.pull-request-url != ''
