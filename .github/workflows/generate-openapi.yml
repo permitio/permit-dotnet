@@ -37,6 +37,9 @@ jobs:
 
       - name: Run SDK generation script
         run: sh ./generate_openapi.sh
+
+      - name: Restore .NET tools
+        run: dotnet tool restore
         
       - name: Check for changes
         id: check_changes
