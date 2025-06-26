@@ -37,35 +37,29 @@ jobs:
 
       - name: Run SDK generation script
         run: sh ./generate_openapi.sh
+
+      - name: Restore .NET tools
+        run: dotnet tool restore
         
       - name: Check for changes
         id: check_changes
         run: |
-          git diff --exit-code || echo "changes"
-          
-      - name: Commit changes
-        if: steps.check_changes.outputs.changes == 'changes'
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git checkout -b feat/sdk-update-$(date +'%Y%m%d')
-          git add .
-          git commit -m "Update SDK from OpenAPI specs"
-
-      - name: Push changes to a new branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git push origin feat/sdk-update-$(date +'%Y%m%d')
-
+          if ! git diff --exit-code; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi          
       - name: Create a pull request
+        if: steps.check_changes.outputs.changes == 'true'
         id: create_pr
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: sdk-update-$(date +'%Y%m%d')
+          branch: "feat/sdk-update"
+          branch-suffix: timestamp
           title: "OpenAPI SDK Update"
           body: "This PR updates the SDK based on the latest OpenAPI specifications."
+          commit-message: "Update SDK from OpenAPI specs"
 
       - name: Output PR URL
         if: steps.create_pr.outputs.pull-request-url != ''
