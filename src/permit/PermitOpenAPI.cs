@@ -14306,11 +14306,12 @@ namespace PermitSDK.OpenAPI
         /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
         /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
         /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
+        /// <param name="return_deleted">Whether to return the deleted role assignment, status code will be 200 instead of the default 204 if true</param>
+        /// <returns>Role assignment removed successfully</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual void Unassign_role_from_user(string user_id, string proj_id, string env_id, UserRoleRemove body)
+        public virtual RoleAssignmentRead Unassign_role_from_user(string user_id, string proj_id, string env_id, UserRoleRemove body, bool? return_deleted = null)
         {
-            System.Threading.Tasks.Task.Run(async () => await Unassign_role_from_userAsync(user_id, proj_id, env_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Unassign_role_from_userAsync(user_id, proj_id, env_id, body, return_deleted, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -14327,9 +14328,10 @@ namespace PermitSDK.OpenAPI
         /// <param name="user_id">Either the unique id of the user, or the URL-friendly key of the user (i.e: the "slug").</param>
         /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
         /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
+        /// <param name="return_deleted">Whether to return the deleted role assignment, status code will be 200 instead of the default 204 if true</param>
+        /// <returns>Role assignment removed successfully</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task Unassign_role_from_userAsync(string user_id, string proj_id, string env_id, UserRoleRemove body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<RoleAssignmentRead> Unassign_role_from_userAsync(string user_id, string proj_id, string env_id, UserRoleRemove body, bool? return_deleted = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (user_id == null)
                 throw new System.ArgumentNullException("user_id");
@@ -14354,6 +14356,7 @@ namespace PermitSDK.OpenAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
@@ -14365,6 +14368,12 @@ namespace PermitSDK.OpenAPI
                     urlBuilder_.Append("/users/");
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(user_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/roles");
+                    urlBuilder_.Append('?');
+                    if (return_deleted != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("return_deleted")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(return_deleted, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -14389,9 +14398,26 @@ namespace PermitSDK.OpenAPI
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<RoleAssignmentRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
                         if (status_ == 204)
                         {
-                            return;
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("Role assignment removed successfully", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("Role assignment not found", status_, responseText_, headers_, null);
                         }
                         else
                         if (status_ == 422)
@@ -15950,11 +15976,12 @@ namespace PermitSDK.OpenAPI
         /// </remarks>
         /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
         /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
+        /// <param name="return_deleted">Whether to return the deleted role assignment, status code will be 200 instead of the default 204 if true</param>
+        /// <returns>Role assignment removed successfully</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual void Unassign_role(string proj_id, string env_id, RoleAssignmentRemove body)
+        public virtual RoleAssignmentRead Unassign_role(string proj_id, string env_id, RoleAssignmentRemove body, bool? return_deleted = null)
         {
-            System.Threading.Tasks.Task.Run(async () => await Unassign_roleAsync(proj_id, env_id, body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await Unassign_roleAsync(proj_id, env_id, body, return_deleted, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -15970,9 +15997,10 @@ namespace PermitSDK.OpenAPI
         /// </remarks>
         /// <param name="proj_id">Either the unique id of the project, or the URL-friendly key of the project (i.e: the "slug").</param>
         /// <param name="env_id">Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the "slug").</param>
-        /// <returns>Successful Response</returns>
+        /// <param name="return_deleted">Whether to return the deleted role assignment, status code will be 200 instead of the default 204 if true</param>
+        /// <returns>Role assignment removed successfully</returns>
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task Unassign_roleAsync(string proj_id, string env_id, RoleAssignmentRemove body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<RoleAssignmentRead> Unassign_roleAsync(string proj_id, string env_id, RoleAssignmentRemove body, bool? return_deleted = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (proj_id == null)
                 throw new System.ArgumentNullException("proj_id");
@@ -15994,6 +16022,7 @@ namespace PermitSDK.OpenAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
@@ -16003,6 +16032,12 @@ namespace PermitSDK.OpenAPI
                     urlBuilder_.Append('/');
                     urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(env_id, System.Globalization.CultureInfo.InvariantCulture)));
                     urlBuilder_.Append("/role_assignments");
+                    urlBuilder_.Append('?');
+                    if (return_deleted != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("return_deleted")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(return_deleted, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -16027,9 +16062,26 @@ namespace PermitSDK.OpenAPI
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
+                        if (status_ >= 200 && status_ < 300)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<RoleAssignmentRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
                         if (status_ == 204)
                         {
-                            return;
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("Role assignment removed successfully", status_, responseText_, headers_, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PermitApiException("Role assignment not found", status_, responseText_, headers_, null);
                         }
                         else
                         if (status_ == 422)
