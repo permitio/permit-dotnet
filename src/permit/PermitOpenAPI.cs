@@ -14401,18 +14401,12 @@ namespace PermitSDK.OpenAPI
                         if (status_ >= 200 && status_ < 300)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RoleAssignmentRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            if (objectResponse_.Object == null && status_ != 204) 
                             {
                                 throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
+                            }                            
                             return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 204)
-                        {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("Role assignment removed successfully", status_, responseText_, headers_, null);
-                        }
+                        }                        
                         else
                         if (status_ == 404)
                         {
@@ -16065,17 +16059,11 @@ namespace PermitSDK.OpenAPI
                         if (status_ >= 200 && status_ < 300)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RoleAssignmentRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            if (objectResponse_.Object == null && status_ != 204) 
                             {
                                 throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 204)
-                        {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("Role assignment removed successfully", status_, responseText_, headers_, null);
+                            return objectResponse_.Object;                        
                         }
                         else
                         if (status_ == 404)
