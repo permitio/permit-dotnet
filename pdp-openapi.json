@@ -1309,6 +1309,53 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Local Facts API"
+        ],
+        "summary": "Unassign User Role",
+        "operationId": "unassign_user_role_facts_users__user_id__roles_delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "User Id"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Authorization"
+            },
+            "name": "authorization",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/facts/role_assignments": {
@@ -1318,6 +1365,44 @@
         ],
         "summary": "Create Role Assignment",
         "operationId": "create_role_assignment_facts_role_assignments_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Authorization"
+            },
+            "name": "authorization",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Local Facts API"
+        ],
+        "summary": "Delete Role Assignment",
+        "operationId": "delete_role_assignment_facts_role_assignments_delete",
         "parameters": [
           {
             "required": true,
