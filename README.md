@@ -18,8 +18,14 @@ This script will:
 - Fix status code checks to support 204 status codes
 
 ## Installation
+
+1. Add the NuGet package to your project:
+```bash
+dotnet add package Permit
 ```
-Add nuget package to your project and use with:
-using Permit
-using Permit.Models
+
+2. Import the necessary namespaces:
+```csharp
+using Permit;
+using Permit.Models;
 ```
