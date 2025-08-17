@@ -15391,7 +15391,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "id": "0d38471d99714c0f967a56d80dfe7922",
+                  "id": "0e4184eea3a94ed4a45a37dd302005e5",
                   "title": "The request was invalid",
                   "error_code": "PAGINATION_SIZE_OVERREACHED",
                   "message": "We are sorry for the inconvenience, Max number of results for this API is 10000. To obtain additional results readjust the query's time window, or apply additional filters.. Please check the request and try again.\nIf the issue keeps happening, contact our support on Slack for further guidance."
@@ -23551,15 +23551,15 @@
         ],
         "title": "DerivedRoleBlockRead",
         "example": {
-          "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+          "id": "2e6666ba-a792-4e6a-825e-59086afa4865",
           "users_with_role": [
             {
               "role": "Admin",
               "on_resource": "organization",
               "linked_by_relation": "owner",
-              "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-              "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-              "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+              "role_id": "36c2622e-b666-4fb6-9366-70165ebb26a6",
+              "resource_id": "cdc15c34-dcdd-41cf-a674-d9caf7591273",
+              "relation_id": "2ec72d3c-f807-4a3f-b584-3bbf850c7243"
             }
           ]
         }
@@ -23715,9 +23715,9 @@
           "role": "Admin",
           "on_resource": "organization",
           "linked_by_relation": "owner",
-          "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-          "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-          "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+          "role_id": "36c2622e-b666-4fb6-9366-70165ebb26a6",
+          "resource_id": "cdc15c34-dcdd-41cf-a674-d9caf7591273",
+          "relation_id": "2ec72d3c-f807-4a3f-b584-3bbf850c7243"
         }
       },
       "DetailedAuditLogModel": {
@@ -29979,7 +29979,7 @@
         ],
         "title": "RelationBlockRead",
         "example": {
-          "resource_id": "b08c81cb-a758-4993-a224-879cee7ecb9c",
+          "resource_id": "3ca26346-c5c2-47e7-a694-148f507b2110",
           "relation_name": "parent",
           "resource": "parent-resource"
         }
@@ -32074,15 +32074,15 @@
               ],
               "resource": "repo",
               "granted_to": {
-                "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+                "id": "2e6666ba-a792-4e6a-825e-59086afa4865",
                 "users_with_role": [
                   {
                     "role": "Admin",
                     "on_resource": "organization",
                     "linked_by_relation": "owner",
-                    "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-                    "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-                    "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+                    "role_id": "36c2622e-b666-4fb6-9366-70165ebb26a6",
+                    "resource_id": "cdc15c34-dcdd-41cf-a674-d9caf7591273",
+                    "relation_id": "2ec72d3c-f807-4a3f-b584-3bbf850c7243"
                   }
                 ]
               },
@@ -32096,7 +32096,7 @@
           },
           "relations": {
             "parent": {
-              "resource_id": "b08c81cb-a758-4993-a224-879cee7ecb9c",
+              "resource_id": "3ca26346-c5c2-47e7-a694-148f507b2110",
               "relation_name": "parent",
               "resource": "parent-resource"
             }
@@ -32440,15 +32440,15 @@
           ],
           "resource": "repo",
           "granted_to": {
-            "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+            "id": "2e6666ba-a792-4e6a-825e-59086afa4865",
             "users_with_role": [
               {
                 "role": "Admin",
                 "on_resource": "organization",
                 "linked_by_relation": "owner",
-                "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-                "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-                "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+                "role_id": "36c2622e-b666-4fb6-9366-70165ebb26a6",
+                "resource_id": "cdc15c34-dcdd-41cf-a674-d9caf7591273",
+                "relation_id": "2ec72d3c-f807-4a3f-b584-3bbf850c7243"
               }
             ]
           },
