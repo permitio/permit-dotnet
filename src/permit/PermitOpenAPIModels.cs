@@ -5910,6 +5910,9 @@ namespace PermitSDK.OpenAPI.Models
         [Newtonsoft.Json.JsonProperty("BACKEND_SERVICE_URL", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string BACKEND_SERVICE_URL { get; set; } = default!;
 
+        [Newtonsoft.Json.JsonProperty("OPA_DECISION_LOG_ENABLED", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool OPA_DECISION_LOG_ENABLED { get; set; } = default!;
+
         [Newtonsoft.Json.JsonProperty("OPA_DECISION_LOG_INGRESS_ROUTE", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string OPA_DECISION_LOG_INGRESS_ROUTE { get; set; } = default!;
 
