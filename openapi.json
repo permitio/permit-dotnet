@@ -15391,7 +15391,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "id": "0d38471d99714c0f967a56d80dfe7922",
+                  "id": "5637d9f9c6b349e49d9238c93115008a",
                   "title": "The request was invalid",
                   "error_code": "PAGINATION_SIZE_OVERREACHED",
                   "message": "We are sorry for the inconvenience, Max number of results for this API is 10000. To obtain additional results readjust the query's time window, or apply additional filters.. Please check the request and try again.\nIf the issue keeps happening, contact our support on Slack for further guidance."
@@ -16680,6 +16680,144 @@
         "responses": {
           "204": {
             "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/user-invites": {
+      "get": {
+        "tags": [
+          "Users Elements Data"
+        ],
+        "summary": "List all Elements User Invites",
+        "description": "List all Elements User Invites for the current environment and tenant.",
+        "operationId": "list_elements_user_invites",
+        "parameters": [
+          {
+            "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Elements Config Id",
+              "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+            },
+            "example": "my_elements_config",
+            "name": "elements_config_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "Text search for the email field",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Search",
+              "description": "Text search for the email field"
+            },
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "description": "Status of the user invite",
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/UserInviteStatus"
+                }
+              ],
+              "description": "Status of the user invite"
+            },
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "description": "Page number of the results to fetch, starting at 1.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1.0,
+              "title": "Page",
+              "description": "Page number of the results to fetch, starting at 1.",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "The number of results per page (max 100).",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "title": "Per Page",
+              "description": "The number of results per page (max 100).",
+              "default": 30
+            },
+            "name": "per_page",
+            "in": "query"
+          },
+          {
+            "description": "For ReBAC Elements, the resource instance ID or key to work on",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Resource Instance Id",
+              "description": "For ReBAC Elements, the resource instance ID or key to work on"
+            },
+            "name": "resource_instance_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResult_ElementsUserInviteRead_"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -23551,15 +23689,15 @@
         ],
         "title": "DerivedRoleBlockRead",
         "example": {
-          "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+          "id": "b338e0a8-ec0d-4bdb-8e4a-4bf70d1d1543",
           "users_with_role": [
             {
               "role": "Admin",
               "on_resource": "organization",
               "linked_by_relation": "owner",
-              "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-              "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-              "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+              "role_id": "423d86e9-f8f0-46cc-a637-e842d06154c0",
+              "resource_id": "694e1b45-e860-4b00-8a86-c920630a7e3f",
+              "relation_id": "729f959d-f338-4ee7-a3e2-57b6f28600ae"
             }
           ]
         }
@@ -23715,9 +23853,9 @@
           "role": "Admin",
           "on_resource": "organization",
           "linked_by_relation": "owner",
-          "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-          "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-          "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+          "role_id": "423d86e9-f8f0-46cc-a637-e842d06154c0",
+          "resource_id": "694e1b45-e860-4b00-8a86-c920630a7e3f",
+          "relation_id": "729f959d-f338-4ee7-a3e2-57b6f28600ae"
         }
       },
       "DetailedAuditLogModel": {
@@ -24315,6 +24453,12 @@
             "format": "uuid",
             "title": "Tenant Id",
             "description": "The tenant id of the user that is being invited"
+          },
+          "resource_instance_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Resource Instance Id",
+            "description": "The resource instance id of the user that is being invited"
           }
         },
         "additionalProperties": false,
@@ -24326,7 +24470,8 @@
           "first_name",
           "last_name",
           "role_id",
-          "tenant_id"
+          "tenant_id",
+          "resource_instance_id"
         ],
         "title": "ElementsUserInviteCreate"
       },
@@ -24409,6 +24554,12 @@
             "format": "uuid",
             "title": "Tenant Id",
             "description": "The tenant id of the user that is being invited"
+          },
+          "resource_instance_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Resource Instance Id",
+            "description": "The resource instance id of the user that is being invited"
           }
         },
         "additionalProperties": false,
@@ -24426,7 +24577,8 @@
           "first_name",
           "last_name",
           "role_id",
-          "tenant_id"
+          "tenant_id",
+          "resource_instance_id"
         ],
         "title": "ElementsUserInviteRead"
       },
@@ -24473,6 +24625,12 @@
             "format": "uuid",
             "title": "Tenant Id",
             "description": "The tenant id of the user that is being invited"
+          },
+          "resource_instance_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Resource Instance Id",
+            "description": "The resource instance id of the user that is being invited"
           }
         },
         "additionalProperties": false,
@@ -24484,7 +24642,8 @@
           "first_name",
           "last_name",
           "role_id",
-          "tenant_id"
+          "tenant_id",
+          "resource_instance_id"
         ],
         "title": "ElementsUserInviteUpdate"
       },
@@ -28916,6 +29075,10 @@
             "type": "string",
             "title": "Backend Service Url"
           },
+          "OPA_DECISION_LOG_ENABLED": {
+            "type": "boolean",
+            "title": "Opa Decision Log Enabled"
+          },
           "OPA_DECISION_LOG_INGRESS_ROUTE": {
             "type": "string",
             "title": "Opa Decision Log Ingress Route"
@@ -28949,6 +29112,7 @@
         "type": "object",
         "required": [
           "BACKEND_SERVICE_URL",
+          "OPA_DECISION_LOG_ENABLED",
           "OPA_DECISION_LOG_INGRESS_ROUTE",
           "OPA_DECISION_LOG_INGRESS_BACKEND_TIER_URL",
           "CONTROL_PLANE_RELAY_JWT_TIER",
@@ -29979,7 +30143,7 @@
         ],
         "title": "RelationBlockRead",
         "example": {
-          "resource_id": "b08c81cb-a758-4993-a224-879cee7ecb9c",
+          "resource_id": "6c8f5ae7-509d-4d1c-bbed-d085fa3f1122",
           "relation_name": "parent",
           "resource": "parent-resource"
         }
@@ -32074,15 +32238,15 @@
               ],
               "resource": "repo",
               "granted_to": {
-                "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+                "id": "b338e0a8-ec0d-4bdb-8e4a-4bf70d1d1543",
                 "users_with_role": [
                   {
                     "role": "Admin",
                     "on_resource": "organization",
                     "linked_by_relation": "owner",
-                    "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-                    "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-                    "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+                    "role_id": "423d86e9-f8f0-46cc-a637-e842d06154c0",
+                    "resource_id": "694e1b45-e860-4b00-8a86-c920630a7e3f",
+                    "relation_id": "729f959d-f338-4ee7-a3e2-57b6f28600ae"
                   }
                 ]
               },
@@ -32096,7 +32260,7 @@
           },
           "relations": {
             "parent": {
-              "resource_id": "b08c81cb-a758-4993-a224-879cee7ecb9c",
+              "resource_id": "6c8f5ae7-509d-4d1c-bbed-d085fa3f1122",
               "relation_name": "parent",
               "resource": "parent-resource"
             }
@@ -32440,15 +32604,15 @@
           ],
           "resource": "repo",
           "granted_to": {
-            "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+            "id": "b338e0a8-ec0d-4bdb-8e4a-4bf70d1d1543",
             "users_with_role": [
               {
                 "role": "Admin",
                 "on_resource": "organization",
                 "linked_by_relation": "owner",
-                "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-                "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-                "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+                "role_id": "423d86e9-f8f0-46cc-a637-e842d06154c0",
+                "resource_id": "694e1b45-e860-4b00-8a86-c920630a7e3f",
+                "relation_id": "729f959d-f338-4ee7-a3e2-57b6f28600ae"
               }
             ]
           },
