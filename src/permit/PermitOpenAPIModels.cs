@@ -2346,6 +2346,12 @@ namespace PermitSDK.OpenAPI.Models
         [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Tenant_id { get; set; } = default!;
 
+        /// <summary>
+        /// The resource instance id of the user that is being invited
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Resource_instance_id { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -2430,6 +2436,12 @@ namespace PermitSDK.OpenAPI.Models
         [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Tenant_id { get; set; } = default!;
 
+        /// <summary>
+        /// The resource instance id of the user that is being invited
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Resource_instance_id { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -2477,6 +2489,12 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Tenant_id { get; set; } = default!;
+
+        /// <summary>
+        /// The resource instance id of the user that is being invited
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Resource_instance_id { get; set; } = default!;
 
     }
 
@@ -5909,6 +5927,9 @@ namespace PermitSDK.OpenAPI.Models
     {
         [Newtonsoft.Json.JsonProperty("BACKEND_SERVICE_URL", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string BACKEND_SERVICE_URL { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("OPA_DECISION_LOG_ENABLED", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool OPA_DECISION_LOG_ENABLED { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("OPA_DECISION_LOG_INGRESS_ROUTE", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string OPA_DECISION_LOG_INGRESS_ROUTE { get; set; } = default!;
