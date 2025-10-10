@@ -16062,6 +16062,12 @@ namespace PermitSDK.OpenAPI
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            // 204 No Content is a success response for DELETE operations
+                            return null;
+                        }
+                        else
                         if (status_ >= 200 && status_ < 300)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<RoleAssignmentRead>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -16070,12 +16076,6 @@ namespace PermitSDK.OpenAPI
                                 throw new PermitApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 204)
-                        {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PermitApiException("Role assignment removed successfully", status_, responseText_, headers_, null);
                         }
                         else
                         if (status_ == 404)

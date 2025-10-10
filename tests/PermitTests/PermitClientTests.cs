@@ -114,6 +114,19 @@ namespace PermitSDK.Tests
                 new PermitSDK.PDP.OpenAPI.User() { Key = user.Key }
             );
             Assert.True(userPermissions.Count > 0);
+
+            // Cleanup: delete all created resources in reverse order
+            await permitClient.Api.UnassignRole(user.Key, createdRole.Id.ToString(), tenant.Key);
+            await permitClient.Api.DeleteUser(user.Key);
+            await permitClient.Api.DeleteRole(createdRole.Id.ToString());
+            await permitClient.Api.DeleteTenant(tenant.Key);
+            await permitClient.Api.DeleteResource(resource.Id.ToString());
+
+            // Verify cleanup: these should throw exceptions since resources are deleted
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetUser(user.Key));
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetRole(createdRole.Id.ToString()));
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetTenant(tenant.Key));
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetResource(resource.Id.ToString()));
         }
 
         // test resource input parsing
@@ -273,11 +286,21 @@ namespace PermitSDK.Tests
             assignedRoles = await permitClient.Api.ListAssignedRoles(getUser.Key);
             Assert.True(assignedRoles.Total_count == (assignedRoles2.Total_count - 1));
 
+            // Cleanup: delete all created resources in reverse order
+            await permitClient.Api.DeleteResourceInstance(resourceInstance.Id.ToString());
+            await permitClient.Api.DeleteResourceRole(resourceKey, resourceRole.Id.ToString());
             await permitClient.Api.DeleteUser(getUser.Key);
-
+            await permitClient.Api.DeleteRole(createdRole.Id.ToString());
             await permitClient.Api.DeleteTenant(tenantKey);
-
             await permitClient.Api.DeleteResource(resource.Id.ToString());
+
+            // Verify cleanup: these should throw exceptions since resources are deleted
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetResourceInstance(resourceInstance.Id.ToString()));
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetResourceRole(resourceKey, resourceRole.Id.ToString()));
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetUser(getUser.Key));
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetRole(createdRole.Id.ToString()));
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetTenant(tenantKey));
+            await Assert.ThrowsAsync<PermitSDK.OpenAPI.Models.PermitApiException>(async () => await permitClient.Api.GetResource(resource.Id.ToString()));
         }
     }
 }
