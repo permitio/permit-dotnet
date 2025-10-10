@@ -37,16 +37,22 @@ namespace PermitSDK
             _logger = logger;
 
             _api_client = new OpenAPI.PermitClient(baseUrl: _config.ApiUrl, httpClient: _client);
-            if (string.IsNullOrEmpty(_config.ProjectId) || string.IsNullOrEmpty(_config.EnvId))
+            
+            // Store config values if provided, but don't make API calls in constructor
+            _projectId = _config.ProjectId;
+            _environmentId = _config.EnvId;
+        }
+
+        /// <summary>
+        /// Ensures that project and environment IDs are initialized by fetching them from the API key scope if needed.
+        /// </summary>
+        private async Task EnsureScopeInitializedAsync()
+        {
+            if (string.IsNullOrEmpty(_projectId) || string.IsNullOrEmpty(_environmentId))
             {
-                var scope = _api_client.Get_api_key_scope();
+                var scope = await _api_client.Get_api_key_scopeAsync();
                 _projectId = scope.Project_id.Value!.ToString();
                 _environmentId = scope.Environment_id.Value!.ToString();
-            }
-            else
-            {
-                _projectId = _config.ProjectId;
-                _environmentId = _config.EnvId;
             }
         }
 
@@ -64,6 +70,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<UserRead> CreateUser(UserCreate user)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Create_userAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -82,6 +89,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">The user is not found or an error has occurred</exception>
         public async Task<UserRead> GetUser(string userKey)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Get_userAsync(
                 user_id: userKey,
                 env_id: _environmentId,
@@ -100,6 +108,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<RoleRead> GetRole(string roleKey)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Get_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -118,6 +127,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<TenantRead> GetTenant(string tenantKey)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Get_tenantAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -159,6 +169,7 @@ namespace PermitSDK
             int perPage = 30
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.List_role_assignmentsAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -189,6 +200,7 @@ namespace PermitSDK
             int perPage = 30
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.List_tenantsAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -210,6 +222,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<ResourceRead> GetResource(string resourceKey)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Get_resourceAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -233,6 +246,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<UserRead> SyncUser(UserCreate userCreate)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Replace_userAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -252,6 +266,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task DeleteUser(string userKey)
         {
+            await EnsureScopeInitializedAsync();
             await _api_client.Delete_userAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -272,6 +287,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<TenantRead> CreateTenant(TenantCreate tenantCreate)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Create_tenantAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -292,6 +308,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<TenantRead> UpdateTenant(string tenantKey, TenantUpdate tenantUpdate)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Update_tenantAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -311,6 +328,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task DeleteTenant(string tenantKey)
         {
+            await EnsureScopeInitializedAsync();
             await _api_client.Delete_tenantAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -328,6 +346,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<RoleRead> CreateRole(RoleCreate role)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Create_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -348,6 +367,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<RoleRead> UpdateRole(string roleKey, RoleUpdate roleUpdate)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Update_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -379,6 +399,7 @@ namespace PermitSDK
             string resource_type = null
         )
         {
+            await EnsureScopeInitializedAsync();
             string resourceInstanceIdent = null;
             if (
                 (resource_type != null && resourceInstanceId == null)
@@ -432,6 +453,7 @@ namespace PermitSDK
             string resource_type = null
         )
         {
+            await EnsureScopeInitializedAsync();
             string resourceInstanceIdent = null;
             if (
                 (resource_type != null && resourceInstanceId == null)
@@ -472,6 +494,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task DeleteRole(string roleKey)
         {
+            await EnsureScopeInitializedAsync();
             await _api_client.Delete_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -489,6 +512,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<ResourceRead> CreateResource(ResourceCreate resourceCreate)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Create_resourceAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -512,6 +536,7 @@ namespace PermitSDK
             ResourceUpdate resourceUpdate
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Update_resourceAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -531,6 +556,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task DeleteResource(string resourceKey)
         {
+            await EnsureScopeInitializedAsync();
             await _api_client.Delete_resourceAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -555,6 +581,7 @@ namespace PermitSDK
             int perPage = 30
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.List_rolesAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -582,6 +609,7 @@ namespace PermitSDK
             int perPage = 30
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.List_resource_instancesAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -603,6 +631,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task DeleteResourceInstance(string resourceInstanceId)
         {
+            await EnsureScopeInitializedAsync();
             await _api_client.Delete_resource_instanceAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -625,6 +654,7 @@ namespace PermitSDK
             ResourceInstanceCreate resourceInstance
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Create_resource_instanceAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -643,6 +673,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task<ResourceInstanceRead> GetResourceInstance(string resourceInstanceId)
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Get_resource_instanceAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -666,6 +697,7 @@ namespace PermitSDK
             ResourceInstanceUpdate resourceInstanceUpdate
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Update_resource_instanceAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -689,6 +721,7 @@ namespace PermitSDK
             ResourceRoleCreate resourceRole
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Create_resource_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -712,6 +745,7 @@ namespace PermitSDK
             string resourceRoleId
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Get_resource_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -738,6 +772,7 @@ namespace PermitSDK
             ResourceRoleUpdate resourceRoleUpdate
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Update_resource_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -760,6 +795,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task DeleteResourceRole(string resourceId, string resourceRoleId)
         {
+            await EnsureScopeInitializedAsync();
             await _api_client.Delete_resource_roleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -783,6 +819,7 @@ namespace PermitSDK
             ResourceActionCreate resourceAction
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Create_resource_actionAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -806,6 +843,7 @@ namespace PermitSDK
             string resourceActionId
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Get_resource_actionAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -832,6 +870,7 @@ namespace PermitSDK
             ResourceActionUpdate resourceActionUpdate
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Update_resource_actionAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -854,6 +893,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task DeleteResourceAction(string resourceId, string resourceActionId)
         {
+            await EnsureScopeInitializedAsync();
             await _api_client.Delete_resource_actionAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -892,6 +932,7 @@ namespace PermitSDK
             string instanceId = null
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.List_role_assignmentsAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -912,6 +953,7 @@ namespace PermitSDK
             RelationshipTupleCreate relationshipTuple
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.Create_relationship_tupleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -929,6 +971,7 @@ namespace PermitSDK
         /// <exception cref="PermitApiException">A server side error occurred.</exception>
         public async Task DeleteRelationshipTuple(RelationshipTupleDelete relationshipTuple)
         {
+            await EnsureScopeInitializedAsync();
             await _api_client.Delete_relationship_tupleAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
@@ -964,6 +1007,7 @@ namespace PermitSDK
             int perPage = 30
         )
         {
+            await EnsureScopeInitializedAsync();
             return await _api_client.List_relationship_tuplesAsync(
                 proj_id: _projectId,
                 env_id: _environmentId,
