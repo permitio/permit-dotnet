@@ -7535,6 +7535,203 @@
         ]
       }
     },
+    "/v2/schema/{proj_id}/{env_id}/groups/direct": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "List Direct Group",
+        "operationId": "list_direct_group",
+        "parameters": [
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "The tenant key or id to filter by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Tenant",
+              "description": "The tenant key or id to filter by"
+            },
+            "name": "tenant",
+            "in": "query"
+          },
+          {
+            "description": "The resource key or id to filter by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Resource",
+              "description": "The resource key or id to filter by"
+            },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Page number of the results to fetch, starting at 1.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1.0,
+              "title": "Page",
+              "description": "Page number of the results to fetch, starting at 1.",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "The number of results per page (max 100).",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "title": "Per Page",
+              "description": "The number of results per page (max 100).",
+              "default": 30
+            },
+            "name": "per_page",
+            "in": "query"
+          },
+          {
+            "description": "Text search for the object name or key",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Search",
+              "description": "Text search for the object name or key"
+            },
+            "name": "search",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResult_GroupReadSchema_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/schema/{proj_id}/{env_id}/groups/direct/{group_instance_key}": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "Get Direct Group",
+        "description": "Retrieve a specific group by its instance key.",
+        "operationId": "get_direct_group",
+        "parameters": [
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Group Instance Key",
+              "description": "Either the unique id of the resource instance, or the URL-friendly key of the resource instance (i.e: the \"slug\")."
+            },
+            "example": "my_instance_group",
+            "name": "group_instance_key",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupReadSchema"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/v2/schema/{proj_id}/{env_id}/groups/{group_instance_key}": {
       "get": {
         "tags": [
@@ -7603,6 +7800,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "HTTPBearer": []
@@ -7810,6 +8008,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "HTTPBearer": []
@@ -15391,7 +15590,7 @@
             "content": {
               "application/json": {
                 "example": {
-                  "id": "0d38471d99714c0f967a56d80dfe7922",
+                  "id": "8f13ad1a413147b8bf26106dce972a4d",
                   "title": "The request was invalid",
                   "error_code": "PAGINATION_SIZE_OVERREACHED",
                   "message": "We are sorry for the inconvenience, Max number of results for this API is 10000. To obtain additional results readjust the query's time window, or apply additional filters.. Please check the request and try again.\nIf the issue keeps happening, contact our support on Slack for further guidance."
@@ -16680,6 +16879,144 @@
         "responses": {
           "204": {
             "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v2/elements/{proj_id}/{env_id}/config/{elements_config_id}/data/user-invites": {
+      "get": {
+        "tags": [
+          "Users Elements Data"
+        ],
+        "summary": "List all Elements User Invites",
+        "description": "List all Elements User Invites for the current environment and tenant.",
+        "operationId": "list_elements_user_invites",
+        "parameters": [
+          {
+            "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Elements Config Id",
+              "description": "Either the unique id of the elements_config, or the URL-friendly key of the elements_config (i.e: the \"slug\")."
+            },
+            "example": "my_elements_config",
+            "name": "elements_config_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Proj Id",
+              "description": "Either the unique id of the project, or the URL-friendly key of the project (i.e: the \"slug\")."
+            },
+            "example": "my_project",
+            "name": "proj_id",
+            "in": "path"
+          },
+          {
+            "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\").",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Env Id",
+              "description": "Either the unique id of the environment, or the URL-friendly key of the environment (i.e: the \"slug\")."
+            },
+            "example": "my_environment",
+            "name": "env_id",
+            "in": "path"
+          },
+          {
+            "description": "Text search for the email field",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Search",
+              "description": "Text search for the email field"
+            },
+            "name": "search",
+            "in": "query"
+          },
+          {
+            "description": "Status of the user invite",
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/UserInviteStatus"
+                }
+              ],
+              "description": "Status of the user invite"
+            },
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "description": "Page number of the results to fetch, starting at 1.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1.0,
+              "title": "Page",
+              "description": "Page number of the results to fetch, starting at 1.",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "The number of results per page (max 100).",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100.0,
+              "minimum": 1.0,
+              "title": "Per Page",
+              "description": "The number of results per page (max 100).",
+              "default": 30
+            },
+            "name": "per_page",
+            "in": "query"
+          },
+          {
+            "description": "For ReBAC Elements, the resource instance ID or key to work on",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Resource Instance Id",
+              "description": "For ReBAC Elements, the resource instance ID or key to work on"
+            },
+            "name": "resource_instance_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResult_ElementsUserInviteRead_"
+                }
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
@@ -23551,15 +23888,15 @@
         ],
         "title": "DerivedRoleBlockRead",
         "example": {
-          "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+          "id": "223c0c6e-dd1c-4cf1-a1a9-170a74ecedcc",
           "users_with_role": [
             {
               "role": "Admin",
               "on_resource": "organization",
               "linked_by_relation": "owner",
-              "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-              "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-              "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+              "role_id": "87bee2d2-7b6b-409f-871a-0f63be3fdec3",
+              "resource_id": "c9fc9f3a-4f0b-4596-af08-1e714baf1ccf",
+              "relation_id": "e750e999-a824-498d-898e-61434a067cb8"
             }
           ]
         }
@@ -23715,9 +24052,9 @@
           "role": "Admin",
           "on_resource": "organization",
           "linked_by_relation": "owner",
-          "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-          "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-          "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+          "role_id": "87bee2d2-7b6b-409f-871a-0f63be3fdec3",
+          "resource_id": "c9fc9f3a-4f0b-4596-af08-1e714baf1ccf",
+          "relation_id": "e750e999-a824-498d-898e-61434a067cb8"
         }
       },
       "DetailedAuditLogModel": {
@@ -24315,6 +24652,12 @@
             "format": "uuid",
             "title": "Tenant Id",
             "description": "The tenant id of the user that is being invited"
+          },
+          "resource_instance_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Resource Instance Id",
+            "description": "The resource instance id of the user that is being invited"
           }
         },
         "additionalProperties": false,
@@ -24326,7 +24669,8 @@
           "first_name",
           "last_name",
           "role_id",
-          "tenant_id"
+          "tenant_id",
+          "resource_instance_id"
         ],
         "title": "ElementsUserInviteCreate"
       },
@@ -24409,6 +24753,12 @@
             "format": "uuid",
             "title": "Tenant Id",
             "description": "The tenant id of the user that is being invited"
+          },
+          "resource_instance_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Resource Instance Id",
+            "description": "The resource instance id of the user that is being invited"
           }
         },
         "additionalProperties": false,
@@ -24426,7 +24776,8 @@
           "first_name",
           "last_name",
           "role_id",
-          "tenant_id"
+          "tenant_id",
+          "resource_instance_id"
         ],
         "title": "ElementsUserInviteRead"
       },
@@ -24473,6 +24824,12 @@
             "format": "uuid",
             "title": "Tenant Id",
             "description": "The tenant id of the user that is being invited"
+          },
+          "resource_instance_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Resource Instance Id",
+            "description": "The resource instance id of the user that is being invited"
           }
         },
         "additionalProperties": false,
@@ -24484,7 +24841,8 @@
           "first_name",
           "last_name",
           "role_id",
-          "tenant_id"
+          "tenant_id",
+          "resource_instance_id"
         ],
         "title": "ElementsUserInviteUpdate"
       },
@@ -25619,6 +25977,45 @@
             "user_1",
             "user_2"
           ]
+        }
+      },
+      "GroupReadSchema": {
+        "properties": {
+          "group_resource_type_key": {
+            "type": "string",
+            "title": "Group Resource Type Key",
+            "description": "The key of the resource type that the group belongs to.",
+            "default": "group"
+          },
+          "group_instance_key": {
+            "type": "string",
+            "title": "Group Instance Key",
+            "description": "Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the <resource_key:resource_instance_key> (i.e: file:my_file)"
+          },
+          "group_tenant": {
+            "type": "string",
+            "title": "Group Tenant",
+            "description": "The tenant key or id that the group belongs to."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "group_instance_key",
+          "group_tenant",
+          "id"
+        ],
+        "title": "GroupReadSchema",
+        "example": {
+          "id": "123e4567-e89b-12d3-a456-426614174000",
+          "group_resource_type_key": "company",
+          "group_instance_key": "Acme",
+          "group_tenant": "business"
         }
       },
       "HTTPValidationError": {
@@ -28501,6 +28898,36 @@
         ],
         "title": "PaginatedResult[ElementsUserInviteRead]"
       },
+      "PaginatedResult_GroupReadSchema_": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/GroupReadSchema"
+            },
+            "type": "array",
+            "title": "Data",
+            "description": "List of Group Read Schemas"
+          },
+          "total_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Total Count"
+          },
+          "page_count": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Page Count",
+            "default": 0
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "data",
+          "total_count"
+        ],
+        "title": "PaginatedResult[GroupReadSchema]"
+      },
       "PaginatedResult_OperationApprovalList_": {
         "properties": {
           "data": {
@@ -28916,6 +29343,10 @@
             "type": "string",
             "title": "Backend Service Url"
           },
+          "OPA_DECISION_LOG_ENABLED": {
+            "type": "boolean",
+            "title": "Opa Decision Log Enabled"
+          },
           "OPA_DECISION_LOG_INGRESS_ROUTE": {
             "type": "string",
             "title": "Opa Decision Log Ingress Route"
@@ -28949,6 +29380,7 @@
         "type": "object",
         "required": [
           "BACKEND_SERVICE_URL",
+          "OPA_DECISION_LOG_ENABLED",
           "OPA_DECISION_LOG_INGRESS_ROUTE",
           "OPA_DECISION_LOG_INGRESS_BACKEND_TIER_URL",
           "CONTROL_PLANE_RELAY_JWT_TIER",
@@ -29979,7 +30411,7 @@
         ],
         "title": "RelationBlockRead",
         "example": {
-          "resource_id": "b08c81cb-a758-4993-a224-879cee7ecb9c",
+          "resource_id": "b7e52ff0-b4a9-404f-9b15-3d0048b04555",
           "relation_name": "parent",
           "resource": "parent-resource"
         }
@@ -32074,15 +32506,15 @@
               ],
               "resource": "repo",
               "granted_to": {
-                "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+                "id": "223c0c6e-dd1c-4cf1-a1a9-170a74ecedcc",
                 "users_with_role": [
                   {
                     "role": "Admin",
                     "on_resource": "organization",
                     "linked_by_relation": "owner",
-                    "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-                    "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-                    "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+                    "role_id": "87bee2d2-7b6b-409f-871a-0f63be3fdec3",
+                    "resource_id": "c9fc9f3a-4f0b-4596-af08-1e714baf1ccf",
+                    "relation_id": "e750e999-a824-498d-898e-61434a067cb8"
                   }
                 ]
               },
@@ -32096,7 +32528,7 @@
           },
           "relations": {
             "parent": {
-              "resource_id": "b08c81cb-a758-4993-a224-879cee7ecb9c",
+              "resource_id": "b7e52ff0-b4a9-404f-9b15-3d0048b04555",
               "relation_name": "parent",
               "resource": "parent-resource"
             }
@@ -32440,15 +32872,15 @@
           ],
           "resource": "repo",
           "granted_to": {
-            "id": "a86ca432-95e7-437b-85a6-530fd5ce630a",
+            "id": "223c0c6e-dd1c-4cf1-a1a9-170a74ecedcc",
             "users_with_role": [
               {
                 "role": "Admin",
                 "on_resource": "organization",
                 "linked_by_relation": "owner",
-                "role_id": "3064417d-ff34-42a1-8cda-3bacdfad8ada",
-                "resource_id": "1463ebbd-93a6-41f7-9301-d1f440b46aa4",
-                "relation_id": "fb8e98b7-f07b-41d2-9781-ac7e79dcfccf"
+                "role_id": "87bee2d2-7b6b-409f-871a-0f63be3fdec3",
+                "resource_id": "c9fc9f3a-4f0b-4596-af08-1e714baf1ccf",
+                "relation_id": "e750e999-a824-498d-898e-61434a067cb8"
               }
             ]
           },
