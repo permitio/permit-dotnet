@@ -7,12 +7,12 @@
     <LangVersion>latest</LangVersion>
     <Configurations>Release;Debug</Configurations>
     <TargetFrameworks>net9.0;net8.0</TargetFrameworks>
+    <RepositoryUrl>https://github.com/permitio/permit-dotnet</RepositoryUrl>
+    <PackageProjectUrl>https://docs.permit.io/sdk/dotnet/quickstart-dotnet</PackageProjectUrl>
+    <PackageLicenseExpression>APACHE-2.0</PackageLicenseExpression>
   </PropertyGroup>
 <PropertyGroup>
   <VersionPrefix>1.4.1</VersionPrefix>
-</PropertyGroup>
-<PropertyGroup>
-  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 </PropertyGroup>
 <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   <DebugSymbols>true</DebugSymbols>
