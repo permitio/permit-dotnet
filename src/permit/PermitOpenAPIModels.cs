@@ -2346,6 +2346,12 @@ namespace PermitSDK.OpenAPI.Models
         [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Tenant_id { get; set; } = default!;
 
+        /// <summary>
+        /// The resource instance id of the user that is being invited
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Resource_instance_id { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -2430,6 +2436,12 @@ namespace PermitSDK.OpenAPI.Models
         [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Tenant_id { get; set; } = default!;
 
+        /// <summary>
+        /// The resource instance id of the user that is being invited
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Resource_instance_id { get; set; } = default!;
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -2477,6 +2489,12 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("tenant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid Tenant_id { get; set; } = default!;
+
+        /// <summary>
+        /// The resource instance id of the user that is being invited
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("resource_instance_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Resource_instance_id { get; set; } = default!;
 
     }
 
@@ -3505,6 +3523,32 @@ namespace PermitSDK.OpenAPI.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty("group_tenant", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Group_tenant { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GroupReadSchema
+    {
+        /// <summary>
+        /// The key of the resource type that the group belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("group_resource_type_key", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string? Group_resource_type_key { get; set; } = "group";
+
+        /// <summary>
+        /// Either the unique id of the resource instance that that the group belongs to, or the URL-friendly key of the &lt;resource_key:resource_instance_key&gt; (i.e: file:my_file)
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("group_instance_key", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Group_instance_key { get; set; } = default!;
+
+        /// <summary>
+        /// The tenant key or id that the group belongs to.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("group_tenant", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Group_tenant { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid Id { get; set; } = default!;
 
     }
 
@@ -5664,6 +5708,23 @@ namespace PermitSDK.OpenAPI.Models
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PaginatedResult_GroupReadSchema_
+    {
+        /// <summary>
+        /// List of Group Read Schemas
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<GroupReadSchema> Data { get; set; } = new System.Collections.ObjectModel.Collection<GroupReadSchema>();
+
+        [Newtonsoft.Json.JsonProperty("total_count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Total_count { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("page_count", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Page_count { get; set; } = 0;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class PaginatedResult_OperationApprovalList_
     {
         /// <summary>
@@ -5909,6 +5970,9 @@ namespace PermitSDK.OpenAPI.Models
     {
         [Newtonsoft.Json.JsonProperty("BACKEND_SERVICE_URL", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string BACKEND_SERVICE_URL { get; set; } = default!;
+
+        [Newtonsoft.Json.JsonProperty("OPA_DECISION_LOG_ENABLED", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool OPA_DECISION_LOG_ENABLED { get; set; } = default!;
 
         [Newtonsoft.Json.JsonProperty("OPA_DECISION_LOG_INGRESS_ROUTE", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string OPA_DECISION_LOG_INGRESS_ROUTE { get; set; } = default!;
